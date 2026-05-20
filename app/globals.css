@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────
+   4Ever Inner Circle — global styles
+   Brand-locked base layer. Tailwind handles most of the design
+   system; this file is reserved for things Tailwind doesn't do
+   cleanly (font-feature settings, complex gradients-as-utilities).
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  --color-cream: #FAF4F0;
+  --color-blush: #F0D5D0;
+  --color-blush-soft: #F5E2DD;
+  --color-blush-deep: #E8C5BE;
+  --color-plum: #4A1F3D;
+  --color-plum-deep: #381530;
+  --color-mauve: #A86B85;
+  --color-mauve-soft: #C49AAA;
+  --color-ink: #2E3528;
+  --color-charcoal: #3D4338;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-cream text-charcoal font-sans font-light antialiased;
+    line-height: 1.7;
+  }
+  h1, h2, h3, h4, h5 {
+    @apply font-serif font-light text-ink;
+    letter-spacing: 0.01em;
+  }
+}
+
+@layer components {
+  /* The small all-caps brand label */
+  .label-tag {
+    @apply font-sans text-[11px] tracking-label uppercase font-medium text-mauve;
+  }
+
+  /* The brushy "4ever"-style script accent */
+  .script-accent {
+    @apply font-script text-mauve;
+  }
+
+  /* Subtle hairline divider */
+  .hairline {
+    @apply w-[60px] h-px bg-mauve/60;
+  }
+
+  /* The 4ever wordmark + Inner Circle pill (used in nav/footer) */
+  .brand-mark {
+    @apply flex items-baseline gap-1.5;
+  }
+  .brand-mark__four {
+    @apply font-script text-ink leading-none;
+    transform: translateY(2px);
+  }
+  .brand-mark__pill {
+    @apply font-sans font-semibold text-[10px] tracking-small-caps uppercase text-cream bg-mauve px-2.5 py-1;
+  }
+
+  /* The hero gradient — blush radial fading into cream */
+  .hero-bg {
+    background:
+      radial-gradient(ellipse at top, rgba(240, 213, 208, 0.5), transparent 65%),
+      linear-gradient(180deg, var(--color-cream) 0%, var(--color-blush-soft) 100%);
+  }
+
+  /* The plum-deep gradient used in CTAs and registry */
+  .plum-bg {
+    background: linear-gradient(135deg, var(--color-plum) 0%, var(--color-plum-deep) 100%);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

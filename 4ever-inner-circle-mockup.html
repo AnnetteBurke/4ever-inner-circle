@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>4Ever Inner Circle — Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=Yellowtail&family=Sacramento&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    /* Brand palette — derived from 4Ever Photos */
+    --cream: #FAF4F0;            /* warm ivory, very faint pink */
+    --blush: #F0D5D0;            /* signature blush */
+    --blush-soft: #F5E2DD;       /* lighter blush */
+    --blush-deep: #E8C5BE;       /* deeper blush */
+    --plum: #4A1F3D;             /* signature deep plum */
+    --plum-deep: #381530;        /* almost black plum for footer/registry */
+    --mauve: #A86B85;            /* signature mauve accent */
+    --mauve-soft: #C49AAA;       /* lighter mauve */
+    --ink: #2E3528;              /* signature dark green-charcoal */
+    --charcoal: #3D4338;
+    --whisper: rgba(46, 53, 40, 0.55);
+    --whisper-light: rgba(46, 53, 40, 0.4);
+    --hairline: rgba(74, 31, 61, 0.14);
+    --hairline-cream: rgba(250, 244, 240, 0.15);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    color: var(--charcoal);
+    background: var(--cream);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, .serif {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+  }
+  .brand-script {
+    font-family: 'Yellowtail', cursive;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+  .label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--mauve);
+  }
+  .container { max-width: 1240px; margin: 0 auto; padding: 0 48px; }
+  .hairline { width: 60px; height: 1px; background: var(--mauve); margin: 24px auto; opacity: 0.6; }
+  .hairline.left { margin-left: 0; margin-right: auto; }
+
+  /* NAV */
+  nav.top {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250, 244, 240, 0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 48px;
+    max-width: 1240px; margin: 0 auto;
+  }
+  .logo-mark {
+    display: flex; align-items: baseline; gap: 6px;
+  }
+  .logo-mark .four {
+    font-family: 'Yellowtail', cursive;
+    font-size: 34px;
+    color: var(--ink);
+    line-height: 1;
+    transform: translateY(2px);
+  }
+  .logo-mark .pill {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--mauve);
+    padding: 4px 10px;
+  }
+  .nav-links { display: flex; gap: 36px; }
+  .nav-links a {
+    font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--charcoal); text-decoration: none; font-weight: 400;
+    transition: color 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--mauve); }
+  .nav-meta {
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--mauve); font-weight: 500;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 48px 80px;
+    background:
+      radial-gradient(ellipse at top, rgba(240, 213, 208, 0.5), transparent 65%),
+      linear-gradient(180deg, var(--cream) 0%, var(--blush-soft) 100%);
+    position: relative;
+  }
+  .hero .label { margin-bottom: 32px; color: var(--mauve); }
+  .hero h1 {
+    font-size: clamp(72px, 11vw, 156px);
+    line-height: 0.92;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .hero h1 .script {
+    font-family: 'Yellowtail', cursive;
+    font-style: normal;
+    color: var(--mauve);
+    font-weight: 400;
+    font-size: 0.92em;
+    display: inline-block;
+    transform: translateY(-6px);
+  }
+  .hero .tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--plum);
+    margin-top: 12px;
+    font-weight: 300;
+  }
+  .hero .sub {
+    max-width: 540px; margin: 40px auto 0;
+    font-size: 15px; line-height: 1.85; color: var(--whisper);
+  }
+  .hero-meta {
+    position: absolute; bottom: 48px; left: 0; right: 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 80px;
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--whisper);
+  }
+  .hero-meta .by-script {
+    font-family: 'Yellowtail', cursive;
+    font-size: 22px;
+    color: var(--mauve);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  /* SECTION DIVIDER */
+  .section {
+    padding: 140px 0;
+    border-top: 1px solid var(--hairline);
+  }
+  .section-head { margin-bottom: 80px; max-width: 720px; }
+  .section-head .label { display: block; margin-bottom: 18px; }
+  .section-head h2 {
+    font-size: clamp(40px, 5vw, 64px);
+    line-height: 1.05;
+    margin-bottom: 24px;
+    font-weight: 300;
+    color: var(--ink);
+  }
+  .section-head h2 em {
+    color: var(--mauve);
+    font-weight: 300;
+  }
+  .section-head h2 .script {
+    font-family: 'Yellowtail', cursive;
+    font-style: normal;
+    color: var(--mauve);
+    font-weight: 400;
+  }
+  .section-head p { font-size: 16px; color: var(--whisper); line-height: 1.85; max-width: 560px; }
+
+  /* WELCOME DASHBOARD */
+  .dashboard-frame {
+    background: #fff;
+    border: 1px solid var(--hairline);
+    border-radius: 2px;
+    padding: 64px 56px;
+    box-shadow: 0 30px 80px -40px rgba(74, 31, 61, 0.18);
+    position: relative;
+    overflow: hidden;
+  }
+  .dashboard-frame::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 2px; background: linear-gradient(90deg, transparent, var(--mauve), transparent);
+  }
+  .dash-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 56px;
+  }
+  .dash-greeting .label { margin-bottom: 12px; }
+  .dash-greeting h3 {
+    font-size: 56px; line-height: 1; font-weight: 300;
+    color: var(--ink);
+  }
+  .dash-greeting h3 em {
+    color: var(--mauve);
+    font-family: 'Yellowtail', cursive;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.85em;
+  }
+  .countdown {
+    text-align: right; padding-left: 32px;
+    border-left: 1px solid var(--hairline);
+  }
+  .countdown .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 88px; line-height: 1; font-weight: 300;
+    color: var(--plum);
+  }
+  .countdown .lbl {
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--whisper); margin-top: 8px;
+  }
+  .dash-date {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 18px; color: var(--mauve);
+    margin-top: 8px;
+  }
+
+  .dash-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--hairline);
+    border: 1px solid var(--hairline);
+  }
+  .dash-card {
+    background: #fff;
+    padding: 36px 32px;
+    min-height: 200px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    transition: background 0.4s ease;
+    cursor: pointer;
+  }
+  .dash-card:hover { background: var(--cream); }
+  .dash-card .icon {
+    width: 28px; height: 28px; margin-bottom: 20px;
+    color: var(--mauve);
+  }
+  .dash-card h4 {
+    font-size: 24px; margin-bottom: 8px;
+    font-weight: 400;
+    color: var(--ink);
+  }
+  .dash-card p {
+    font-size: 13px; color: var(--whisper); line-height: 1.6;
+  }
+  .dash-card .meta {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--mauve); margin-top: 20px;
+  }
+
+  /* JOURNEY TIMELINE */
+  .journey {
+    background: var(--blush);
+  }
+  .journey .section-head h2 { color: var(--plum); }
+  .journey .section-head .label { color: var(--plum); }
+  .timeline {
+    position: relative;
+    padding: 40px 0;
+  }
+  .timeline::before {
+    content: ''; position: absolute; left: 0; right: 0; top: 50%;
+    height: 1px; background: var(--plum); opacity: 0.25;
+  }
+  .timeline-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+    position: relative; z-index: 2;
+  }
+  .stop { text-align: center; }
+  .stop .dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--blush); border: 1px solid var(--plum);
+    margin: 0 auto 24px;
+    position: relative;
+  }
+  .stop.now .dot { background: var(--mauve); border-color: var(--mauve); transform: scale(1.5); box-shadow: 0 0 0 6px rgba(168, 107, 133, 0.2); }
+  .stop .when {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-style: italic; color: var(--plum);
+    margin-bottom: 8px;
+  }
+  .stop .what {
+    font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--whisper); line-height: 1.6;
+  }
+  .stop.now .what { color: var(--plum); font-weight: 500; }
+
+  /* PEOPLE */
+  .people-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--hairline);
+    border: 1px solid var(--hairline);
+  }
+  .person {
+    background: var(--cream);
+    padding: 40px 28px;
+    text-align: center;
+    transition: background 0.4s ease;
+    position: relative;
+  }
+  .person:hover { background: #fff; }
+  .person .avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--mauve-soft), var(--blush));
+    margin: 0 auto 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Yellowtail', cursive;
+    font-size: 30px; color: #fff;
+    box-shadow: 0 4px 12px -4px rgba(74, 31, 61, 0.2);
+  }
+  .person h5 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 400;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+  .person .role {
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--mauve); margin-bottom: 14px;
+  }
+  .person .status {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--whisper);
+  }
+  .person .next {
+    margin-top: 18px; padding-top: 18px;
+    border-top: 1px solid var(--hairline);
+    font-size: 11px; color: var(--whisper); line-height: 1.6;
+  }
+  .person .next strong { color: var(--ink); font-weight: 500; display: block; margin-bottom: 4px; }
+  .add-person {
+    background: transparent;
+    border: 1px dashed var(--mauve-soft);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--mauve);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-style: italic;
+    cursor: pointer;
+  }
+  .add-person:hover { background: var(--blush-soft); border-color: var(--mauve); }
+
+  /* TWO COL */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .visual-block {
+    aspect-ratio: 4/5;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(168, 107, 133, 0.4), transparent 60%),
+      linear-gradient(135deg, var(--blush), var(--blush-deep));
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .visual-block.calm {
+    background:
+      radial-gradient(circle at 70% 40%, rgba(196, 154, 170, 0.4), transparent 60%),
+      linear-gradient(180deg, var(--blush-soft), var(--blush));
+  }
+  .visual-block .glyph {
+    font-family: 'Yellowtail', cursive;
+    font-size: 220px;
+    color: var(--plum); opacity: 0.45;
+    line-height: 1;
+  }
+  .visual-block .img-note {
+    position: absolute; bottom: 24px; left: 24px;
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--plum);
+  }
+  .col-text h3 {
+    font-size: 48px; line-height: 1.1; margin-bottom: 24px;
+    font-weight: 300;
+    color: var(--ink);
+  }
+  .col-text h3 em { color: var(--mauve); }
+  .col-text h3 .script {
+    font-family: 'Yellowtail', cursive;
+    font-style: normal;
+    color: var(--mauve);
+    font-weight: 400;
+  }
+  .col-text p {
+    font-size: 16px; line-height: 1.85; color: var(--whisper);
+    margin-bottom: 20px;
+  }
+  .col-text .quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 22px; line-height: 1.5;
+    color: var(--plum);
+    padding: 24px 0 24px 24px;
+    border-left: 1px solid var(--mauve);
+    margin: 32px 0;
+  }
+  .btn {
+    display: inline-block; margin-top: 16px;
+    padding: 18px 36px;
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--ink); text-decoration: none;
+    border: 1px solid var(--ink);
+    background: transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--ink); color: var(--cream); }
+  .btn.mauve { border-color: var(--mauve); color: var(--mauve); }
+  .btn.mauve:hover { background: var(--mauve); color: var(--cream); }
+  .btn.plum { border-color: var(--plum); color: var(--plum); }
+  .btn.plum:hover { background: var(--plum); color: var(--cream); }
+
+  /* THE EDIT (SHOP) */
+  .edit-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .product {
+    cursor: pointer;
+  }
+  .product-img {
+    aspect-ratio: 3/4;
+    background: linear-gradient(135deg, var(--blush-soft), var(--blush));
+    margin-bottom: 16px;
+    position: relative; overflow: hidden;
+    transition: transform 0.5s ease;
+  }
+  .product:hover .product-img { transform: scale(0.98); }
+  .product-img::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 60%, rgba(168, 107, 133, 0.25), transparent 60%);
+  }
+  .product-img .num {
+    position: absolute; top: 16px; left: 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px; font-style: italic;
+    color: var(--plum);
+  }
+  .product-img .silhouette {
+    position: absolute; bottom: 20px; right: 20px;
+    font-family: 'Yellowtail', cursive;
+    font-size: 110px;
+    color: rgba(74, 31, 61, 0.25);
+    line-height: 1;
+  }
+  .product h5 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 400;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+  .product .price {
+    font-size: 13px; color: var(--mauve);
+    letter-spacing: 0.1em;
+  }
+  .product .tag {
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--whisper);
+    margin-bottom: 8px;
+  }
+
+  /* GIFT REGISTRY */
+  .registry {
+    background: var(--plum);
+    color: var(--cream);
+    padding: 140px 0;
+  }
+  .registry .label { color: var(--mauve-soft); }
+  .registry h2 { color: var(--cream); }
+  .registry h2 em { color: var(--mauve-soft); }
+  .registry h2 .script { color: var(--mauve-soft); }
+  .registry p { color: rgba(250, 244, 240, 0.7); }
+  .registry-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 64px;
+  }
+  .gift-card {
+    border: 1px solid rgba(250, 244, 240, 0.14);
+    padding: 36px 32px;
+    transition: border-color 0.3s ease;
+    background: rgba(250, 244, 240, 0.02);
+  }
+  .gift-card:hover { border-color: var(--mauve-soft); }
+  .gift-card .label { color: var(--mauve-soft); }
+  .gift-card h4 {
+    color: var(--cream);
+    font-size: 26px; font-weight: 400;
+    margin-bottom: 8px;
+    margin-top: 8px;
+  }
+  .gift-card .gift-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 28px; color: var(--mauve-soft);
+    margin-top: 24px; margin-bottom: 16px;
+  }
+  .gift-card .desc {
+    font-size: 13px; color: rgba(250, 244, 240, 0.6);
+    line-height: 1.7;
+  }
+  .progress {
+    height: 1px; background: rgba(250, 244, 240, 0.15);
+    margin: 24px 0 12px;
+    position: relative;
+  }
+  .progress .fill { position: absolute; left: 0; top: 0; height: 100%; background: var(--mauve-soft); }
+  .progress-meta {
+    display: flex; justify-content: space-between;
+    font-size: 11px; letter-spacing: 0.15em;
+    color: rgba(250, 244, 240, 0.55);
+  }
+
+  /* MOOD BOARD */
+  .mood-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 180px 180px 180px;
+    gap: 12px;
+  }
+  .mood-tile {
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: flex-end; padding: 16px;
+  }
+  .mood-tile span {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 16px;
+    color: var(--plum);
+    z-index: 2;
+  }
+  .mood-tile::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 40% 40%, rgba(168, 107, 133, 0.4), transparent 70%);
+  }
+  .mt-1 { grid-column: span 2; grid-row: span 2; background: linear-gradient(135deg, var(--blush), var(--blush-deep)); }
+  .mt-2 { grid-column: span 2; background: linear-gradient(135deg, var(--blush-soft), var(--mauve-soft)); }
+  .mt-3 { grid-column: span 2; background: linear-gradient(135deg, var(--mauve-soft), var(--mauve)); }
+  .mt-3 span { color: #fff; }
+  .mt-4 { grid-column: span 2; background: linear-gradient(135deg, var(--blush-soft), var(--blush)); }
+  .mt-5 { grid-column: span 2; background: linear-gradient(135deg, var(--blush-deep), var(--mauve-soft)); }
+  .mt-6 { grid-column: span 3; background: linear-gradient(135deg, var(--mauve), var(--plum)); }
+  .mt-6 span { color: var(--cream); }
+  .mt-7 { grid-column: span 3; background: linear-gradient(135deg, var(--blush), var(--blush-deep)); }
+
+  /* CALM CORNER (BODYTAP) */
+  .calm-section {
+    background: linear-gradient(180deg, var(--blush-soft) 0%, var(--blush) 100%);
+  }
+  .calm-section .section-head h2 { color: var(--plum); }
+  .coin-display {
+    display: flex; align-items: center; gap: 16px;
+    margin-top: 32px;
+  }
+  .coin {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--mauve-soft), var(--mauve));
+    box-shadow: 0 8px 24px -8px rgba(74, 31, 61, 0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Yellowtail', cursive;
+    color: #fff;
+    font-size: 24px;
+  }
+  .coin-meta {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 18px;
+    color: var(--plum);
+  }
+
+  /* MESSAGE PREVIEW */
+  .msg-preview-block {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .msg {
+    background: var(--cream);
+    border: 1px solid var(--hairline);
+    padding: 28px;
+    position: relative;
+  }
+  .msg-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .msg-from { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--plum); font-weight: 500; }
+  .msg-channel {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: #fff;
+    padding: 4px 8px;
+    background: var(--mauve);
+  }
+  .msg-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; line-height: 1.5;
+    color: var(--ink);
+    font-style: italic;
+  }
+  .msg-when {
+    margin-top: 18px;
+    font-size: 11px; color: var(--mauve);
+    letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* SIGNATURE */
+  .signature-block {
+    text-align: center;
+    padding: 100px 0;
+    background: var(--cream);
+    border-top: 1px solid var(--hairline);
+  }
+  .signature-block .quiet {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--plum);
+    margin-bottom: 32px;
+    line-height: 1.5;
+    max-width: 560px;
+    margin-left: auto; margin-right: auto;
+  }
+  .signature {
+    font-family: 'Sacramento', cursive;
+    font-size: 48px;
+    color: var(--ink);
+    line-height: 1;
+    margin-top: 16px;
+  }
+  .signature-block .role {
+    margin-top: 8px;
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--mauve);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 100px 0 60px;
+    background: var(--plum-deep);
+    color: var(--cream);
+  }
+  .footer-inner {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 60px;
+  }
+  .footer-logo {
+    font-family: 'Yellowtail', cursive;
+    font-size: 84px;
+    line-height: 0.9;
+    color: var(--cream);
+  }
+  .footer-logo .pill {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cream);
+    background: var(--mauve);
+    padding: 8px 18px;
+    margin-left: 8px;
+    vertical-align: middle;
+    transform: translateY(-12px);
+  }
+  .footer-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 22px;
+    color: var(--mauve-soft); margin-top: 20px;
+  }
+  .footer-meta {
+    text-align: right;
+    font-size: 11px; letter-spacing: 0.25em;
+    text-transform: uppercase; color: rgba(250, 244, 240, 0.55);
+    line-height: 2.2;
+  }
+  .footer-bottom {
+    padding-top: 32px;
+    border-top: 1px solid var(--hairline-cream);
+    display: flex; justify-content: space-between;
+    font-size: 11px; letter-spacing: 0.25em;
+    text-transform: uppercase; color: rgba(250, 244, 240, 0.55);
+  }
+
+  @media (max-width: 900px) {
+    .container { padding: 0 28px; }
+    .nav-inner { padding: 18px 28px; }
+    .nav-links, .nav-meta { display: none; }
+    .hero-meta { display: none; }
+    .dashboard-frame { padding: 36px 28px; }
+    .dash-top { flex-direction: column; gap: 32px; }
+    .countdown { padding-left: 0; border-left: none; text-align: left; }
+    .dash-grid { grid-template-columns: 1fr; }
+    .timeline-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .timeline::before { display: none; }
+    .people-grid { grid-template-columns: 1fr 1fr; }
+    .two-col { grid-template-columns: 1fr; gap: 40px; }
+    .edit-grid { grid-template-columns: 1fr 1fr; }
+    .registry-grid { grid-template-columns: 1fr; }
+    .mood-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .mt-1, .mt-2, .mt-3, .mt-4, .mt-5, .mt-6, .mt-7 { grid-column: span 1; grid-row: span 1; height: 160px; }
+    .footer-inner { flex-direction: column; align-items: flex-start; gap: 32px; }
+    .footer-meta { text-align: left; }
+    .msg-preview-block { grid-template-columns: 1fr; }
+    .footer-logo { font-size: 56px; }
+    .footer-logo .pill { font-size: 14px; padding: 6px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="top">
+  <div class="nav-inner">
+    <div class="logo-mark">
+      <span class="four">4ever</span>
+      <span class="pill">Inner Circle</span>
+    </div>
+    <div class="nav-links">
+      <a href="#dashboard">Dashboard</a>
+      <a href="#journey">Journey</a>
+      <a href="#people">People</a>
+      <a href="#mood">Mood</a>
+      <a href="#edit">The Edit</a>
+      <a href="#calm">Calm Corner</a>
+    </div>
+    <div class="nav-meta">Sarah &amp; James</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="label">A private space for our couples</div>
+  <h1>The <span class="script">Inner</span> Circle</h1>
+  <div class="tagline">a wedding experience, considered</div>
+  <div class="hairline"></div>
+  <p class="sub">
+    From the moment you book, we walk every step with you. A quiet, beautifully kept space for your people, your moments, your plans — looked after by 4Ever Photos.
+  </p>
+  <div class="hero-meta">
+    <div><span class="by-script">by</span> &nbsp;4Ever Photos</div>
+    <div>Members only · Est. 2026</div>
+  </div>
+</section>
+
+<!-- WELCOME DASHBOARD -->
+<section class="section" id="dashboard">
+  <div class="container">
+    <div class="section-head">
+      <span class="label">Your space</span>
+      <h2>Welcome home, <span class="script">Sarah &amp; James</span></h2>
+      <p>Everything you need, gently organised. Updates, reminders and small luxuries arrive at the right moment — never in a rush.</p>
+    </div>
+
+    <div class="dashboard-frame">
+      <div class="dash-top">
+        <div class="dash-greeting">
+          <div class="label">Counting down</div>
+          <h3>To your <em>forever</em></h3>
+          <div class="dash-date">Saturday, 12 September 2026 · Cliveden House</div>
+        </div>
+        <div class="countdown">
+          <div class="num">116</div>
+          <div class="lbl">Days to go</div>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="dash-card">
+          <div>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+            <h4>Your people</h4>
+            <p>14 added · 3 awaiting role</p>
+          </div>
+          <div class="meta">Open list →</div>
+        </div>
+        <div class="dash-card">
+          <div>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+            <h4>This week</h4>
+            <p>Bridesmaids' dress fitting confirmation due Friday</p>
+          </div>
+          <div class="meta">2 actions waiting</div>
+        </div>
+        <div class="dash-card">
+          <div>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2v20M2 12h20"/></svg>
+            <h4>Shot planner</h4>
+            <p>18 looks saved · sunset 7:42pm</p>
+          </div>
+          <div class="meta">Refine →</div>
+        </div>
+        <div class="dash-card">
+          <div>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M3 7l9-4 9 4-9 4-9-4zM3 7v10l9 4 9-4V7"/></svg>
+            <h4>The Edit</h4>
+            <p>Curated wedding essentials</p>
+          </div>
+          <div class="meta">Browse shop →</div>
+        </div>
+        <div class="dash-card">
+          <div>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <h4>Calm Corner</h4>
+            <p>5 tapping coins gifted to you</p>
+          </div>
+          <div class="meta">Open Bodytap →</div>
+        </div>
+        <div class="dash-card">
+          <div>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="8" width="18" height="13" rx="1"/><path d="M16 8V5a4 4 0 0 0-8 0v3"/></svg>
+            <h4>Photography gift list</h4>
+            <p>3 of 8 upgrades funded by guests</p>
+          </div>
+          <div class="meta">View registry →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section class="section journey" id="journey">
+  <div class="container">
+    <div class="section-head">
+      <span class="label">The journey</span>
+      <h2>Quiet care, <span class="script">in the right rhythm</span></h2>
+      <p>From the moment you book, we'll be sending small, useful things — to you, to your bridal party, to your suppliers — at exactly the right moment.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-grid">
+        <div class="stop">
+          <div class="dot"></div>
+          <div class="when">Booked</div>
+          <div class="what">Inner Circle access &<br/>welcome film</div>
+        </div>
+        <div class="stop">
+          <div class="dot"></div>
+          <div class="when">−12 weeks</div>
+          <div class="what">Mood board &<br/>shot inspiration</div>
+        </div>
+        <div class="stop now">
+          <div class="dot"></div>
+          <div class="when">−8 weeks</div>
+          <div class="what">Best man &amp; bridesmaid<br/>prep notes sent</div>
+        </div>
+        <div class="stop">
+          <div class="dot"></div>
+          <div class="when">−2 weeks</div>
+          <div class="what">Final timings,<br/>calming reminders</div>
+        </div>
+        <div class="stop">
+          <div class="dot"></div>
+          <div class="when">+1 week</div>
+          <div class="what">Sneak peeks<br/>&amp; guest album opens</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AUTOMATED MESSAGE PREVIEWS -->
+    <div class="msg-preview-block">
+      <div class="msg">
+        <div class="msg-head">
+          <div class="msg-from">To: Tom, Best Man</div>
+          <div class="msg-channel">WhatsApp</div>
+        </div>
+        <div class="msg-body">"Tom — eight weeks to go. Here's a quiet little guide on writing your speech: three stories, one laugh, one tear. We've also dropped a Google Maps pin for the church..."</div>
+        <div class="msg-when">Sends 8 weeks before · Auto</div>
+      </div>
+      <div class="msg">
+        <div class="msg-head">
+          <div class="msg-from">To: Emma, Maid of Honour</div>
+          <div class="msg-channel">SMS</div>
+        </div>
+        <div class="msg-body">"Hair &amp; makeup begins at 8:30am at the bridal suite. We've added it to your calendar with the address — and a little note on what to bring..."</div>
+        <div class="msg-when">Sends day before · Auto</div>
+      </div>
+      <div class="msg">
+        <div class="msg-head">
+          <div class="msg-from">To: Florals by Posy (supplier)</div>
+          <div class="msg-channel">Email</div>
+        </div>
+        <div class="msg-body">"Are there any details of the arrangements you'd love captured on the day? We'll make sure your work is photographed beautifully for your portfolio..."</div>
+        <div class="msg-when">Sends 3 weeks before · Auto</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PEOPLE -->
+<section class="section" id="people">
+  <div class="container">
+    <div class="section-head">
+      <span class="label">Your circle</span>
+      <h2>The people who'll be there, <span class="script">cared for</span></h2>
+      <p>Add everyone with a role — parents, bridal party, ushers, suppliers. We'll guide each of them, gently, with what they need to know and when.</p>
+    </div>
+
+    <div class="people-grid">
+      <div class="person">
+        <div class="avatar">E</div>
+        <h5>Emma Whitfield</h5>
+        <div class="role">Maid of Honour</div>
+        <div class="status">All briefed</div>
+        <div class="next">
+          <strong>Next message</strong>
+          Hair &amp; makeup timing · in 14 days
+        </div>
+      </div>
+      <div class="person">
+        <div class="avatar">T</div>
+        <h5>Tom Bradley</h5>
+        <div class="role">Best Man</div>
+        <div class="status">Speech tips sent</div>
+        <div class="next">
+          <strong>Next message</strong>
+          Day-before rundown · in 55 days
+        </div>
+      </div>
+      <div class="person">
+        <div class="avatar">M</div>
+        <h5>Margaret &amp; David</h5>
+        <div class="role">Parents of the Bride</div>
+        <div class="status">Awaiting note</div>
+        <div class="next">
+          <strong>Next message</strong>
+          Family photo plan · in 7 days
+        </div>
+      </div>
+      <div class="person">
+        <div class="avatar">P</div>
+        <h5>Posy Florals</h5>
+        <div class="role">Supplier · Flowers</div>
+        <div class="status">Shot list shared</div>
+        <div class="next">
+          <strong>Next message</strong>
+          Final brief · in 21 days
+        </div>
+      </div>
+      <div class="person">
+        <div class="avatar">L</div>
+        <h5>Lottie Greene</h5>
+        <div class="role">Bridesmaid</div>
+        <div class="status">All briefed</div>
+        <div class="next">
+          <strong>Next message</strong>
+          Getting-ready playlist · in 28 days
+        </div>
+      </div>
+      <div class="person">
+        <div class="avatar">J</div>
+        <h5>James Mackenzie</h5>
+        <div class="role">Father of the Groom</div>
+        <div class="status">Awaiting role</div>
+        <div class="next">
+          <strong>Next message</strong>
+          Welcome &amp; intro · in 1 day
+        </div>
+      </div>
+      <div class="person">
+        <div class="avatar">S</div>
+        <h5>Sophie Lane</h5>
+        <div class="role">Bridesmaid</div>
+        <div class="status">All briefed</div>
+        <div class="next">
+          <strong>Next message</strong>
+          Day-of timeline · in 35 days
+        </div>
+      </div>
+      <div class="person add-person">
+        <div>+ add someone</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOOD BOARD -->
+<section class="section" id="mood" style="background: var(--blush-soft);">
+  <div class="container">
+    <div class="section-head">
+      <span class="label">The mood</span>
+      <h2>Your day, <span class="script">visualised</span></h2>
+      <p>A living mood board — looks, light, locations, favourite corners of your venue. We'll plan around what matters to you, and use it on the day.</p>
+    </div>
+
+    <div class="mood-grid">
+      <div class="mood-tile mt-1"><span>The first look · golden hour</span></div>
+      <div class="mood-tile mt-2"><span>Ceremony aisle</span></div>
+      <div class="mood-tile mt-3"><span>Bridal portrait — soft window light</span></div>
+      <div class="mood-tile mt-4"><span>Table styling</span></div>
+      <div class="mood-tile mt-5"><span>Sunset on the lake · 7:42pm</span></div>
+      <div class="mood-tile mt-6"><span>Family group · west lawn</span></div>
+      <div class="mood-tile mt-7"><span>Final dance · 11:15pm</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CALM CORNER (BODYTAP) -->
+<section class="section calm-section" id="calm">
+  <div class="container">
+    <div class="two-col">
+      <div class="visual-block calm">
+        <div class="glyph">calm</div>
+        <div class="img-note">Calm Corner · Bodytap</div>
+      </div>
+      <div class="col-text">
+        <span class="label">Calm Corner</span>
+        <h3 style="margin-top: 18px;">For the <span class="script">nerves</span>, the racing thoughts, the morning butterflies.</h3>
+        <p>Inside your Inner Circle, you have private access to Bodytap — gentle, science-backed tapping sequences for wedding nerves, family stress, sleep, and confidence.</p>
+        <div class="quote">"The morning of, I sat with my coffee and did the 8-minute calm sequence. By the time the dress was on, I felt like myself again."</div>
+        <div class="coin-display">
+          <div class="coin">5</div>
+          <div class="coin-meta">Five tapping coins, gifted with our compliments</div>
+        </div>
+        <a href="#" class="btn mauve" style="margin-top: 28px;">Enter Calm Corner</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE EDIT (SHOPIFY) -->
+<section class="section" id="edit">
+  <div class="container">
+    <div class="section-head">
+      <span class="label">The Edit</span>
+      <h2>Considered things, <span class="script">for the day</span></h2>
+      <p>A curated wedding shop — emergency kits, guestbooks, getting-ready robes, calligraphy. Things we've vetted, by people we trust.</p>
+    </div>
+
+    <div class="edit-grid">
+      <div class="product">
+        <div class="product-img">
+          <div class="num">N° 01</div>
+          <div class="silhouette">kit</div>
+        </div>
+        <div class="tag">Essential</div>
+        <h5>The Wedding Day Kit</h5>
+        <div class="price">£68 · linen pouch</div>
+      </div>
+      <div class="product">
+        <div class="product-img" style="background: linear-gradient(135deg, var(--blush-deep), var(--mauve-soft));">
+          <div class="num">N° 02</div>
+          <div class="silhouette">guest</div>
+        </div>
+        <div class="tag">Keepsake</div>
+        <h5>Heirloom Guest Book</h5>
+        <div class="price">£94 · hand-bound</div>
+      </div>
+      <div class="product">
+        <div class="product-img" style="background: linear-gradient(135deg, var(--blush-soft), var(--blush-deep));">
+          <div class="num">N° 03</div>
+          <div class="silhouette">robe</div>
+        </div>
+        <div class="tag">Morning of</div>
+        <h5>Bridal Party Robes</h5>
+        <div class="price">From £62</div>
+      </div>
+      <div class="product">
+        <div class="product-img" style="background: linear-gradient(135deg, var(--mauve-soft), var(--mauve));">
+          <div class="num" style="color: var(--cream);">N° 04</div>
+          <div class="silhouette" style="color: rgba(250,244,240,0.3);">ink</div>
+        </div>
+        <div class="tag">Detail</div>
+        <h5>Custom Calligraphy Set</h5>
+        <div class="price">From £40</div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 64px;">
+      <a href="#" class="btn plum">Open the full shop</a>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTOGRAPHY GIFT REGISTRY -->
+<section class="registry">
+  <div class="container">
+    <div class="section-head">
+      <span class="label">Photography Gift List</span>
+      <h2>Let those who love you, <span class="script">give to your story</span></h2>
+      <p>Like a Prezola for your photographs. Guests can contribute to an extra hour of coverage, a fine-art album, a sunrise shoot — the things you'd love but might not buy yourself.</p>
+    </div>
+
+    <div class="registry-grid">
+      <div class="gift-card">
+        <div class="label">Most loved</div>
+        <h4>An extra hour</h4>
+        <div class="desc">For the moments after the cake — the slow drinks, the second dances, the quiet ones we don't want to miss.</div>
+        <div class="gift-price">£240</div>
+        <div class="progress"><div class="fill" style="width: 78%;"></div></div>
+        <div class="progress-meta"><span>78% funded</span><span>by 6 guests</span></div>
+      </div>
+      <div class="gift-card">
+        <div class="label">Heirloom</div>
+        <h4>Fine art album</h4>
+        <div class="desc">Italian-bound, hand-finished. The book your grandchildren will pull from the shelf one day.</div>
+        <div class="gift-price">£680</div>
+        <div class="progress"><div class="fill" style="width: 34%;"></div></div>
+        <div class="progress-meta"><span>34% funded</span><span>by 3 guests</span></div>
+      </div>
+      <div class="gift-card">
+        <div class="label">Just the two of you</div>
+        <h4>Day-after sunrise shoot</h4>
+        <div class="desc">A quiet hour, the morning after. No timeline, no guests — just you and the light.</div>
+        <div class="gift-price">£420</div>
+        <div class="progress"><div class="fill" style="width: 12%;"></div></div>
+        <div class="progress-meta"><span>12% funded</span><span>by 1 guest</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUEST ALBUM -->
+<section class="section">
+  <div class="container">
+    <div class="two-col">
+      <div class="col-text">
+        <span class="label">The shared album</span>
+        <h3 style="margin-top: 18px;">Every guest, <span class="script">a quiet contributor.</span></h3>
+        <p>After the day, your guests are invited — privately, with a single tap — to add the photographs and films they took. We weave them through your gallery so nothing is lost.</p>
+        <p>A second perspective. The whispered moments. The dance floor through your aunt's eyes.</p>
+        <a href="#" class="btn mauve">See an example album</a>
+      </div>
+      <div class="visual-block">
+        <div class="glyph">142</div>
+        <div class="img-note">guest contributions · Sarah &amp; James</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNATURE / WE ARE LOOKING AFTER YOU -->
+<section class="signature-block">
+  <div class="container">
+    <div class="quiet">
+      "We are looking after you. From the moment you book until long after the last dance —<br/>
+      every detail, every person, every quiet moment."
+    </div>
+    <div class="signature">Annette Burke</div>
+    <div class="role">Founder · 4Ever Photos</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">4ever<span class="pill">Inner Circle</span></div>
+        <div class="footer-sub">we are looking after you</div>
+      </div>
+      <div class="footer-meta">
+        <div>By invitation</div>
+        <div>By 4Ever Photos</div>
+        <div>Made in the UK</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 4Ever Photos · Inner Circle</div>
+      <div>Concierge · Privacy · Members</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

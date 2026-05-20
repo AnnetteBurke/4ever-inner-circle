@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>4Ever Inner Circle — Phased Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=Yellowtail&family=Sacramento&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cream: #FAF4F0;
+    --blush: #F0D5D0;
+    --blush-soft: #F5E2DD;
+    --blush-deep: #E8C5BE;
+    --plum: #4A1F3D;
+    --plum-deep: #381530;
+    --mauve: #A86B85;
+    --mauve-soft: #C49AAA;
+    --ink: #2E3528;
+    --charcoal: #3D4338;
+    --whisper: rgba(46, 53, 40, 0.55);
+    --whisper-light: rgba(46, 53, 40, 0.4);
+    --hairline: rgba(74, 31, 61, 0.14);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    color: var(--charcoal);
+    background: var(--cream);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, h5 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    color: var(--ink);
+    letter-spacing: 0.01em;
+  }
+  .script {
+    font-family: 'Yellowtail', cursive;
+    font-style: normal;
+    color: var(--mauve);
+    font-weight: 400;
+  }
+  .label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--mauve);
+  }
+  .container { max-width: 1160px; margin: 0 auto; padding: 0 48px; }
+  .hairline { width: 60px; height: 1px; background: var(--mauve); margin: 32px 0; opacity: 0.6; }
+
+  /* NAV */
+  nav.top {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250, 244, 240, 0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 48px; max-width: 1160px; margin: 0 auto;
+  }
+  .logo-mark { display: flex; align-items: baseline; gap: 6px; }
+  .logo-mark .four {
+    font-family: 'Yellowtail', cursive; font-size: 30px;
+    color: var(--ink); line-height: 1; transform: translateY(2px);
+  }
+  .logo-mark .pill {
+    font-family: 'Inter', sans-serif; font-weight: 600; font-size: 10px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: #fff; background: var(--mauve); padding: 4px 10px;
+  }
+  .nav-doc {
+    font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--mauve); font-weight: 500;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 200px 0 100px;
+    background:
+      radial-gradient(ellipse at top, rgba(240, 213, 208, 0.5), transparent 60%),
+      linear-gradient(180deg, var(--cream) 0%, var(--blush-soft) 100%);
+  }
+  .hero .label { margin-bottom: 24px; }
+  .hero h1 {
+    font-size: clamp(56px, 8vw, 104px);
+    line-height: 1; margin-bottom: 16px;
+    color: var(--ink);
+  }
+  .hero h1 .script { font-size: 0.92em; display: inline-block; transform: translateY(-4px); }
+  .hero .sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 24px;
+    color: var(--plum); margin-top: 8px;
+  }
+  .hero .intro {
+    max-width: 640px; font-size: 16px; line-height: 1.85;
+    color: var(--whisper); margin-top: 40px;
+  }
+  .hero .intro strong { color: var(--ink); font-weight: 500; }
+
+  /* PHILOSOPHY QUOTE */
+  .philosophy {
+    background: var(--cream);
+    padding: 100px 0;
+    border-top: 1px solid var(--hairline);
+  }
+  .philosophy .quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(28px, 3.4vw, 40px);
+    line-height: 1.35;
+    color: var(--plum);
+    max-width: 820px;
+    border-left: 1px solid var(--mauve);
+    padding-left: 32px;
+  }
+  .philosophy .attribution {
+    margin-top: 24px; font-size: 11px; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--mauve);
+    padding-left: 32px;
+  }
+
+  /* STACK */
+  .stack {
+    padding: 120px 0;
+    background: var(--blush-soft);
+  }
+  .stack .label { color: var(--plum); }
+  .stack h2 {
+    font-size: clamp(40px, 5vw, 60px); margin-bottom: 24px; margin-top: 18px;
+    color: var(--plum);
+  }
+  .stack h2 .script { color: var(--plum); }
+  .stack .intro-line {
+    max-width: 640px; font-size: 16px; line-height: 1.85;
+    color: var(--whisper); margin-bottom: 56px;
+  }
+  .stack-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--hairline);
+    border: 1px solid var(--hairline);
+  }
+  .stack-item {
+    background: var(--cream); padding: 32px 28px;
+  }
+  .stack-item .role {
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--mauve); margin-bottom: 12px;
+  }
+  .stack-item h4 {
+    font-size: 22px; font-weight: 400; margin-bottom: 6px;
+  }
+  .stack-item p {
+    font-size: 13px; color: var(--whisper); line-height: 1.6;
+  }
+
+  /* PHASE */
+  .phase {
+    padding: 140px 0;
+    border-top: 1px solid var(--hairline);
+  }
+  .phase-1 { background: var(--cream); }
+  .phase-2 { background: var(--blush); }
+  .phase-3 { background: var(--plum); color: var(--cream); }
+
+  .phase-2 .phase-num, .phase-2 .label { color: var(--plum); }
+  .phase-2 h2, .phase-2 h3, .phase-2 h4 { color: var(--plum); }
+  .phase-2 p { color: rgba(74, 31, 61, 0.75); }
+  .phase-2 .meta-card { background: var(--cream); }
+  .phase-2 .feature { background: var(--cream); }
+  .phase-2 .feature h5 { color: var(--ink); }
+  .phase-2 .feature p { color: var(--whisper); }
+  .phase-2 .not-included { background: rgba(74, 31, 61, 0.05); border-color: rgba(74, 31, 61, 0.2); }
+  .phase-2 .not-included p { color: rgba(74, 31, 61, 0.7); }
+
+  .phase-3 .phase-num, .phase-3 .label, .phase-3 h2 .script { color: var(--mauve-soft); }
+  .phase-3 h2, .phase-3 h3, .phase-3 h4, .phase-3 h5 { color: var(--cream); }
+  .phase-3 p { color: rgba(250, 244, 240, 0.7); }
+  .phase-3 .meta-card { background: rgba(250, 244, 240, 0.05); border: 1px solid rgba(250, 244, 240, 0.14); }
+  .phase-3 .meta-card .v { color: var(--cream); }
+  .phase-3 .meta-card .k { color: rgba(250, 244, 240, 0.55); }
+  .phase-3 .feature { background: rgba(250, 244, 240, 0.04); border: 1px solid rgba(250, 244, 240, 0.12); }
+  .phase-3 .feature h5 { color: var(--cream); }
+  .phase-3 .feature p { color: rgba(250, 244, 240, 0.6); }
+  .phase-3 .not-included {
+    background: rgba(250, 244, 240, 0.04);
+    border-color: rgba(250, 244, 240, 0.16);
+  }
+  .phase-3 .not-included h4 { color: var(--cream); }
+  .phase-3 .not-included p { color: rgba(250, 244, 240, 0.55); }
+
+  .phase-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 64px;
+    margin-bottom: 80px;
+  }
+  .phase-header-text { flex: 1; }
+  .phase-num {
+    font-family: 'Yellowtail', cursive;
+    font-size: 100px; line-height: 1;
+    color: var(--mauve); opacity: 0.85;
+    margin-bottom: 16px;
+  }
+  .phase h2 {
+    font-size: clamp(44px, 5.5vw, 72px);
+    line-height: 1.05; margin-bottom: 20px;
+  }
+  .phase h2 .script { font-weight: 400; }
+  .phase-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 22px;
+    color: var(--plum); margin-bottom: 24px;
+  }
+  .phase-3 .phase-tagline { color: var(--mauve-soft); }
+  .phase-summary {
+    max-width: 560px; font-size: 16px; line-height: 1.85;
+  }
+
+  .meta-stack {
+    flex-shrink: 0; width: 280px;
+    display: flex; flex-direction: column; gap: 1px;
+    background: var(--hairline);
+    border: 1px solid var(--hairline);
+  }
+  .meta-card {
+    background: var(--cream); padding: 24px 28px;
+  }
+  .meta-card .k {
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--mauve); margin-bottom: 6px;
+  }
+  .meta-card .v {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; line-height: 1.2; color: var(--ink);
+  }
+  .meta-card .v small {
+    font-family: 'Inter', sans-serif; font-weight: 300; font-size: 13px;
+    color: var(--whisper); display: block; margin-top: 4px;
+  }
+
+  /* FEATURES */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 56px;
+  }
+  .feature {
+    background: #fff;
+    border: 1px solid var(--hairline);
+    padding: 28px;
+  }
+  .feature .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 14px;
+    color: var(--mauve); margin-bottom: 8px;
+  }
+  .feature h5 {
+    font-size: 20px; font-weight: 400; margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .feature p {
+    font-size: 14px; line-height: 1.65; color: var(--whisper);
+  }
+
+  /* NOT INCLUDED */
+  .not-included {
+    background: var(--blush-soft);
+    border: 1px solid var(--hairline);
+    padding: 32px 36px;
+    margin-top: 48px;
+  }
+  .not-included h4 {
+    font-size: 18px; font-weight: 500; color: var(--plum);
+    margin-bottom: 12px;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    font-size: 11px;
+  }
+  .not-included p {
+    font-size: 14px; line-height: 1.7; color: var(--whisper);
+  }
+  .not-included .items {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px;
+  }
+  .not-included .items span {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 16px;
+    color: var(--plum);
+    padding: 4px 12px;
+    border: 1px solid var(--hairline);
+    background: rgba(255,255,255,0.4);
+  }
+  .phase-3 .not-included .items span {
+    background: rgba(250, 244, 240, 0.06);
+    border-color: rgba(250, 244, 240, 0.15);
+    color: var(--mauve-soft);
+  }
+
+  /* DECISION GATES */
+  .gates {
+    padding: 140px 0;
+    background: var(--cream);
+    border-top: 1px solid var(--hairline);
+  }
+  .gates h2 {
+    font-size: clamp(40px, 5vw, 60px); margin-bottom: 24px; margin-top: 18px;
+  }
+  .gates .intro-line {
+    max-width: 640px; font-size: 16px; line-height: 1.85;
+    color: var(--whisper); margin-bottom: 64px;
+  }
+  .gate {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    padding: 40px 0;
+    border-top: 1px solid var(--hairline);
+  }
+  .gate:last-child { border-bottom: 1px solid var(--hairline); }
+  .gate-from-to {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 22px;
+    color: var(--mauve);
+    line-height: 1.4;
+  }
+  .gate-from-to .arrow {
+    display: block; margin: 8px 0;
+    color: var(--plum); font-size: 28px;
+  }
+  .gate-criteria h4 {
+    font-size: 22px; font-weight: 400; margin-bottom: 16px;
+  }
+  .gate-criteria ul { list-style: none; padding: 0; }
+  .gate-criteria li {
+    font-size: 14px; line-height: 1.7;
+    color: var(--charcoal);
+    padding-left: 24px;
+    position: relative;
+    margin-bottom: 10px;
+  }
+  .gate-criteria li::before {
+    content: ''; position: absolute;
+    left: 0; top: 12px;
+    width: 12px; height: 1px;
+    background: var(--mauve);
+  }
+
+  /* RISKS */
+  .risks {
+    padding: 140px 0;
+    background: var(--blush-soft);
+    border-top: 1px solid var(--hairline);
+  }
+  .risks h2 {
+    font-size: clamp(40px, 5vw, 60px); margin-bottom: 24px; margin-top: 18px;
+    color: var(--plum);
+  }
+  .risks .intro-line {
+    max-width: 640px; font-size: 16px; line-height: 1.85;
+    color: var(--whisper); margin-bottom: 56px;
+  }
+  .risk-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .risk {
+    background: var(--cream);
+    border: 1px solid var(--hairline);
+    padding: 32px;
+  }
+  .risk .level {
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--mauve); margin-bottom: 12px;
+  }
+  .risk h5 {
+    font-size: 22px; font-weight: 400; margin-bottom: 12px;
+    color: var(--plum);
+  }
+  .risk p {
+    font-size: 14px; line-height: 1.7; color: var(--whisper);
+  }
+
+  /* SUMMARY TIMELINE */
+  .timeline-summary {
+    padding: 140px 0 100px;
+    background: var(--cream);
+    border-top: 1px solid var(--hairline);
+  }
+  .timeline-summary h2 {
+    font-size: clamp(40px, 5vw, 60px); margin-bottom: 24px; margin-top: 18px;
+  }
+  .timeline-summary .intro-line {
+    max-width: 640px; font-size: 16px; line-height: 1.85;
+    color: var(--whisper); margin-bottom: 72px;
+  }
+  .total-strip {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--hairline);
+    border: 1px solid var(--hairline);
+    margin-bottom: 56px;
+  }
+  .total-cell {
+    background: var(--cream); padding: 40px 32px;
+    text-align: left;
+  }
+  .total-cell .phase-tag {
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--mauve); margin-bottom: 16px;
+  }
+  .total-cell .phase-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; line-height: 1.1;
+    color: var(--ink); margin-bottom: 24px;
+  }
+  .total-cell .phase-bits {
+    font-size: 12px; line-height: 1.7;
+    color: var(--whisper);
+    letter-spacing: 0.05em;
+  }
+  .total-cell .phase-bits div { padding: 4px 0; }
+  .total-cell .phase-bits strong {
+    color: var(--plum); font-weight: 500;
+    display: inline-block; min-width: 80px;
+  }
+
+  .visual-bar {
+    margin-top: 16px;
+    display: flex; height: 36px;
+    border: 1px solid var(--hairline);
+  }
+  .bar-segment {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--cream);
+  }
+  .bar-1 { background: var(--mauve-soft); flex: 4; color: var(--plum); }
+  .bar-2 { background: var(--mauve); flex: 3; }
+  .bar-3 { background: var(--plum); flex: 5; }
+
+  .visual-bar-labels {
+    display: flex; margin-top: 8px;
+    font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--whisper);
+  }
+  .visual-bar-labels span { flex: 1; }
+  .visual-bar-labels span.l1 { flex: 4; text-align: left; }
+  .visual-bar-labels span.l2 { flex: 3; text-align: center; }
+  .visual-bar-labels span.l3 { flex: 5; text-align: right; }
+
+  /* SIGN-OFF */
+  .signoff {
+    text-align: center;
+    padding: 120px 0;
+    background: var(--cream);
+    border-top: 1px solid var(--hairline);
+  }
+  .signoff .quiet {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 26px;
+    color: var(--plum);
+    margin-bottom: 32px;
+    line-height: 1.5;
+    max-width: 600px;
+    margin-left: auto; margin-right: auto;
+  }
+  .signature {
+    font-family: 'Sacramento', cursive;
+    font-size: 44px; color: var(--ink); line-height: 1;
+  }
+  .signoff .role {
+    margin-top: 8px;
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--mauve);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 80px 0 50px;
+    background: var(--plum-deep);
+    color: var(--cream);
+  }
+  .footer-inner {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 40px;
+  }
+  .footer-logo {
+    font-family: 'Yellowtail', cursive;
+    font-size: 64px; line-height: 0.9; color: var(--cream);
+  }
+  .footer-logo .pill {
+    display: inline-block;
+    font-family: 'Inter', sans-serif; font-weight: 600;
+    font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--cream); background: var(--mauve);
+    padding: 6px 14px; margin-left: 6px;
+    vertical-align: middle;
+    transform: translateY(-10px);
+  }
+  .footer-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 18px;
+    color: var(--mauve-soft); margin-top: 12px;
+  }
+  .footer-meta {
+    text-align: right;
+    font-size: 11px; letter-spacing: 0.25em;
+    text-transform: uppercase; color: rgba(250, 244, 240, 0.55);
+    line-height: 2.2;
+  }
+
+  @media (max-width: 900px) {
+    .container { padding: 0 28px; }
+    .nav-inner { padding: 18px 28px; }
+    .nav-doc { display: none; }
+    .hero { padding: 160px 0 80px; }
+    .stack-grid { grid-template-columns: 1fr; }
+    .phase-header { flex-direction: column; gap: 32px; }
+    .meta-stack { width: 100%; }
+    .features { grid-template-columns: 1fr; }
+    .gate { grid-template-columns: 1fr; gap: 16px; }
+    .risk-grid { grid-template-columns: 1fr; }
+    .total-strip { grid-template-columns: 1fr; }
+    .footer-inner { flex-direction: column; align-items: flex-start; gap: 24px; }
+    .footer-meta { text-align: left; }
+    .footer-logo { font-size: 52px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="nav-inner">
+    <div class="logo-mark">
+      <span class="four">4ever</span>
+      <span class="pill">Inner Circle</span>
+    </div>
+    <div class="nav-doc">Phased Roadmap · v1.0</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="label">Phased Roadmap</div>
+    <h1>Build the smallest <span class="script">beautiful</span> thing first.</h1>
+    <div class="sub">Then let it earn its way to more.</div>
+    <div class="intro">
+      <p>A clear, honest plan for bringing the Inner Circle to life — built as a <strong>Progressive Web App</strong> first (installable to the home screen, feels like an app, opens like an app), with a thoughtful path to a native iOS &amp; Android app only when usage justifies it.</p>
+      <p style="margin-top: 20px;">Three phases, twelve months, one quiet promise: every part you ship should already feel like 4Ever Photos before the next part is added.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy">
+  <div class="container">
+    <span class="label">Guiding principle</span>
+    <div class="hairline"></div>
+    <div class="quote">
+      "Begin with the experience that matters most — a couple, their people, the right message at the right moment. Everything else is added only when it earns the right to be."
+    </div>
+    <div class="attribution">— The North Star</div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section class="stack">
+  <div class="container">
+    <span class="label">The architecture, at a glance</span>
+    <h2>One stack, <span class="script">considered</span></h2>
+    <p class="intro-line">Every piece chosen because it works beautifully with the others. Nothing fashionable for fashion's sake.</p>
+
+    <div class="stack-grid">
+      <div class="stack-item">
+        <div class="role">Frontend</div>
+        <h4>Next.js (PWA)</h4>
+        <p>The site couples see. Installable to home screen, push notification capable, beautifully fast.</p>
+      </div>
+      <div class="stack-item">
+        <div class="role">Backend &amp; auth</div>
+        <h4>Supabase</h4>
+        <p>Database, secure couple log-in, file storage for photographs — all in one. GDPR-friendly.</p>
+      </div>
+      <div class="stack-item">
+        <div class="role">SMS &amp; WhatsApp</div>
+        <h4>Twilio</h4>
+        <p>The messaging engine. SMS live from day one; WhatsApp Business once Meta approval comes through.</p>
+      </div>
+      <div class="stack-item">
+        <div class="role">Email</div>
+        <h4>Resend</h4>
+        <p>For supplier outreach, post-wedding sneak peeks, anything best read at length.</p>
+      </div>
+      <div class="stack-item">
+        <div class="role">Commerce</div>
+        <h4>Shopify</h4>
+        <p>Powers The Edit. Embedded into the site so the experience never breaks brand.</p>
+      </div>
+      <div class="stack-item">
+        <div class="role">Payments</div>
+        <h4>Stripe</h4>
+        <p>Powers the photography gift registry — guests contributing to upgrades, like Prezola.</p>
+      </div>
+      <div class="stack-item">
+        <div class="role">Hosting</div>
+        <h4>Vercel</h4>
+        <p>The natural home for Next.js. Fast, reliable, low fuss.</p>
+      </div>
+      <div class="stack-item">
+        <div class="role">Compliance</div>
+        <h4>GDPR baked in</h4>
+        <p>Cookie consent, data export, deletion flows — designed in from day one, not bolted on later.</p>
+      </div>
+      <div class="stack-item">
+        <div class="role">Brand</div>
+        <h4>Yours, throughout</h4>
+        <p>Blush, plum, mauve, charcoal — the 4Ever Photos brand carried into every screen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHASE 1 -->
+<section class="phase phase-1">
+  <div class="container">
+    <div class="phase-header">
+      <div class="phase-header-text">
+        <div class="label">Phase One</div>
+        <div class="phase-num">one</div>
+        <h2>The <span class="script">foundation</span></h2>
+        <div class="phase-tagline">The wedding concierge, in its quietest form.</div>
+        <div class="phase-summary">
+          <p>Everything a couple genuinely needs from the moment they book: their people, the right messages, a beautiful home, and a small curated shop. The PWA installs to their phone home screen on first visit, so they have you with them already.</p>
+        </div>
+      </div>
+      <div class="meta-stack">
+        <div class="meta-card">
+          <div class="k">Time</div>
+          <div class="v">3–4 months<small>From kickoff to soft launch</small></div>
+        </div>
+        <div class="meta-card">
+          <div class="k">Budget</div>
+          <div class="v">£28k – £42k<small>Freelance / small studio</small></div>
+        </div>
+        <div class="meta-card">
+          <div class="k">Team</div>
+          <div class="v">1 + 1<small>Full-stack dev + designer</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="num">01</div>
+        <h5>Brand-aligned platform shell</h5>
+        <p>The Next.js site, designed to the brand mockup — blush, plum, mauve, the script accents, the editorial spacing. Mobile-first.</p>
+      </div>
+      <div class="feature">
+        <div class="num">02</div>
+        <h5>Installable as an app (PWA)</h5>
+        <p>Couples tap "Add to Home Screen" and the Inner Circle lives on their phone like any other app. Icon, splash screen, fullscreen.</p>
+      </div>
+      <div class="feature">
+        <div class="num">03</div>
+        <h5>Secure invitation-only log-in</h5>
+        <p>Couples receive a magic-link invitation when they book. No public sign-ups. Members-only by design.</p>
+      </div>
+      <div class="feature">
+        <div class="num">04</div>
+        <h5>The couple's dashboard</h5>
+        <p>Their wedding date, countdown, the things waiting on them this week, the next gentle nudge.</p>
+      </div>
+      <div class="feature">
+        <div class="num">05</div>
+        <h5>Your People — role manager</h5>
+        <p>Add parents, bridal party, suppliers, ushers — each with their role, phone number, email, and WhatsApp opt-in.</p>
+      </div>
+      <div class="feature">
+        <div class="num">06</div>
+        <h5>Role-based message engine</h5>
+        <p>The brain. Schedules the right message to the right person at the right moment, based on their role and the wedding date.</p>
+      </div>
+      <div class="feature">
+        <div class="num">07</div>
+        <h5>SMS delivery (Twilio)</h5>
+        <p>Best man speech tips at 8 weeks. Bridesmaid hair-and-makeup timing the day before. Live from day one.</p>
+      </div>
+      <div class="feature">
+        <div class="num">08</div>
+        <h5>Email delivery (Resend)</h5>
+        <p>Longer, more considered messages — supplier outreach, family briefings, post-wedding sneak peeks.</p>
+      </div>
+      <div class="feature">
+        <div class="num">09</div>
+        <h5>Google Maps per role</h5>
+        <p>Every messaged person gets the pin they need — church for the family, suite for the bridesmaids, kitchen entrance for suppliers.</p>
+      </div>
+      <div class="feature">
+        <div class="num">10</div>
+        <h5>The Edit — Shopify embed</h5>
+        <p>Six to twelve starter products, beautifully presented in your brand. Wedding day kits, guest books, the essentials.</p>
+      </div>
+      <div class="feature">
+        <div class="num">11</div>
+        <h5>GDPR &amp; consent</h5>
+        <p>Cookie consent, data export, full deletion flow. Right from the start, not patched in later.</p>
+      </div>
+      <div class="feature">
+        <div class="num">12</div>
+        <h5>Annette's quiet signature</h5>
+        <p>Your handwritten "we are looking after you" sign-off woven into the experience — onboarding, first dashboard visit, the welcome email.</p>
+      </div>
+    </div>
+
+    <div class="not-included">
+      <h4>Not yet — and that's intentional</h4>
+      <p>These are wonderful, and they're coming. But they need the foundation to be solid first.</p>
+      <div class="items">
+        <span>WhatsApp messaging</span>
+        <span>Guest photo upload</span>
+        <span>Shot planner</span>
+        <span>Calm Corner / Bodytap</span>
+        <span>Gift registry</span>
+        <span>Supplier portal</span>
+        <span>AI features</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHASE 2 -->
+<section class="phase phase-2">
+  <div class="container">
+    <div class="phase-header">
+      <div class="phase-header-text">
+        <div class="label">Phase Two</div>
+        <div class="phase-num">two</div>
+        <h2>The <span class="script">depth</span></h2>
+        <div class="phase-tagline">From useful to emotional. From service to experience.</div>
+        <div class="phase-summary">
+          <p>Now the platform earns its emotional weight. Tapping for nerves, gift registry for upgrades, the shared guest album, the mood board for shot planning, and the moment WhatsApp comes online.</p>
+        </div>
+      </div>
+      <div class="meta-stack">
+        <div class="meta-card">
+          <div class="k">Time</div>
+          <div class="v">2–3 months<small>Following Phase 1 launch</small></div>
+        </div>
+        <div class="meta-card">
+          <div class="k">Budget</div>
+          <div class="v">£18k – £28k<small>Same team, additive build</small></div>
+        </div>
+        <div class="meta-card">
+          <div class="k">Begin early</div>
+          <div class="v">From month 1<small>WhatsApp Meta approval takes weeks</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="num">13</div>
+        <h5>WhatsApp Business integration</h5>
+        <p>Begun in month 1 in parallel with Phase 1 — Meta's approval window is 4–8 weeks. Goes live in Phase 2.</p>
+      </div>
+      <div class="feature">
+        <div class="num">14</div>
+        <h5>Shot planner &amp; mood board</h5>
+        <p>Couples save inspiration, mark favourite corners of their venue, build the visual brief that travels with you on the day.</p>
+      </div>
+      <div class="feature">
+        <div class="num">15</div>
+        <h5>Emotional intelligence intake</h5>
+        <p>Quiet questions — relationship status of key people, sensitivities, "parents not speaking" flags. So you plan around what matters.</p>
+      </div>
+      <div class="feature">
+        <div class="num">16</div>
+        <h5>Calm Corner — Bodytap vouchers</h5>
+        <p>Five tapping coins issued to each Inner Circle couple. Redeemable in Bodytap. The Inner Circle ↔ Bodytap bridge.</p>
+      </div>
+      <div class="feature">
+        <div class="num">17</div>
+        <h5>Guest photo upload</h5>
+        <p>After the day, each guest gets a private link. One tap, upload, contribute to the shared album. No app required for them.</p>
+      </div>
+      <div class="feature">
+        <div class="num">18</div>
+        <h5>Photography gift registry</h5>
+        <p>Stripe-powered, Prezola-style. Guests fund an extra hour, a fine-art album, a sunrise shoot. Live progress bars, beautifully presented.</p>
+      </div>
+      <div class="feature">
+        <div class="num">19</div>
+        <h5>Supplier portal — light</h5>
+        <p>A simple page where suppliers (florist, planner, baker) can leave a "shot wish" you'll capture for them on the day.</p>
+      </div>
+      <div class="feature">
+        <div class="num">20</div>
+        <h5>Couple ↔ Annette channel</h5>
+        <p>A quiet inbox inside the Inner Circle for couples to message you directly. Not chat-noisy. Not loud. Just available.</p>
+      </div>
+    </div>
+
+    <div class="not-included">
+      <h4>Still deferred — until usage justifies them</h4>
+      <p>These are exciting, and they're real. But each one wants careful design, and Phase 2 is already a lot.</p>
+      <div class="items">
+        <span>Native iOS / Android app</span>
+        <span>Apple Wallet integration</span>
+        <span>AI shot suggestions</span>
+        <span>AI tapping portal integration</span>
+        <span>Multi-language</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHASE 3 -->
+<section class="phase phase-3">
+  <div class="container">
+    <div class="phase-header">
+      <div class="phase-header-text">
+        <div class="label">Phase Three</div>
+        <div class="phase-num">three</div>
+        <h2>The <span class="script">magic</span></h2>
+        <div class="phase-tagline">Built only on what the first two phases have earned.</div>
+        <div class="phase-summary">
+          <p>This is where you decide — based on real usage data — whether to go native, integrate deeper with Bodytap and the AI tapping portal, and add the magic layers (Apple Wallet, AI shot planning) that depend on the foundation already being beloved.</p>
+        </div>
+      </div>
+      <div class="meta-stack">
+        <div class="meta-card">
+          <div class="k">Time</div>
+          <div class="v">Variable<small>3–6 months per module</small></div>
+        </div>
+        <div class="meta-card">
+          <div class="k">Budget</div>
+          <div class="v">£30k – £80k+<small>If native app is justified</small></div>
+        </div>
+        <div class="meta-card">
+          <div class="k">Decision</div>
+          <div class="v">Data-led<small>Only build what's earned its place</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="num">21</div>
+        <h5>Native iOS &amp; Android app</h5>
+        <p>Built with React Native if engagement data warrants it. The PWA codebase carries over substantially, so this is additive, not a rewrite.</p>
+      </div>
+      <div class="feature">
+        <div class="num">22</div>
+        <h5>Apple Wallet passes</h5>
+        <p>Venue maps, day-of timings, dress codes, RSVP cards — all delivered to the wedding party's wallets the week before.</p>
+      </div>
+      <div class="feature">
+        <div class="num">23</div>
+        <h5>AI shot suggestions</h5>
+        <p>Based on the venue, time of year, and style preferences, the Inner Circle proposes shots no one else thought to take.</p>
+      </div>
+      <div class="feature">
+        <div class="num">24</div>
+        <h5>Deeper Bodytap integration</h5>
+        <p>The AI tapping portal connected fully — vouchers, recommended sequences for the morning of, post-wedding reflections.</p>
+      </div>
+      <div class="feature">
+        <div class="num">25</div>
+        <h5>Couples who refer couples</h5>
+        <p>A quiet referral mechanic — a previous Inner Circle couple sends a personal note to a friend who's just got engaged.</p>
+      </div>
+      <div class="feature">
+        <div class="num">26</div>
+        <h5>Multi-language</h5>
+        <p>For couples whose families and suppliers don't all speak English. Considered, not Google-translated.</p>
+      </div>
+    </div>
+
+    <div class="not-included">
+      <h4>The freedom of "later"</h4>
+      <p>By building only what's been earned, Phase 3 stays optional. You can stop at Phase 2 and still have an outstanding product. You can pick one module from Phase 3 and skip the others. The roadmap serves you, not the other way around.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DECISION GATES -->
+<section class="gates">
+  <div class="container">
+    <span class="label">The decision gates</span>
+    <h2>How you know it's <span class="script">time to move on</span></h2>
+    <p class="intro-line">Each phase only begins when the previous one has proved itself. No moving forward until couples are actually using what you've built.</p>
+
+    <div class="gate">
+      <div class="gate-from-to">
+        Phase 1
+        <span class="arrow">↓</span>
+        Phase 2
+      </div>
+      <div class="gate-criteria">
+        <h4>Before you build the depth</h4>
+        <ul>
+          <li>At least 5 real couples have used the Inner Circle end-to-end from booking through wedding day.</li>
+          <li>The role-based messaging is landing — the bridal party and parents are reading and responding.</li>
+          <li>At least 2 couples have installed the PWA to their home screen.</li>
+          <li>The Edit (Shopify) has generated at least 10 orders.</li>
+          <li>You've collected meaningful feedback on what couples wished was there but wasn't.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="gate">
+      <div class="gate-from-to">
+        Phase 2
+        <span class="arrow">↓</span>
+        Phase 3 (native)
+      </div>
+      <div class="gate-criteria">
+        <h4>Before you build the native app</h4>
+        <ul>
+          <li>PWA install rate is above 40% — couples are choosing "Add to Home Screen" without prompting.</li>
+          <li>Couples are opening the Inner Circle at least weekly during their planning months.</li>
+          <li>There is a specific feature you genuinely cannot deliver well as a web app (heavy camera, AR, deep wallet integration).</li>
+          <li>You have the revenue base to support ongoing native maintenance — app store fees, OS updates twice a year, dual codebase.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RISKS -->
+<section class="risks">
+  <div class="container">
+    <span class="label">Risks &amp; dependencies</span>
+    <h2>What to watch <span class="script">honestly</span></h2>
+    <p class="intro-line">Every project has them. Naming them now means none of them surprise you later.</p>
+
+    <div class="risk-grid">
+      <div class="risk">
+        <div class="level">Phase 2 · Plan ahead</div>
+        <h5>WhatsApp Business approval</h5>
+        <p>Meta's approval window is typically 4–8 weeks. Begin the application in month 1 even though it won't be used until Phase 2. Template messages must be pre-approved.</p>
+      </div>
+      <div class="risk">
+        <div class="level">Phase 1 · Design-led</div>
+        <h5>Brand integrity in Shopify embed</h5>
+        <p>Shopify's default styling does not match your brand. The embed needs careful theming so The Edit feels like the Inner Circle, not a shop bolted on.</p>
+      </div>
+      <div class="risk">
+        <div class="level">Phase 1 · Non-negotiable</div>
+        <h5>GDPR from day one</h5>
+        <p>Adding GDPR after launch is painful and expensive. Designed in from the start, it's a feature. Cookie consent, data export, deletion, supplier data sharing terms.</p>
+      </div>
+      <div class="risk">
+        <div class="level">Phase 2 · External dependency</div>
+        <h5>Bodytap voucher readiness</h5>
+        <p>The Calm Corner depends on Bodytap being able to accept and redeem coins. If Bodytap isn't ready, the voucher feature can stub for Phase 2 and integrate properly in Phase 3.</p>
+      </div>
+      <div class="risk">
+        <div class="level">Phase 3 · Strategic</div>
+        <h5>The "native app" temptation</h5>
+        <p>It's tempting to build native sooner because it feels premium. Resist unless the data is clear. A beloved PWA outperforms a shipped-too-early native app every time.</p>
+      </div>
+      <div class="risk">
+        <div class="level">All phases · Operational</div>
+        <h5>The content burden</h5>
+        <p>Beautifully written role-based messages don't write themselves. Plan for a content sprint before Phase 1 launch — best man tips, bridesmaid notes, supplier briefs, all in your voice.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE SUMMARY -->
+<section class="timeline-summary">
+  <div class="container">
+    <span class="label">The whole picture</span>
+    <h2>Twelve months, <span class="script">three phases</span></h2>
+    <p class="intro-line">A clean view of where the money and time go, and what's live by when.</p>
+
+    <div class="total-strip">
+      <div class="total-cell">
+        <div class="phase-tag">Phase One</div>
+        <div class="phase-name">The foundation</div>
+        <div class="phase-bits">
+          <div><strong>Months</strong> 1 – 4</div>
+          <div><strong>Budget</strong> £28k – £42k</div>
+          <div><strong>Live</strong> Web + PWA, SMS, Email, Shop, People manager</div>
+          <div><strong>Outcome</strong> Couples can be onboarded</div>
+        </div>
+      </div>
+      <div class="total-cell">
+        <div class="phase-tag">Phase Two</div>
+        <div class="phase-name">The depth</div>
+        <div class="phase-bits">
+          <div><strong>Months</strong> 4 – 7</div>
+          <div><strong>Budget</strong> £18k – £28k</div>
+          <div><strong>Live</strong> WhatsApp, Mood, Gift list, Calm Corner, Album</div>
+          <div><strong>Outcome</strong> Emotional product, full experience</div>
+        </div>
+      </div>
+      <div class="total-cell">
+        <div class="phase-tag">Phase Three</div>
+        <div class="phase-name">The magic</div>
+        <div class="phase-bits">
+          <div><strong>Months</strong> 7 – 12+</div>
+          <div><strong>Budget</strong> £30k – £80k+</div>
+          <div><strong>Live</strong> Native app (if earned), Wallet, AI, multi-language</div>
+          <div><strong>Outcome</strong> Premium tech moat</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="visual-bar">
+      <div class="bar-segment bar-1">Foundation</div>
+      <div class="bar-segment bar-2">Depth</div>
+      <div class="bar-segment bar-3">Magic</div>
+    </div>
+    <div class="visual-bar-labels">
+      <span class="l1">Month 1</span>
+      <span class="l2">Month 5</span>
+      <span class="l3">Month 12+</span>
+    </div>
+
+    <div style="margin-top: 64px; padding: 40px; background: var(--blush-soft); border: 1px solid var(--hairline);">
+      <span class="label">Total commitment</span>
+      <h3 style="font-size: 36px; font-weight: 400; margin-top: 14px; line-height: 1.2;">A complete product, <span class="script">live to couples</span>, in months 4 – 7.<br/>A genuinely premium platform by month 12.</h3>
+      <p style="margin-top: 20px; max-width: 640px; font-size: 15px; line-height: 1.85; color: var(--whisper);">If you only ever did Phase 1, you'd already have a beautiful, functional Inner Circle. If you stopped after Phase 2, you'd have something most luxury wedding photographers in the world don't offer. Phase 3 is the cherry, not the cake.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNOFF -->
+<section class="signoff">
+  <div class="container">
+    <div class="quiet">
+      "Build slowly. Build beautifully. Build only what makes a couple's life quieter, not busier."
+    </div>
+    <div class="signature">Annette Burke</div>
+    <div class="role">Founder · 4Ever Photos</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">4ever<span class="pill">Inner Circle</span></div>
+        <div class="footer-sub">we are looking after you</div>
+      </div>
+      <div class="footer-meta">
+        <div>Phased Roadmap · v1.0</div>
+        <div>Prepared for Annette Burke</div>
+        <div>Made in the UK</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
