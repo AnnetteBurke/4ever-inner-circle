@@ -2,10 +2,10 @@ import Image from 'next/image'
 
 export default function HeroSection() {
   return (
-    <section className="hero-bg flex flex-col items-center text-center relative overflow-hidden md:min-h-screen md:justify-center md:pt-32 md:pb-20">
+    <section className="hero-bg min-h-screen relative overflow-hidden flex flex-col pt-24 pb-16 md:items-center md:justify-center md:text-center md:pt-32 md:pb-20">
 
-      {/* Desktop only — floating image to the right */}
-      <div className="absolute inset-0 pointer-events-none hero-image-fade hidden md:block" aria-hidden="true">
+      {/* Background image — right side on all screen sizes */}
+      <div className="absolute inset-0 pointer-events-none hero-image-fade" aria-hidden="true">
         <Image
           src="/images/hero-couple.jpg"
           alt=""
@@ -15,32 +15,23 @@ export default function HeroSection() {
         />
       </div>
 
-      {/* Mobile only — image stacked above text, cropped to bouquet */}
-      <div className="md:hidden w-full h-[340px] relative overflow-hidden">
-        <Image
-          src="/images/hero-couple.jpg"
-          alt=""
-          fill
-          className="object-cover object-top"
-          priority
-        />
-      </div>
-
-      {/* Text content */}
-      <div className="relative z-10 px-8 pt-10 pb-16 md:px-12 md:pt-0 md:pb-0">
-        <div className="label-tag mb-8">A private space for our couples</div>
-
-        <h1 className="text-6xl md:text-8xl lg:text-9xl font-light leading-[0.92] tracking-tight text-ink mb-2">
+      {/* Title block — left-aligned on mobile, centred on desktop */}
+      <div className="relative z-10 px-8 md:px-12 md:text-center">
+        <div className="label-tag mb-6 md:mb-8 text-left md:text-center">
+          A private space for our couples
+        </div>
+        <h1 className="text-5xl md:text-8xl lg:text-9xl font-light leading-[0.92] tracking-tight text-ink mb-2 text-left md:text-center max-w-[52%] md:max-w-none">
           The <span className="script-accent font-normal text-[0.92em] inline-block -translate-y-1.5">Inner</span> Circle
         </h1>
+      </div>
 
-        <div className="font-serif italic text-2xl md:text-3xl text-plum mt-3">
+      {/* Tagline + paragraph — centred on both */}
+      <div className="relative z-10 px-8 md:px-12 text-center mt-8 md:mt-3">
+        <div className="font-serif italic text-2xl md:text-3xl text-plum">
           Where your wedding day is quietly held
         </div>
-
         <div className="hairline mx-auto my-8" />
-
-        <p className="max-w-[540px] mx-auto text-base leading-[1.85] text-whisper mt-10">
+        <p className="max-w-[540px] mx-auto text-base leading-[1.85] text-whisper">
           From the moment you book, we walk every step with you. A quiet, beautifully kept
           space for you, your people, your moments, looked after by 4Ever Photos.
         </p>
