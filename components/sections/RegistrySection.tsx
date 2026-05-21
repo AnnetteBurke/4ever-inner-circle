@@ -1,27 +1,35 @@
 const gifts = [
   {
-    label: 'Most loved',
-    title: 'An extra hour',
-    desc: 'For the moments after the cake — the slow drinks, the second dances, the quiet ones we don\'t want to miss.',
-    price: '£240',
-    progress: 78,
-    by: '6 guests'
+    label: 'The ultimate guest gift',
+    title: 'The Portrait Studio',
+    desc: 'Our team arrives with professional backdrop and lighting and photographs every guest — printed and mounted on the day. A red carpet moment for everyone who made the effort to be there and look their best.',
+    price: 'Ask for pricing',
+    progress: 62,
+    by: '8 guests'
   },
   {
-    label: 'Heirloom',
-    title: 'Fine art album',
-    desc: 'Italian-bound, hand-finished. The book your grandchildren will pull from the shelf one day.',
-    price: '£680',
-    progress: 34,
-    by: '3 guests'
+    label: 'Most popular album',
+    title: 'The Framed Album',
+    desc: '30 designed pages of your finest images, presented in a keepsake box with a clear front that opens like a picture frame. Our most-loved album — the one couples reach for first.',
+    price: 'From £495',
+    progress: 84,
+    by: '11 guests'
   },
   {
     label: 'Just the two of you',
-    title: 'Day-after sunrise shoot',
-    desc: 'A quiet hour, the morning after. No timeline, no guests — just you and the light.',
-    price: '£420',
-    progress: 12,
-    by: '1 guest'
+    title: 'Post-Wedding Experience',
+    desc: 'Come back dressed up, somewhere personal — the stables, the racetrack, the spot where you were proposed to. No timeline, no guests. Just you, your story, and a day still being written.',
+    price: 'Ask for pricing',
+    progress: 45,
+    by: '4 guests'
+  },
+  {
+    label: 'More of the night',
+    title: 'An Extra Hour',
+    desc: 'Our sessions close at 9:30pm. An extra hour keeps us with you for the slow drinks, the second dances, the quiet moments at the end of the night we\'d otherwise miss.',
+    price: '£200 per hour',
+    progress: 91,
+    by: '14 guests'
   }
 ];
 
@@ -35,13 +43,13 @@ export default function RegistrySection() {
             Let those who love you, <span className="script-accent text-mauve-soft font-normal">give to your story</span>
           </h2>
           <p className="text-base leading-[1.85] text-cream/70 max-w-[560px]">
-            Like a Prezola for your photographs. Guests can contribute to an extra hour
-            of coverage, a fine-art album, a sunrise shoot — the things you&apos;d love
-            but might not buy yourself.
+            Let your family and friends contribute to the storytelling of your day.
+            A photography gift list — for the experiences, the albums, and the moments
+            you&apos;d love but might not buy yourself.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
           {gifts.map((g) => (
             <div key={g.title} className="border border-cream/15 p-9 bg-cream/[0.02] hover:border-mauve-soft transition-colors">
               <div className="text-[10px] tracking-label uppercase text-mauve-soft mb-2">{g.label}</div>
