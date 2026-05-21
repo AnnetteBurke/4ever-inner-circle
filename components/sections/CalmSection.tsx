@@ -65,7 +65,7 @@ export default function CalmSection() {
             <div className="text-[10px] tracking-label uppercase text-mauve mb-4">The groom</div>
             <p className="font-serif italic text-lg leading-relaxed text-ink">
               &ldquo;He was terrified. Couldn&apos;t get through a practice run without his
-              voice breaking. We tapped around the nerves the night before. He stood up the
+              voice breaking. We tapped around the nerves the week before. He stood up the
               next day, looked out at two hundred people, and didn&apos;t quiver once.&rdquo;
             </p>
           </div>
