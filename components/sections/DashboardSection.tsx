@@ -20,7 +20,7 @@ export default function DashboardSection() {
           src="/images/dashboard-bg.jpg"
           alt=""
           fill
-          className="object-contain object-right opacity-50"
+          className="object-contain object-top md:object-right opacity-50"
         />
       </div>
 

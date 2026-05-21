@@ -8,7 +8,7 @@ export default function HeroSection() {
           src="/images/hero-couple.jpg"
           alt=""
           fill
-          className="object-contain object-center md:object-right opacity-50"
+          className="object-contain object-top md:object-right opacity-50"
           priority
         />
       </div>

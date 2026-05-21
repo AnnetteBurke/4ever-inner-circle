@@ -9,7 +9,7 @@ export default function CalmSection() {
     >
       <div className="max-w-container mx-auto px-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
-          <div className="aspect-[4/5] rounded-sm relative overflow-hidden">
+          <div className="aspect-[4/5] rounded-sm relative overflow-hidden order-last md:order-first">
             <Image
               src="/images/calm-bride.jpg"
               alt="Bride, serene, veil over her face"
@@ -17,7 +17,7 @@ export default function CalmSection() {
               className="object-cover object-top"
             />
           </div>
-          <div>
+          <div className="order-first md:order-last">
             <span className="label-tag">Calm Corner</span>
             <h3 className="text-4xl md:text-5xl font-light leading-tight text-ink mb-6 mt-4">
               For the <span className="script-accent font-normal">nerves</span>, the racing thoughts, the morning butterflies.
@@ -66,7 +66,7 @@ export default function CalmSection() {
             <p className="font-serif italic text-lg leading-relaxed text-ink">
               &ldquo;He was terrified. Couldn&apos;t get through a practice run without his
               voice breaking. We tapped around the nerves the week before. He stood up the
-              next day, looked out at two hundred people, and didn&apos;t quiver once.&rdquo;
+              next week, looked out at two hundred people, and didn&apos;t quiver once.&rdquo;
             </p>
           </div>
           <div className="bg-cream/60 p-8 border border-hairline">
