@@ -3,8 +3,8 @@ const people = [
   { initial: 'T', name: 'Tom Bradley', role: 'Best Man', status: 'Speech tips sent', next: 'Day-before rundown · in 55 days' },
   { initial: 'M', name: 'Margaret & David', role: 'Parents of the Bride', status: 'Awaiting note', next: 'Family photo plan · in 7 days' },
   { initial: 'P', name: 'Posy Florals', role: 'Supplier · Flowers', status: 'Shot list shared', next: 'Final brief · in 21 days' },
-  { initial: 'L', name: 'Lottie Greene', role: 'Bridesmaid', status: 'All briefed', next: 'Getting-ready playlist · in 28 days' },
-  { initial: 'J', name: 'James Mackenzie', role: 'Father of the Groom', status: 'Awaiting role', next: 'Welcome & intro · in 1 day' },
+  { initial: 'L', name: 'Lottie at The Bridal Suite', role: 'Supplier · Hair', status: 'Schedule requested', next: 'Full hair schedule & timings for the day · in 28 days' },
+  { initial: 'J', name: 'James Mackenzie', role: 'Brother of the Groom', status: 'All briefed', next: 'Family photos at the front of the castle · in 15 mins' },
   { initial: 'S', name: 'Sophie Lane', role: 'Bridesmaid', status: 'All briefed', next: 'Day-of timeline · in 35 days' }
 ];
 
@@ -15,7 +15,8 @@ export default function PeopleSection() {
         <div className="mb-20 max-w-[720px]">
           <span className="label-tag">Your circle</span>
           <h2 className="text-5xl md:text-6xl font-light leading-tight text-ink mb-6 mt-4">
-            The people who&apos;ll be there, <span className="script-accent font-normal">cared for</span>
+            The Photography List<br />
+            <span className="script-accent font-normal">your VIPs</span>
           </h2>
           <p className="text-base leading-[1.85] text-whisper max-w-[560px]">
             Add everyone with a role — parents, bridal party, ushers, suppliers. We&apos;ll
