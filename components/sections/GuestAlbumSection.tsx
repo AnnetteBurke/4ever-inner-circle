@@ -1,18 +1,18 @@
 import Image from 'next/image'
 
 const collageImages = [
-  { src: '/images/strip-2.jpg',           alt: 'Ceremony moment' },
-  { src: '/images/guest-papparazzi.jpg',  alt: 'Wedding guests celebrating' },
-  { src: '/images/mood-7.jpg',            alt: 'Dancing at the reception' },
-  { src: '/images/guest-mum-dress.jpg',   alt: 'Mum helping with the dress' },
-  { src: '/images/strip-1.jpg',           alt: 'Flowergirls' },
+  { src: '/images/guest-new-1.jpg',        alt: 'Bride and groom' },
+  { src: '/images/guest-papparazzi.jpg',   alt: 'Wedding guests celebrating' },
+  { src: '/images/guest-new-2.jpg',        alt: 'Editorial portrait' },
+  { src: '/images/guest-mum-dress.jpg',    alt: 'Mum helping with the dress' },
+  { src: '/images/guest-new-5.jpg',        alt: 'Flowergirls' },
   { src: '/images/guest-getting-ready.jpg', alt: 'Getting ready' },
-  { src: '/images/mood-5.jpg',            alt: 'Daddy reveal' },
-  { src: '/images/guest-pageboys.jpg',    alt: 'Pageboys' },
-  { src: '/images/guest-raining.jpg',     alt: 'A rainy moment' },
-  { src: '/images/mood-3.jpg',            alt: 'Bridal party' },
-  { src: '/images/guest-sneak.jpg',       alt: 'A quiet moment' },
-  { src: '/images/mood-6.jpg',            alt: 'Fairy lights' },
+  { src: '/images/guest-new-4.jpg',        alt: 'Happy couple with family' },
+  { src: '/images/guest-pageboys.jpg',     alt: 'Pageboys' },
+  { src: '/images/guest-raining.jpg',      alt: 'A rainy moment' },
+  { src: '/images/guest-new-6.jpg',        alt: 'Floral detail' },
+  { src: '/images/guest-sneak.jpg',        alt: 'A quiet moment' },
+  { src: '/images/guest-new-3.jpg',        alt: 'Walking through the forest' },
 ];
 
 export default function GuestAlbumSection() {
