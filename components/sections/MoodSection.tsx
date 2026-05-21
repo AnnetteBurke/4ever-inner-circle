@@ -1,11 +1,13 @@
+import Image from 'next/image'
+
 const tiles = [
-  { label: 'The first look · golden hour', span: 'col-span-2 row-span-2', tone: 'from-blush to-blush-deep' },
-  { label: 'Ceremony aisle', span: 'col-span-2', tone: 'from-blush-soft to-mauve-soft' },
-  { label: 'Bridal portrait — soft window light', span: 'col-span-2', tone: 'from-mauve-soft to-mauve text-white' },
-  { label: 'Table styling', span: 'col-span-2', tone: 'from-blush-soft to-blush' },
-  { label: 'Sunset on the lake · 7:42pm', span: 'col-span-2', tone: 'from-blush-deep to-mauve-soft' },
-  { label: 'Family group · west lawn', span: 'col-span-3', tone: 'from-mauve to-plum text-cream' },
-  { label: 'Final dance · 11:15pm', span: 'col-span-3', tone: 'from-blush to-blush-deep' }
+  { src: '/images/mood-1.jpg', alt: 'Couple kissing under magnolia tree, veil flying', span: 'col-span-2 row-span-2' },
+  { src: '/images/mood-2.jpg', alt: 'Jimmy Choo crystal shoes', span: 'col-span-2' },
+  { src: '/images/mood-3.jpg', alt: 'Bride and bridesmaids with pink bouquets', span: 'col-span-2' },
+  { src: '/images/mood-4.jpg', alt: 'Back of dress bow detail', span: 'col-span-2' },
+  { src: '/images/mood-5.jpg', alt: 'Daddy reveal on the staircase', span: 'col-span-2' },
+  { src: '/images/mood-6.jpg', alt: 'Couple under fairy lights canopy', span: 'col-span-3' },
+  { src: '/images/mood-7.jpg', alt: 'Bride celebrating with bouquet raised', span: 'col-span-3' },
 ];
 
 export default function MoodSection() {
@@ -23,15 +25,18 @@ export default function MoodSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-3 md:auto-rows-[180px]">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-3 md:auto-rows-[220px]">
           {tiles.map((tile) => (
             <div
-              key={tile.label}
-              className={`${tile.span} bg-gradient-to-br ${tile.tone} relative p-4 flex items-end overflow-hidden h-40 md:h-auto`}
+              key={tile.src}
+              className={`${tile.span} relative overflow-hidden h-48 md:h-auto group`}
             >
-              <span className="font-serif italic text-base z-10 text-plum relative">
-                {tile.label}
-              </span>
+              <Image
+                src={tile.src}
+                alt={tile.alt}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+              />
             </div>
           ))}
         </div>
