@@ -22,7 +22,7 @@ export default function SignatureBlock() {
             src="/images/signature.jpg"
             alt="Annette Burke signature"
             fill
-            className="object-contain"
+            className="object-contain mix-blend-multiply"
           />
         </div>
         <div className="text-[11px] tracking-label uppercase text-mauve mb-8">
@@ -33,7 +33,7 @@ export default function SignatureBlock() {
             src="/images/love-out-loud-stamp.jpg"
             alt="Love Out Loud"
             fill
-            className="object-contain"
+            className="object-contain mix-blend-multiply"
           />
         </div>
       </div>
