@@ -7,7 +7,7 @@ const tiles = [
   { src: '/images/mood-4.jpg', alt: 'Back of dress bow detail', span: 'col-span-2' },
   { src: '/images/mood-5.jpg', alt: 'Daddy reveal on the staircase', span: 'col-span-2' },
   { src: '/images/mood-6.jpg', alt: 'Couple under fairy lights canopy', span: 'col-span-3' },
-  { src: '/images/guest-sparklers.jpg', alt: 'Sparklers at the wedding', span: 'col-span-3' },
+  { src: '/images/guest-sparklers.jpg', alt: 'Sparklers at the wedding', span: 'col-span-3', pos: 'object-top' },
 ];
 
 export default function MoodSection() {
@@ -35,7 +35,7 @@ export default function MoodSection() {
                 src={tile.src}
                 alt={tile.alt}
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                className={`object-cover transition-transform duration-700 group-hover:scale-105 ${tile.pos ?? 'object-center'}`}
               />
             </div>
           ))}
