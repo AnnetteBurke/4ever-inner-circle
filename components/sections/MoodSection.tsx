@@ -7,7 +7,7 @@ const tiles = [
   { src: '/images/mood-4.jpg', alt: 'Back of dress bow detail', span: 'col-span-2' },
   { src: '/images/mood-5.jpg', alt: 'Daddy reveal on the staircase', span: 'col-span-2' },
   { src: '/images/mood-6.jpg', alt: 'Couple under fairy lights canopy', span: 'col-span-3' },
-  { src: '/images/mood-7.jpg', alt: 'Bride celebrating with bouquet raised', span: 'col-span-3' },
+  { src: '/images/guest-sparklers.jpg', alt: 'Sparklers at the wedding', span: 'col-span-3' },
 ];
 
 export default function MoodSection() {

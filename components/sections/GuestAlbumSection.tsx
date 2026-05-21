@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
 const collageImages = [
-  { src: '/images/guest-sparklers.jpg',     alt: 'Sparklers at the wedding' },
+  { src: '/images/mood-7.jpg',              alt: 'Dancing at the reception' },
   { src: '/images/guest-papparazzi.jpg',   alt: 'Wedding guests celebrating' },
   { src: '/images/guest-new-2.jpg',        alt: 'Editorial portrait' },
   { src: '/images/guest-mum-dress.jpg',    alt: 'Mum helping with the dress' },
