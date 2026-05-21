@@ -1,3 +1,12 @@
+import Image from 'next/image'
+
+const stripImages = [
+  { src: '/images/strip-1.jpg', alt: 'Flower girls at the window' },
+  { src: '/images/strip-2.jpg', alt: 'First kiss at the ceremony' },
+  { src: '/images/strip-3.jpg', alt: 'Two brides in a wildflower meadow' },
+  { src: '/images/strip-4.jpg', alt: 'Couple under the veil' },
+]
+
 const stops = [
   { when: 'Booked', what: 'Inner Circle access & welcome film', isNow: false },
   { when: '−12 weeks', what: 'Mood board & shot inspiration', isNow: false },
@@ -34,17 +43,34 @@ export default function JourneySection() {
   return (
     <section id="journey" className="bg-blush py-32 md:py-36">
       <div className="max-w-container mx-auto px-12">
-        <div className="mb-20 max-w-[720px]">
-          <span className="label-tag !text-plum">The journey</span>
+        <div className="mb-16 max-w-[720px]">
+          <span className="label-tag !text-plum">Your Wedding Journey</span>
           <h2 className="text-5xl md:text-6xl font-light leading-tight mb-6 mt-4 text-plum">
-            Quiet care, <span className="script-accent font-normal">in the right rhythm</span>
+            We will send little reminders to all the main people,{' '}
+            <span className="script-accent font-normal">just at the right time</span>
           </h2>
           <p className="text-base leading-[1.85] text-whisper max-w-[560px]">
             From the moment you book, we&apos;ll be sending small, useful things — to you,
             to your bridal party, to your suppliers — at exactly the right moment.
           </p>
         </div>
+      </div>
 
+      {/* Full-width photo strip */}
+      <div className="grid grid-cols-2 md:grid-cols-4 mb-16">
+        {stripImages.map((img) => (
+          <div key={img.src} className="relative h-[220px] md:h-[320px] overflow-hidden">
+            <Image
+              src={img.src}
+              alt={img.alt}
+              fill
+              className="object-cover hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+        ))}
+      </div>
+
+      <div className="max-w-container mx-auto px-12">
         <div className="relative py-10">
           <div className="absolute left-0 right-0 top-1/2 h-px bg-plum/25 hidden md:block" />
           <div className="grid grid-cols-2 md:grid-cols-5 gap-6 relative z-10">
@@ -91,4 +117,5 @@ export default function JourneySection() {
     </section>
   );
 }
+
 
