@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export default function CalmSection() {
   return (
     <section
@@ -7,11 +9,13 @@ export default function CalmSection() {
     >
       <div className="max-w-container mx-auto px-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
-          <div className="aspect-[4/5] rounded-sm relative overflow-hidden flex items-center justify-center bg-gradient-to-br from-blush-soft to-blush">
-            <div className="font-script text-[220px] text-plum opacity-40 leading-none">calm</div>
-            <div className="absolute bottom-6 left-6 text-[10px] tracking-label uppercase text-plum">
-              Calm Corner · Bodytap
-            </div>
+          <div className="aspect-[4/5] rounded-sm relative overflow-hidden">
+            <Image
+              src="/images/calm-bride.jpg"
+              alt="Bride, serene, veil over her face"
+              fill
+              className="object-cover object-top"
+            />
           </div>
           <div>
             <span className="label-tag">Calm Corner</span>
@@ -24,8 +28,10 @@ export default function CalmSection() {
               and confidence.
             </p>
             <div className="font-serif italic text-xl leading-relaxed text-plum pl-6 py-6 border-l border-mauve my-8">
-              &ldquo;The morning of, I sat with my coffee and did the 8-minute calm sequence.
-              By the time the dress was on, I felt like myself again.&rdquo;
+              &ldquo;Her mum had passed. She&apos;d been in tears for weeks — there were days
+              she wasn&apos;t sure she could go through with it at all. On the morning of her
+              wedding, she giggled getting into her dress. Not one tear. Her guests
+              couldn&apos;t believe it was the same woman.&rdquo;
             </div>
             <div className="flex items-center gap-4 mt-8">
               <div className="w-14 h-14 rounded-full bg-gradient-to-br from-mauve-soft to-mauve flex items-center justify-center text-white font-script text-2xl shadow-lg">
@@ -43,6 +49,36 @@ export default function CalmSection() {
             </a>
           </div>
         </div>
+
+        {/* Three real stories */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20 pt-16 border-t border-mauve/20">
+          <div className="bg-cream/60 p-8 border border-hairline">
+            <div className="text-[10px] tracking-label uppercase text-mauve mb-4">The bride</div>
+            <p className="font-serif italic text-lg leading-relaxed text-ink">
+              &ldquo;She fainted when she was nervous — had done since she was a girl.
+              At the chapel doors, she started to go. We tapped right there in the doorway.
+              Within minutes the colour came back. She walked up that aisle on her own two feet
+              and didn&apos;t look back.&rdquo;
+            </p>
+          </div>
+          <div className="bg-cream/60 p-8 border border-hairline">
+            <div className="text-[10px] tracking-label uppercase text-mauve mb-4">The groom</div>
+            <p className="font-serif italic text-lg leading-relaxed text-ink">
+              &ldquo;He was terrified. Couldn&apos;t get through a practice run without his
+              voice breaking. We tapped around the nerves the night before. He stood up the
+              next day, looked out at two hundred people, and didn&apos;t quiver once.&rdquo;
+            </p>
+          </div>
+          <div className="bg-cream/60 p-8 border border-hairline">
+            <div className="text-[10px] tracking-label uppercase text-mauve mb-4">The mother of the bride</div>
+            <p className="font-serif italic text-lg leading-relaxed text-ink">
+              &ldquo;She&apos;d been grieving and exhausted for months. We worked through it
+              together, tapping around the loss. On the morning of the wedding, she giggled
+              getting into her dress. Not one tear. Everyone was mesmerised.&rdquo;
+            </p>
+          </div>
+        </div>
+
       </div>
     </section>
   );
