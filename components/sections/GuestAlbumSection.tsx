@@ -113,8 +113,9 @@ export default function GuestAlbumSection() {
               {[
                 'Your professional wedding photographs from 4Ever Photos',
                 'Every upload from your guests and suppliers',
-                'Designed in a magazine editorial style — full bleed, beautifully laid out',
-                'Printed and bound to heirloom quality',
+                'Designed in a magazine editorial style — full bleed, glossy, beautifully laid out',
+                'Thinner pages mean the spine holds up to 100 spreads — far more than our traditional albums can take',
+                'Think Hello magazine, not a coffee table book — hundreds of moments, nothing left out',
                 'Delivered to your door',
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3 text-sm text-whisper leading-relaxed">
