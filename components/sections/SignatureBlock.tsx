@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export default function SignatureBlock() {
   return (
     <section className="text-center py-28 bg-cream border-t border-hairline">
@@ -15,14 +17,24 @@ export default function SignatureBlock() {
           in the light of a photograph,<br />
           to how it all felt.
         </div>
-        {/*
-          NOTE: This is a placeholder for Annette's real signature.
-          Replace with an SVG of the actual handwritten signature
-          (in /public/signature.svg) and swap the text below for an <Image>.
-        */}
-        <div className="font-signature text-5xl text-ink leading-none">Annette Burke</div>
-        <div className="mt-2 text-[11px] tracking-label uppercase text-mauve">
+        <div className="relative h-20 w-64 mx-auto mb-2">
+          <Image
+            src="/images/signature.jpg"
+            alt="Annette Burke signature"
+            fill
+            className="object-contain"
+          />
+        </div>
+        <div className="text-[11px] tracking-label uppercase text-mauve mb-8">
           Founder · 4Ever Photos
+        </div>
+        <div className="relative h-24 w-24 mx-auto">
+          <Image
+            src="/images/love-out-loud-stamp.jpg"
+            alt="Love Out Loud"
+            fill
+            className="object-contain"
+          />
         </div>
       </div>
     </section>
