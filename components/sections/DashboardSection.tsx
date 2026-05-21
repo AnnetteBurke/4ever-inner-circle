@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 /* Sample dashboard preview (marketing-side mockup of the private dashboard).
    The real private dashboard is built in Phase 1 session 4. */
 
@@ -12,16 +14,26 @@ const cards = [
 
 export default function DashboardSection() {
   return (
-    <section id="dashboard" className="py-32 md:py-36 border-t border-hairline">
-      <div className="max-w-container mx-auto px-12">
+    <section id="dashboard" className="py-32 md:py-36 border-t border-hairline relative overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none hero-image-fade" aria-hidden="true">
+        <Image
+          src="/images/dashboard-bg.jpg"
+          alt=""
+          fill
+          className="object-contain object-right opacity-50"
+        />
+      </div>
+
+      <div className="relative z-10 max-w-container mx-auto px-12">
         <div className="mb-20 max-w-[720px]">
-          <span className="label-tag">Your space</span>
+          <span className="label-tag">Home of your wedding photography</span>
           <h2 className="text-5xl md:text-6xl font-light leading-tight text-ink mb-6 mt-4">
-            Welcome home, <span className="script-accent font-normal">Sarah &amp; James</span>
+            Welcome, <span className="script-accent font-normal">Sarah &amp; James</span>
           </h2>
           <p className="text-base leading-[1.85] text-whisper max-w-[560px]">
-            Everything you need, gently organised. Updates, reminders and small luxuries
-            arrive at the right moment — never in a rush.
+            A private space designed to quietly remove the stress from your day — keeping
+            your people, your timeline, and every detail beautifully organised, so that
+            when the moment arrives, all you need to do is breathe.
           </p>
         </div>
 
