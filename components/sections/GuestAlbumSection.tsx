@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export default function GuestAlbumSection() {
   return (
     <section className="py-32 md:py-36 border-t border-hairline">
@@ -24,11 +26,13 @@ export default function GuestAlbumSection() {
               See an example album
             </a>
           </div>
-          <div className="aspect-[4/5] rounded-sm relative overflow-hidden flex items-center justify-center bg-gradient-to-br from-blush to-blush-deep">
-            <div className="font-script text-[220px] text-plum opacity-40 leading-none">142</div>
-            <div className="absolute bottom-6 left-6 text-[10px] tracking-label uppercase text-plum">
-              guest contributions · Sarah &amp; James
-            </div>
+          <div className="aspect-[4/5] rounded-sm relative overflow-hidden bg-blush-soft">
+            <Image
+              src="/images/guest-album-book.jpg"
+              alt="Guest album book with a collection of photographs"
+              fill
+              className="object-contain"
+            />
           </div>
         </div>
       </div>
