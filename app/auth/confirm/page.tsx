@@ -9,13 +9,28 @@ export default function AuthConfirmPage() {
 
   useEffect(() => {
     const supabase = createSupabaseBrowserClient()
-    supabase.auth.getSession().then(({ data: { session } }) => {
+
+    // Handle PKCE code in URL (server-side invite flow)
+    const params = new URLSearchParams(window.location.search)
+    const code = params.get('code')
+
+    if (code) {
+      supabase.auth.exchangeCodeForSession(code).then(({ error }) => {
+        router.replace(error ? '/login' : '/home')
+      })
+      return
+    }
+
+    // Handle hash-based tokens (implicit invite flow)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
         router.replace('/home')
-      } else {
+      } else if (event === 'INITIAL_SESSION') {
         router.replace('/login')
       }
     })
+
+    return () => subscription.unsubscribe()
   }, [router])
 
   return (
