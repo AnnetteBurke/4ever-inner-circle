@@ -34,14 +34,14 @@ const features = [
   {
     label: 'Gift List',
     tag: 'Photography gifts',
-    desc: 'Let the people who love you give to your story. Extra hours, fine-art albums, portrait studios.',
+    desc: 'A mobile portrait studio at your venue, extra coverage, fine-art albums. Let the people who love you give to your story.',
     href: '/home/registry',
     accent: 'text-mauve',
   },
   {
     label: 'Shared Album',
     tag: 'Every moment',
-    desc: 'Your QR code for guests. Every photograph from every angle, all in one place.',
+    desc: 'Your professional images alongside every angle captured by your guests. One place for it all.',
     href: '/home/album',
     accent: 'text-mauve',
   },
@@ -84,19 +84,21 @@ export default async function HomePage() {
 
       {/* Header */}
       <div className="bg-plum text-cream px-8 md:px-16 pt-16 pb-20">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-[11px] tracking-label uppercase text-mauve-soft mb-4">
-            4Ever Inner Circle
+        <div className="max-w-4xl mx-auto flex items-center justify-between gap-8">
+          <div className="flex-1">
+            <div className="text-[11px] tracking-label uppercase text-mauve-soft mb-4">
+              4Ever Inner Circle
+            </div>
+            <h1 className="text-4xl md:text-6xl font-light leading-tight mb-3 text-cream">
+              {couple.bride_name} <span className="font-serif italic text-mauve-soft">&</span> {couple.groom_name}
+            </h1>
+            <p className="text-cream/60 text-base">{couple.venue_name} · {weddingDateFormatted}</p>
           </div>
-          <h1 className="text-4xl md:text-6xl font-light leading-tight mb-2 text-cream">
-            {couple.bride_name} <span className="font-serif italic text-mauve-soft">&</span> {couple.groom_name}
-          </h1>
-          <p className="text-cream/60 text-base mt-2">{couple.venue_name} · {weddingDateFormatted}</p>
 
           {days !== null && (
-            <div className="mt-10 flex items-end gap-4">
-              <span className="font-serif text-7xl md:text-9xl text-cream leading-none">{days}</span>
-              <span className="font-serif italic text-2xl text-mauve-soft pb-3">{label}</span>
+            <div className="flex-shrink-0 border border-cream/25 px-10 py-8 text-center min-w-[160px]">
+              <div className="font-serif text-6xl md:text-8xl text-cream leading-none mb-2">{days}</div>
+              <div className="font-serif italic text-base text-mauve-soft">{label}</div>
             </div>
           )}
         </div>
