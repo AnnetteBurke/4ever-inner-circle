@@ -88,7 +88,7 @@ export default async function HomePage() {
           <div className="text-[11px] tracking-label uppercase text-mauve-soft mb-4">
             4Ever Inner Circle
           </div>
-          <h1 className="text-4xl md:text-6xl font-light leading-tight mb-2">
+          <h1 className="text-4xl md:text-6xl font-light leading-tight mb-2 text-cream">
             {couple.bride_name} <span className="font-serif italic text-mauve-soft">&</span> {couple.groom_name}
           </h1>
           <p className="text-cream/60 text-base mt-2">{couple.venue_name} · {weddingDateFormatted}</p>
