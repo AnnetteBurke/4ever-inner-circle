@@ -105,10 +105,11 @@ export default function GuestAlbumSection() {
               single lens could have made alone.
             </p>
             <p className="text-base leading-[1.85] text-whisper mb-8">
-              A second perspective. The whispered moments. The dance floor through your
-              aunt&apos;s eyes. All of it, held together in print.
+              Many perspectives. Many moments. The laughs you missed, the dance floor
+              through someone else&apos;s eyes, the glances and the tears and the joy,
+              all seen differently, all coming together in one print.
             </p>
-            <div className="font-serif italic text-3xl text-mauve mt-2 mb-1">From £600</div>
+            <div className="font-serif italic text-3xl text-mauve mt-2 mb-1">From £800</div>
             <div className="text-[11px] tracking-label uppercase text-whisper">Design &amp; print included</div>
           </div>
           <div className="bg-blush-soft p-10 border border-hairline">
@@ -117,6 +118,7 @@ export default function GuestAlbumSection() {
               {[
                 'Your professional wedding photographs from 4Ever Photos',
                 'Your favourite uploads from your guests and suppliers',
+                'We collaborate with you to curate and edit every page, nothing goes in without your eye on it',
                 'Designed in a magazine editorial style, full bleed, glossy, beautifully laid out',
                 'Thinner pages mean the spine holds up to 100 spreads, far more than our traditional albums can take',
                 'Think Hello magazine, not a coffee table book, hundreds of moments, nothing left out',
