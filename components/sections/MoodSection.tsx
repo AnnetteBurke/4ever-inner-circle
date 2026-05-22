@@ -19,9 +19,18 @@ export default function MoodSection() {
           <h2 className="text-5xl md:text-6xl font-light leading-tight text-ink mb-6 mt-4">
             Your day, <span className="script-accent font-normal">visualised</span>
           </h2>
+          <p className="text-base leading-[1.85] text-whisper max-w-[560px] mb-5">
+            Think of this as your personal Pinterest, built into your Inner Circle. Bring
+            all your inspiration, your ideas, your existing Pinterest boards, all gathered
+            into one beautiful space that we can actually work from.
+          </p>
           <p className="text-base leading-[1.85] text-whisper max-w-[560px]">
-            A living mood board — looks, light, locations, favourite corners of your venue.
-            We&apos;ll plan around what matters to you, and use it on the day.
+            Your mood board is organised by the different parts of your day — hair and
+            makeup, dress and styling, flowers, venue, reception and more. Each section
+            is private by default, shared only with the right people. Your hair stylist
+            sees your hair inspiration and your trial photographs. Your florist sees your
+            flower vision. Your bridal party sees only what you choose to show them.
+            Everything in its place, seen by the right eyes.
           </p>
         </div>
 
