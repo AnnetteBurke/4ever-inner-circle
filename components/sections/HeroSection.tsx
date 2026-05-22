@@ -6,26 +6,31 @@ export default function HeroSection() {
 
       {/* Mobile layout */}
       <div className="md:hidden">
-        {/* Full-height image — nav logo floats over the top left */}
-        <div className="relative w-full h-[65vh] bg-cream">
+        {/* Photo fills full width — heading overlaid bottom-left */}
+        <div className="relative w-full h-[65vh]">
           <Image
             src="/images/hero-couple.jpg"
             alt="Bride and groom"
             fill
-            className="object-contain object-center"
+            className="object-cover object-top"
             priority
           />
+          {/* Gradient so text is readable over the photo */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
+          {/* "The Inner Circle" overlaid on the left of the photo */}
+          <div className="absolute left-6 bottom-8">
+            <div className="label-tag !text-cream/80 mb-3">A private space for our couples</div>
+            <h1 className="text-5xl font-light leading-[0.92] tracking-tight text-cream">
+              The <span className="script-accent font-normal text-[0.92em] inline-block -translate-y-1.5">Inner</span> Circle
+            </h1>
+          </div>
         </div>
-        {/* Text below the photo */}
-        <div className="text-center px-8 pt-10 pb-16 bg-cream">
-          <div className="label-tag mb-6">A private space for our couples</div>
-          <h1 className="text-5xl font-light leading-[0.92] tracking-tight text-ink mb-2">
-            The <span className="script-accent font-normal text-[0.92em] inline-block -translate-y-1.5">Inner</span> Circle
-          </h1>
-          <div className="font-serif italic text-2xl text-plum mt-3">
+        {/* Tagline and paragraph tight under the photo */}
+        <div className="text-center px-8 pt-6 pb-12 bg-cream">
+          <div className="font-serif italic text-2xl text-plum mt-2">
             Where your wedding day is quietly held
           </div>
-          <div className="hairline mx-auto my-8" />
+          <div className="hairline mx-auto my-6" />
           <p className="text-base leading-[1.85] text-whisper">
             From the moment you book, we walk every step with you. A quiet, beautifully kept
             space for you, your people, your moments, looked after by 4Ever Photos.
