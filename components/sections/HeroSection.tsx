@@ -61,7 +61,7 @@ export default function HeroSection() {
         </div>
         <div className="relative z-10 hairline mx-auto my-8" />
         <p className="relative z-10 max-w-[540px] text-base leading-[1.85] text-whisper mt-10">
-          From the moment you book, we walk every step with you. A quiet, beautifully kept
+          From the moment you book, we walk every step with you. A beautifully kept
           space for you, your people, your moments, looked after by 4Ever Photos.
         </p>
         <div className="z-10 hidden lg:flex absolute bottom-12 left-0 right-0 justify-between items-center px-20 text-[11px] tracking-label uppercase text-whisper">

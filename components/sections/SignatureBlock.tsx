@@ -13,7 +13,7 @@ export default function SignatureBlock() {
           Long after the flowers wilt<br />
           and the music finds its silence,<br />
           may you always hold a way back,<br />
-          in the quiet turn of a page,<br />
+          in the turn of a page,<br />
           in the light of a photograph,<br />
           to how it all felt.
         </div>

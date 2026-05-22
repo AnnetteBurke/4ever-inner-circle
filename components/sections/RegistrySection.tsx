@@ -28,7 +28,7 @@ const gifts = [
   {
     label: 'More of the night',
     title: 'An Extra Hour',
-    desc: 'Our sessions close at 9:30pm. An extra hour keeps us with you for the slow drinks, the second dances, the quiet moments at the end of the night we\'d otherwise miss.',
+    desc: 'Our sessions close at 9:30pm. An extra hour keeps us with you for the slow drinks, the second dances, the moments at the end of the night we\'d otherwise miss.',
     price: '£200 per hour',
     progress: 91,
     by: '14 guests'

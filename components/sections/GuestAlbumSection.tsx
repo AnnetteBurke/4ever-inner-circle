@@ -11,7 +11,7 @@ const collageImages = [
   { src: '/images/guest-pageboys.jpg',      alt: 'Pageboys' },
   { src: '/images/guest-raining.jpg',       alt: 'A rainy moment' },
   { src: '/images/guest-new-6.jpg',         alt: 'Floral detail' },
-  { src: '/images/guest-sneak.jpg',         alt: 'A quiet moment' },
+  { src: '/images/guest-sneak.jpg',         alt: 'A candid moment' },
   { src: '/images/guest-new-3.jpg',         alt: 'Walking through the forest' },
 ];
 
@@ -25,7 +25,7 @@ export default function GuestAlbumSection() {
           <div className="md:sticky md:top-32">
             <span className="label-tag">The shared album</span>
             <h3 className="text-4xl md:text-5xl font-light leading-tight text-ink mb-6 mt-4">
-              Every guest, <span className="script-accent font-normal">a quiet contributor.</span>
+              Every guest, <span className="script-accent font-normal">a contributor to your story.</span>
             </h3>
             <p className="text-base leading-[1.85] text-whisper mb-5">
               Here is your personal QR code — share it with anyone who is part of your day.

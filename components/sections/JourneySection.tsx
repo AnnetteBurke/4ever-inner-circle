@@ -20,7 +20,7 @@ const sampleMessages = [
     to: 'To: Tom, Best Man',
     channel: 'WhatsApp',
     body:
-      '"Tom — eight weeks to go. Here\'s a quiet little guide on writing your speech: three stories, one laugh, one tear. We\'ve also dropped a Google Maps pin for the church..."',
+      '"Tom — eight weeks to go. Here\'s a little guide on writing your speech: three stories, one laugh, one tear. We\'ve also dropped a Google Maps pin for the church..."',
     when: 'Sends 8 weeks before · Auto'
   },
   {

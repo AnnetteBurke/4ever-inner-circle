@@ -31,7 +31,7 @@ export default function DashboardSection() {
             Welcome, <span className="script-accent font-normal">Sarah &amp; James</span>
           </h2>
           <p className="text-base leading-[1.85] text-whisper max-w-[560px]">
-            A private space designed to quietly remove the stress from your day — keeping
+            A private space designed to remove the stress from your day, keeping
             your people, your timeline, and every detail beautifully organised, so that
             when the moment arrives, all you need to do is breathe.
           </p>
