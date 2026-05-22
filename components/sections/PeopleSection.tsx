@@ -25,11 +25,13 @@ export default function PeopleSection() {
           </p>
           <p className="text-base leading-[1.85] text-whisper max-w-[560px]">
             Add your people here and we take care of the rest. On the day, we use the latest
-            technology to send WhatsApp messages in real time, calling people into the room,
-            letting them know exactly where and when to be for photographs, and keeping
-            the celebrant, hair team and every supplier moving to the same rhythm. Every
-            detail beautifully coordinated. Every person, perfectly placed. This is the
-            collaboration that makes dream weddings a reality.
+            technology to send WhatsApp messages and Google pin drops in real time, letting
+            every VIP on the photograph list know exactly where and when to be for their
+            moment. Every supplier can schedule their talents and stay in rhythm with the
+            overall day. Trust us with the people who matter most to you, and we will make
+            sure every single one of them feels it. Every detail beautifully coordinated.
+            Every person, perfectly placed. This is the collaboration that makes dream
+            weddings a reality.
           </p>
         </div>
 
