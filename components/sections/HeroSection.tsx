@@ -18,16 +18,18 @@ export default function HeroSection() {
           />
           {/* Gradient so text is readable over the photo */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
-          {/* "The Inner Circle" overlaid on the left of the photo */}
-          <div className="absolute left-6 bottom-8">
-            <div className="label-tag !text-cream/80 mb-3">A private space for our couples</div>
-            <h1 className="text-5xl font-light leading-[0.92] tracking-tight text-cream">
-              The <span className="script-accent font-normal text-[0.92em] inline-block -translate-y-1.5">Inner</span> Circle
-            </h1>
+          {/* Label stacked on the left of the photo */}
+          <div className="absolute left-6 bottom-8 max-w-[45%]">
+            <p className="text-[11px] tracking-label uppercase text-cream/90 leading-relaxed font-medium">
+              A private<br />space for<br />our couples
+            </p>
           </div>
         </div>
-        {/* Tagline and paragraph tight under the photo */}
+        {/* Heading and text tight under the photo */}
         <div className="text-center px-8 pt-6 pb-12 bg-cream">
+          <h1 className="text-5xl font-light leading-[0.92] tracking-tight text-ink mb-3">
+            The <span className="script-accent font-normal text-[0.92em] inline-block -translate-y-1.5">Inner</span> Circle
+          </h1>
           <div className="font-serif italic text-2xl text-plum mt-2">
             Where your wedding day is quietly held
           </div>
