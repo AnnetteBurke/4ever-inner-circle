@@ -20,7 +20,7 @@ export default function CalmSection() {
           <div className="order-first md:order-last">
             <span className="label-tag">Calm Corner</span>
             <h3 className="text-4xl md:text-5xl font-light leading-tight text-ink mb-6 mt-4">
-              For the <span className="script-accent font-normal">nerves</span>, the racing thoughts, the morning butterflies.
+              For the <span className="script-accent font-normal">nerves</span>, the worries, the butterflies and the stress.
             </h3>
             <p className="text-base leading-[1.85] text-whisper mb-5">
               Inside your Inner Circle, you have private access to Bodytap — gentle,
