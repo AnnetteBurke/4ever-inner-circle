@@ -28,17 +28,17 @@ export default function GuestAlbumSection() {
               Every guest, <span className="script-accent font-normal">a contributor to your story.</span>
             </h3>
             <p className="text-base leading-[1.85] text-whisper mb-5">
-              This is your personal QR code, and it does more than open an upload page.
-              When a guest scans it, they are welcomed into your day. They add their name,
+              This is your personal QR code. When a guest scans it, they are welcomed into your day. They add their name,
               their number, and their relationship to you. If they are part of a group
               photograph, they join that group right there and then. No work for you at all.
             </p>
             <p className="text-base leading-[1.85] text-whisper mb-8">
               From there, we take care of them. A pin drop to the venue on the morning.
               A message at the right moment letting them know where and when to be for
-              their photograph. And at the end of the day, a nudge to start sharing, so
-              you and your partner wake up tomorrow morning to a full album of moments
-              you never even knew were being captured.
+              their photograph. And at the end of the day, a nudge to start uploading
+              their personal photographs from the day. You two then wake up the next
+              morning to a full album of photographs all from different perspectives.
+              Everything captured, all in one place.
             </p>
 
             {/* QR code placeholder */}

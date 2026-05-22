@@ -23,7 +23,7 @@ export default function CalmSection() {
               For the <span className="script-accent font-normal">nerves</span>, the worries, the butterflies and the stress.
             </h3>
             <p className="text-base leading-[1.85] text-whisper mb-5">
-              Inside your Inner Circle, you have private access to Bodytap, gentle,
+              Inside your Inner Circle, you have private access to &ldquo;The Bodytap Method&rdquo;. This method is a gentle,
               science-backed tapping sequences for wedding nerves, family stress, sleep
               and confidence. For the bride who always dreamed of her dad walking her
               down the aisle, and the ache of planning that day without him. For the
