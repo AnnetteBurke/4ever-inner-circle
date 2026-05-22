@@ -23,12 +23,12 @@ export default function CalmSection() {
               For the <span className="script-accent font-normal">nerves</span>, the worries, the butterflies and the stress.
             </h3>
             <p className="text-base leading-[1.85] text-whisper mb-5">
-              Inside your Inner Circle, you have private access to Bodytap — gentle,
+              Inside your Inner Circle, you have private access to Bodytap, gentle,
               science-backed tapping sequences for wedding nerves, family stress, sleep,
               and confidence.
             </p>
             <div className="font-serif italic text-xl leading-relaxed text-plum pl-6 py-6 border-l border-mauve my-8">
-              &ldquo;Her mum had passed. She&apos;d been in tears for weeks — there were days
+              &ldquo;Her mum had passed. She&apos;d been in tears for weeks. There were days
               she wasn&apos;t sure she could go through with it at all. On the morning of her
               wedding, she giggled getting into her dress. Not one tear. Her guests
               couldn&apos;t believe it was the same woman.&rdquo;
@@ -55,7 +55,7 @@ export default function CalmSection() {
           <div className="bg-cream/60 p-8 border border-hairline">
             <div className="text-[10px] tracking-label uppercase text-mauve mb-4">The bride</div>
             <p className="font-serif italic text-lg leading-relaxed text-ink">
-              &ldquo;She fainted when she was nervous — had done since she was a girl.
+              &ldquo;She fainted when she was nervous, as she had done since she was a girl.
               At the chapel doors, she started to go. We tapped right there in the doorway.
               Within minutes the colour came back. She walked up that aisle on her own two feet
               and didn&apos;t look back.&rdquo;

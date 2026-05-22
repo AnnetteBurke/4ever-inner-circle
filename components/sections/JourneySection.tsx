@@ -20,14 +20,14 @@ const sampleMessages = [
     to: 'To: Tom, Best Man',
     channel: 'WhatsApp',
     body:
-      '"Tom — eight weeks to go. Here\'s a little guide on writing your speech: three stories, one laugh, one tear. We\'ve also dropped a Google Maps pin for the church..."',
+      '"Tom, eight weeks to go. Here\'s a little guide on writing your speech: three stories, one laugh, one tear. We\'ve also dropped a Google Maps pin for the church..."',
     when: 'Sends 8 weeks before · Auto'
   },
   {
     to: 'To: Emma, Maid of Honour',
     channel: 'SMS',
     body:
-      '"Hair & makeup begins at 8:30am at the bridal suite. We\'ve added it to your calendar with the address — and a little note on what to bring..."',
+      '"Hair & makeup begins at 8:30am at the bridal suite. We\'ve added it to your calendar with the address, and a little note on what to bring..."',
     when: 'Sends day before · Auto'
   },
   {
@@ -50,8 +50,8 @@ export default function JourneySection() {
             <span className="script-accent font-normal">just at the right time</span>
           </h2>
           <p className="text-base leading-[1.85] text-whisper max-w-[560px]">
-            From the moment you book, we&apos;ll be sending small, useful things — to you,
-            to your bridal party, to your suppliers — at exactly the right moment.
+            From the moment you book, we&apos;ll be sending small, useful things to you,
+            to your bridal party, to your suppliers, at exactly the right moment.
           </p>
         </div>
       </div>

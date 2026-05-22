@@ -25,7 +25,7 @@ export default function MoodSection() {
             into one beautiful space that we can actually work from.
           </p>
           <p className="text-base leading-[1.85] text-whisper max-w-[560px]">
-            Your mood board is organised by the different parts of your day — hair and
+            Your mood board is organised by the different parts of your day, hair and
             makeup, dress and styling, flowers, venue, reception and more. Each section
             is private by default, shared only with the right people. Your hair stylist
             sees your hair inspiration and your trial photographs. Your florist sees your

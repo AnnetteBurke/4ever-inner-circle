@@ -15,7 +15,7 @@ export default function EditSection() {
             Considered things, <span className="script-accent font-normal">for the day</span>
           </h2>
           <p className="text-base leading-[1.85] text-whisper max-w-[560px]">
-            A curated wedding shop — emergency kits, guestbooks, getting-ready robes,
+            A curated wedding shop, emergency kits, guestbooks, getting-ready robes,
             calligraphy. Things we&apos;ve vetted, by people we trust.
           </p>
         </div>

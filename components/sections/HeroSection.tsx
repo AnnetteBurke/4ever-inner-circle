@@ -35,7 +35,7 @@ export default function HeroSection() {
           </div>
           <div className="hairline mx-auto my-6" />
           <p className="text-base leading-[1.85] text-whisper">
-            Thank you for choosing us to tell your love story. We built this space for you —
+            Thank you for choosing us to tell your love story. We built this space for you,
             your people, your plans, your dreams, all here to gather and come to life.
             Now make it yours. Add your first name.
           </p>

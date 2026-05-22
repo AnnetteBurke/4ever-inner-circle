@@ -4,7 +4,7 @@ const gifts = [
   {
     label: 'The ultimate guest gift',
     title: 'The Portrait Studio',
-    desc: 'Our team arrives with professional backdrop and lighting and photographs every guest — printed and mounted on the day. A red carpet moment for everyone who made the effort to be there and look their best.',
+    desc: 'Our team arrives with professional backdrop and lighting and photographs every guest, printed and mounted on the day. A red carpet moment for everyone who made the effort to be there and look their best.',
     price: 'Ask for pricing',
     progress: 62,
     by: '8 guests'
@@ -12,7 +12,7 @@ const gifts = [
   {
     label: 'Most popular album',
     title: 'The Framed Album',
-    desc: '30 designed pages of your finest images, presented in a keepsake box with a clear front that opens like a picture frame. Our most-loved album — the one couples reach for first.',
+    desc: '30 designed pages of your finest images, presented in a keepsake box with a clear front that opens like a picture frame. Our most-loved album, the one couples reach for first.',
     price: 'From £495',
     progress: 84,
     by: '11 guests'
@@ -20,7 +20,7 @@ const gifts = [
   {
     label: 'Just the two of you',
     title: 'Post-Wedding Experience',
-    desc: 'Come back dressed up, somewhere personal — the stables, the racetrack, the spot where you were proposed to. No timeline, no guests. Just you, your story, and a day still being written.',
+    desc: 'Come back dressed up, somewhere personal, the stables, the racetrack, the spot where you were proposed to. No timeline, no guests. Just you, your story, and a day still being written.',
     price: 'Ask for pricing',
     progress: 45,
     by: '4 guests'
@@ -46,7 +46,7 @@ export default function RegistrySection() {
           </h2>
           <p className="text-base leading-[1.85] text-cream/70 max-w-[560px]">
             Let your family and friends contribute to the storytelling of your day.
-            A photography gift list — for the experiences, the albums, and the moments
+            A photography gift list, for the experiences, the albums, and the moments
             you&apos;d love but might not buy yourself.
           </p>
         </div>

@@ -28,7 +28,7 @@ export default function GuestAlbumSection() {
               Every guest, <span className="script-accent font-normal">a contributor to your story.</span>
             </h3>
             <p className="text-base leading-[1.85] text-whisper mb-5">
-              Here is your personal QR code — share it with anyone who is part of your day.
+              Here is your personal QR code, share it with anyone who is part of your day.
               Guests, suppliers, the aunt who always has her phone out. Anyone who scans it
               can upload their photographs and films directly to your shared album.
             </p>
@@ -95,7 +95,7 @@ export default function GuestAlbumSection() {
               Introducing <span className="script-accent font-normal">The Collective</span>
             </h3>
             <p className="text-base leading-[1.85] text-whisper mb-5">
-              We take every image — yours, ours, theirs — and design a magazine-style album
+              We take every image, yours, ours and theirs, and design a magazine-style album
               that tells the complete, collaborated story of your day. Your guests&apos; candid
               moments woven through our professional photography. One beautiful book that no
               single lens could have made alone.
@@ -113,9 +113,9 @@ export default function GuestAlbumSection() {
               {[
                 'Your professional wedding photographs from 4Ever Photos',
                 'Your favourite uploads from your guests and suppliers',
-                'Designed in a magazine editorial style — full bleed, glossy, beautifully laid out',
-                'Thinner pages mean the spine holds up to 100 spreads — far more than our traditional albums can take',
-                'Think Hello magazine, not a coffee table book — hundreds of moments, nothing left out',
+                'Designed in a magazine editorial style, full bleed, glossy, beautifully laid out',
+                'Thinner pages mean the spine holds up to 100 spreads, far more than our traditional albums can take',
+                'Think Hello magazine, not a coffee table book, hundreds of moments, nothing left out',
                 'Delivered to your door',
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3 text-sm text-whisper leading-relaxed">
