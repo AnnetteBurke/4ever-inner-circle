@@ -31,7 +31,7 @@ export default function HeroSection() {
             The <span className="script-accent font-normal text-[0.92em] inline-block -translate-y-1.5">Inner</span> Circle
           </h1>
           <div className="font-serif italic text-2xl text-plum mt-2">
-            Where your wedding day is quietly held
+            Where the story of your day gathers into life
           </div>
           <div className="hairline mx-auto my-6" />
           <p className="text-base leading-[1.85] text-whisper">
@@ -57,7 +57,7 @@ export default function HeroSection() {
           The <span className="script-accent font-normal text-[0.92em] inline-block -translate-y-1.5">Inner</span> Circle
         </h1>
         <div className="relative z-10 font-serif italic text-3xl text-plum mt-3">
-          Where your wedding day is quietly held
+          Where the story of your day gathers into life
         </div>
         <div className="relative z-10 hairline mx-auto my-8" />
         <p className="relative z-10 max-w-[540px] text-base leading-[1.85] text-whisper mt-10">
