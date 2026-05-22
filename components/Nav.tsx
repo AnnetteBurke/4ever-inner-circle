@@ -9,7 +9,7 @@ export default function Nav() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-cream/95 backdrop-blur-md border-b border-hairline">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent md:bg-cream/95 md:backdrop-blur-md md:border-b md:border-hairline">
       <div className="max-w-container mx-auto flex items-center justify-between px-12 py-5">
         <div className="brand-mark">
           <span className="brand-mark__four text-[30px]">4ever</span>
