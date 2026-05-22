@@ -10,7 +10,7 @@ export default function AuthConfirmPage() {
   useEffect(() => {
     const supabase = createSupabaseBrowserClient()
 
-    // Handle PKCE code in URL (server-side invite flow)
+    // Handle PKCE code in URL search params
     const params = new URLSearchParams(window.location.search)
     const code = params.get('code')
 
@@ -21,16 +21,23 @@ export default function AuthConfirmPage() {
       return
     }
 
-    // Handle hash-based tokens (implicit invite flow)
+    // Listen for SIGNED_IN from hash-based tokens
+    // Don't act on INITIAL_SESSION — wait for the session to be fully established
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (session) {
+      if (event === 'SIGNED_IN' && session) {
         router.replace('/home')
-      } else if (event === 'INITIAL_SESSION') {
-        router.replace('/login')
       }
     })
 
-    return () => subscription.unsubscribe()
+    // Fallback: if nothing happens after 5 seconds, go to login
+    const timeout = setTimeout(() => {
+      router.replace('/login')
+    }, 5000)
+
+    return () => {
+      subscription.unsubscribe()
+      clearTimeout(timeout)
+    }
   }, [router])
 
   return (
