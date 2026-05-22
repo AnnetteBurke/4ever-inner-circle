@@ -28,13 +28,17 @@ export default function GuestAlbumSection() {
               Every guest, <span className="script-accent font-normal">a contributor to your story.</span>
             </h3>
             <p className="text-base leading-[1.85] text-whisper mb-5">
-              Here is your personal QR code, share it with anyone who is part of your day.
-              Guests, suppliers, the aunt who always has her phone out. Anyone who scans it
-              can upload their photographs and films directly to your shared album.
+              This is your personal QR code, and it does more than open an upload page.
+              When a guest scans it, they are welcomed into your day. They add their name,
+              their number, and their relationship to you. If they are part of a group
+              photograph, they join that group right there and then. No work for you at all.
             </p>
             <p className="text-base leading-[1.85] text-whisper mb-8">
-              We will send it to everyone already in your Inner Circle, but this code is
-              yours to share however and with whoever you like.
+              From there, we take care of them. A pin drop to the venue on the morning.
+              A message at the right moment letting them know where and when to be for
+              their photograph. And at the end of the day, a nudge to start sharing, so
+              you and your partner wake up tomorrow morning to a full album of moments
+              you never even knew were being captured.
             </p>
 
             {/* QR code placeholder */}
@@ -53,7 +57,7 @@ export default function GuestAlbumSection() {
               <div>
                 <div className="text-[10px] tracking-label uppercase text-mauve mb-2">Your code</div>
                 <p className="text-sm text-whisper leading-relaxed">
-                  Scan to upload photographs &amp; films to Sarah &amp; James&apos;s shared album.
+                  Every guest who scans this becomes part of your day, guided from arrival to the last dance.
                 </p>
                 <p className="text-xs text-whisper/60 mt-3 leading-relaxed">
                   Your unique code is generated when your Inner Circle is created.
