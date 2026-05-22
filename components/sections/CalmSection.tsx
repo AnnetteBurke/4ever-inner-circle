@@ -24,8 +24,12 @@ export default function CalmSection() {
             </h3>
             <p className="text-base leading-[1.85] text-whisper mb-5">
               Inside your Inner Circle, you have private access to Bodytap, gentle,
-              science-backed tapping sequences for wedding nerves, family stress, sleep,
-              and confidence.
+              science-backed tapping sequences for wedding nerves, family stress, sleep
+              and confidence. For the dad who can no longer walk you down the aisle.
+              For the new in-laws who are making things difficult, or too many people
+              with too much to say. For the family member whose behaviour is keeping
+              you awake, or the quiet dread of what his mother might think. Whatever
+              is sitting heavy, there is something here for it.
             </p>
             <div className="font-serif italic text-xl leading-relaxed text-plum pl-6 py-6 border-l border-mauve my-8">
               &ldquo;Her mum had passed. She&apos;d been in tears for weeks. There were days
