@@ -11,7 +11,7 @@ export async function POST(request: Request) {
   const supabase = createAdminClient()
 
   const { data, error } = await supabase.auth.admin.inviteUserByEmail(email, {
-    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
+    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/confirm`,
     data: { bride_name: brideName, groom_name: groomName },
   })
 
