@@ -62,7 +62,7 @@ export default function HeroSection() {
         </div>
         <div className="relative z-10 hairline mx-auto my-8" />
         <p className="relative z-10 max-w-[540px] text-base leading-[1.85] text-whisper mt-10">
-          Thank you for choosing us to tell your love story. We built this space for you —
+          Thank you for choosing us to tell your love story. We built this space for you,
           your people, your plans, your dreams, all here to gather and come to life.
           Now make it yours. Add your first name.
         </p>
