@@ -12,7 +12,8 @@ export default function HeroSection() {
             src="/images/hero-couple.jpg"
             alt="Bride and groom"
             fill
-            className="object-cover object-top"
+            className="object-cover"
+            style={{ objectPosition: '60% top' }}
             priority
           />
           {/* Gradient so text is readable over the photo */}
