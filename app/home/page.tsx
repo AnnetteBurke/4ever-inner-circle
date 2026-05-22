@@ -1,5 +1,63 @@
 import { redirect } from 'next/navigation'
 import { createSupabaseServerClient } from '@/lib/supabase-server'
+import Link from 'next/link'
+
+const features = [
+  {
+    label: 'Your Circle',
+    tag: 'Your people',
+    desc: 'Add your bridal party, family and suppliers. We brief everyone at the right moment.',
+    href: '/home/people',
+    accent: 'text-mauve',
+  },
+  {
+    label: 'Mood Board',
+    tag: 'Your vision',
+    desc: 'Your personal Pinterest, built in. Hair, flowers, venue, dress — all in one place, shared only with the right eyes.',
+    href: '/home/mood',
+    accent: 'text-mauve',
+  },
+  {
+    label: 'Your Journey',
+    tag: 'The timeline',
+    desc: 'The full story of your day, built with your suppliers. Everyone knows where to be and when.',
+    href: '/home/journey',
+    accent: 'text-mauve',
+  },
+  {
+    label: 'Calm Corner',
+    tag: 'The Bodytap Method',
+    desc: 'For the nerves, the worries, the butterflies and the stress. Five tapping coins, gifted with our compliments.',
+    href: '/home/calm',
+    accent: 'text-mauve',
+  },
+  {
+    label: 'Gift List',
+    tag: 'Photography gifts',
+    desc: 'Let the people who love you give to your story. Extra hours, fine-art albums, portrait studios.',
+    href: '/home/registry',
+    accent: 'text-mauve',
+  },
+  {
+    label: 'Shared Album',
+    tag: 'Every moment',
+    desc: 'Your QR code for guests. Every photograph from every angle, all in one place.',
+    href: '/home/album',
+    accent: 'text-mauve',
+  },
+]
+
+function getCountdown(weddingDate: string | null): { days: number | null; label: string } {
+  if (!weddingDate) return { days: null, label: '' }
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const wedding = new Date(weddingDate)
+  wedding.setHours(0, 0, 0, 0)
+  const diff = Math.round((wedding.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
+  if (diff === 0) return { days: 0, label: 'Today is your day' }
+  if (diff < 0) return { days: Math.abs(diff), label: `days since your wedding` }
+  return { days: diff, label: 'days to go' }
+}
 
 export default async function HomePage() {
   const supabase = await createSupabaseServerClient()
@@ -7,28 +65,72 @@ export default async function HomePage() {
 
   if (!user) redirect('/login')
 
+  const { data: couple } = await supabase
+    .from('couples')
+    .select('*')
+    .eq('user_id', user.id)
+    .single()
+
+  if (!couple?.wedding_date) redirect('/home/setup')
+
+  const { days, label } = getCountdown(couple.wedding_date)
+
+  const weddingDateFormatted = new Date(couple.wedding_date).toLocaleDateString('en-GB', {
+    day: 'numeric', month: 'long', year: 'numeric'
+  })
+
   return (
-    <main className="min-h-screen bg-cream flex items-center justify-center">
-      <div className="text-center max-w-lg px-8">
-        <div className="label-tag mb-6">Your Inner Circle</div>
-        <h1 className="text-5xl font-light text-ink mb-4 leading-tight">
-          Welcome back
-        </h1>
-        <p className="font-serif italic text-2xl text-plum mb-8">
-          Your private space is ready.
-        </p>
-        <p className="text-base text-whisper leading-relaxed mb-10">
-          You are logged in as {user.email}
-        </p>
+    <main className="min-h-screen bg-cream">
+
+      {/* Header */}
+      <div className="bg-plum text-cream px-8 md:px-16 pt-16 pb-20">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-[11px] tracking-label uppercase text-mauve-soft mb-4">
+            4Ever Inner Circle
+          </div>
+          <h1 className="text-4xl md:text-6xl font-light leading-tight mb-2">
+            {couple.bride_name} <span className="font-serif italic text-mauve-soft">&</span> {couple.groom_name}
+          </h1>
+          <p className="text-cream/60 text-base mt-2">{couple.venue_name} · {weddingDateFormatted}</p>
+
+          {days !== null && (
+            <div className="mt-10 flex items-end gap-4">
+              <span className="font-serif text-7xl md:text-9xl text-cream leading-none">{days}</span>
+              <span className="font-serif italic text-2xl text-mauve-soft pb-3">{label}</span>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Feature cards */}
+      <div className="max-w-4xl mx-auto px-8 md:px-16 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-hairline border border-hairline">
+          {features.map((f) => (
+            <Link
+              key={f.href}
+              href={f.href}
+              className="bg-cream p-8 hover:bg-blush-soft transition-colors group"
+            >
+              <div className="text-[10px] tracking-label uppercase text-mauve mb-3">{f.tag}</div>
+              <h3 className="text-2xl font-light text-ink mb-3 group-hover:text-plum transition-colors">
+                {f.label}
+              </h3>
+              <p className="text-sm text-whisper leading-relaxed">{f.desc}</p>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="max-w-4xl mx-auto px-8 md:px-16 pb-16 flex justify-between items-center text-[11px] tracking-label uppercase text-whisper">
+        <span>4Ever Photos · Inner Circle</span>
         <form action="/auth/signout" method="post">
-          <button
-            type="submit"
-            className="text-[11px] tracking-label uppercase text-mauve border border-mauve px-8 py-3 hover:bg-mauve hover:text-cream transition-colors"
-          >
+          <button type="submit" className="text-whisper hover:text-mauve transition-colors">
             Sign out
           </button>
         </form>
       </div>
+
     </main>
   )
 }
