@@ -13,13 +13,13 @@ export default function HeroSection() {
             alt="Bride and groom"
             fill
             className="object-cover"
-            style={{ objectPosition: '60% top' }}
+            style={{ objectPosition: '75% top' }}
             priority
           />
           {/* Gradient so text is readable over the photo */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
           {/* Label stacked on the left of the photo */}
-          <div className="absolute left-6 bottom-8 max-w-[45%]">
+          <div className="absolute left-6 top-1/3 max-w-[45%]">
             <p className="text-[11px] tracking-label uppercase text-cream/90 leading-relaxed font-medium">
               A private<br />space for<br />our couples
             </p>
