@@ -18,9 +18,18 @@ export default function PeopleSection() {
             The Photography List<br />
             <span className="script-accent font-normal">your VIPs</span>
           </h2>
+          <p className="text-base leading-[1.85] text-whisper max-w-[560px] mb-5">
+            A dream wedding is a collaboration. Couples, families, bridal parties, friends
+            and suppliers, everyone has a role to play, and the magic happens when everyone
+            is singing from the same sheet. This is where that begins.
+          </p>
           <p className="text-base leading-[1.85] text-whisper max-w-[560px]">
-            Add everyone with a role — parents, bridal party, ushers, suppliers. We&apos;ll
-            guide each of them, gently, with what they need to know and when.
+            Add your people here and we take care of the rest. On the day, we use the latest
+            technology to send WhatsApp messages in real time, calling people into the room,
+            letting them know exactly where and when to be for photographs, and keeping
+            the celebrant, hair team and every supplier moving to the same rhythm. Every
+            detail beautifully coordinated. Every person, perfectly placed. This is the
+            collaboration that makes dream weddings a reality.
           </p>
         </div>
 
