@@ -35,7 +35,7 @@ export default function HeroSection() {
           </div>
           <div className="hairline mx-auto my-6" />
           <p className="text-base leading-[1.85] text-whisper">
-            From the moment you book, we walk every step with you. A quiet, beautifully kept
+            From the moment you book, we walk every step with you. A beautifully kept
             space for you, your people, your moments, looked after by 4Ever Photos.
           </p>
         </div>
