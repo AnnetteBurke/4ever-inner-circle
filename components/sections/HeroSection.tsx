@@ -21,7 +21,7 @@ export default function HeroSection() {
           {/* Label stacked on the left of the photo */}
           <div className="absolute left-6 top-[45%] max-w-[45%]">
             <p className="text-[11px] tracking-label uppercase text-cream/90 leading-relaxed font-medium">
-              A private<br />space for<br />our couples
+              A private<br />space for<br />our wedding couples
             </p>
           </div>
         </div>
@@ -35,13 +35,14 @@ export default function HeroSection() {
           </div>
           <div className="hairline mx-auto my-6" />
           <p className="text-base leading-[1.85] text-whisper">
-            From the moment you book, we walk every step with you. A beautifully kept
-            space for you, your people, your moments, looked after by 4Ever Photos.
+            Thank you for choosing us to tell your love story. We built this space for you —
+            your people, your plans, your dreams, all here to gather and come to life.
+            Now make it yours. Add your first name.
           </p>
         </div>
       </div>
 
-      {/* Desktop layout — unchanged */}
+      {/* Desktop layout */}
       <div className="hidden md:flex flex-col items-center justify-center text-center min-h-screen px-12 pt-32 pb-20 relative">
         <div className="absolute inset-0 pointer-events-none hero-image-fade" aria-hidden="true">
           <Image
@@ -52,7 +53,7 @@ export default function HeroSection() {
             priority
           />
         </div>
-        <div className="relative z-10 label-tag mb-8">A private space for our couples</div>
+        <div className="relative z-10 label-tag mb-8">A private space for our wedding couples</div>
         <h1 className="relative z-10 text-8xl lg:text-9xl font-light leading-[0.92] tracking-tight text-ink mb-2">
           The <span className="script-accent font-normal text-[0.92em] inline-block -translate-y-1.5">Inner</span> Circle
         </h1>
@@ -61,8 +62,9 @@ export default function HeroSection() {
         </div>
         <div className="relative z-10 hairline mx-auto my-8" />
         <p className="relative z-10 max-w-[540px] text-base leading-[1.85] text-whisper mt-10">
-          From the moment you book, we walk every step with you. A beautifully kept
-          space for you, your people, your moments, looked after by 4Ever Photos.
+          Thank you for choosing us to tell your love story. We built this space for you —
+          your people, your plans, your dreams, all here to gather and come to life.
+          Now make it yours. Add your first name.
         </p>
         <div className="z-10 hidden lg:flex absolute bottom-12 left-0 right-0 justify-between items-center px-20 text-[11px] tracking-label uppercase text-whisper">
           <div className="flex items-center gap-2">
