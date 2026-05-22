@@ -49,9 +49,18 @@ export default function JourneySection() {
             We will send little reminders to all the main people,{' '}
             <span className="script-accent font-normal">just at the right time</span>
           </h2>
-          <p className="text-base leading-[1.85] text-whisper max-w-[560px]">
+          <p className="text-base leading-[1.85] text-whisper max-w-[560px] mb-5">
             From the moment you book, we&apos;ll be sending small, useful things to you,
             to your bridal party, to your suppliers, at exactly the right moment.
+          </p>
+          <p className="text-base leading-[1.85] text-whisper max-w-[560px]">
+            And as the day gets closer, your Inner Circle builds a beautiful timeline
+            of the day itself. Your hairdresser adds her arrival time and her full
+            list of appointments. Your florist locks in her delivery slot. Google
+            Maps works out your travel time to the church and tells you when to leave.
+            Every supplier, every moment, every name, all in one place. So on the
+            morning of your wedding, nobody is guessing and nobody is chasing.
+            You just get ready.
           </p>
         </div>
       </div>
