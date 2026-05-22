@@ -7,6 +7,7 @@ export default function InvitePage() {
   const [brideName, setBrideName] = useState('')
   const [groomName, setGroomName] = useState('')
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [errorMsg, setErrorMsg] = useState('')
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -18,7 +19,13 @@ export default function InvitePage() {
       body: JSON.stringify({ email, brideName, groomName }),
     })
 
-    setStatus(res.ok ? 'sent' : 'error')
+    if (res.ok) {
+      setStatus('sent')
+    } else {
+      const body = await res.json()
+      setErrorMsg(body.error || 'Unknown error')
+      setStatus('error')
+    }
   }
 
   return (
@@ -93,7 +100,7 @@ export default function InvitePage() {
             </button>
             {status === 'error' && (
               <p className="text-sm text-red-500 text-center">
-                Something went wrong. Please try again.
+                Error: {errorMsg}
               </p>
             )}
           </form>
