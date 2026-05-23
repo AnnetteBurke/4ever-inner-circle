@@ -33,8 +33,12 @@ function buildEmailHtml(body: string): string {
           <!-- Header -->
           <tr>
             <td style="background:#4A1F3D;padding:36px 48px;text-align:center;">
-              <p style="margin:0 0 6px;font-family:Arial,sans-serif;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#C49AAA;">4Ever Photos</p>
-              <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:22px;font-weight:300;color:#FAF4F0;letter-spacing:0.08em;">Inner Circle</p>
+              <img
+                src="https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/brand/inner-circle-landscape.svg"
+                alt="4Ever Inner Circle"
+                width="220"
+                style="display:block;margin:0 auto;max-width:220px;"
+              />
             </td>
           </tr>
 
@@ -60,9 +64,10 @@ function buildEmailHtml(body: string): string {
           <!-- Signature -->
           <tr>
             <td style="background:#FAF4F0;padding:32px 48px 48px;">
-              <p style="margin:0 0 4px;font-family:Georgia,'Times New Roman',serif;font-size:13px;font-style:italic;color:#A86B85;">with love,</p>
-              <p style="margin:0 0 16px;font-family:Georgia,'Times New Roman',serif;font-size:28px;font-weight:300;color:#4A1F3D;letter-spacing:0.04em;">Annette</p>
-              <p style="margin:0;font-family:Arial,sans-serif;font-size:11px;color:#C49AAA;letter-spacing:0.1em;text-transform:uppercase;">4Ever Photos &nbsp;&middot;&nbsp; studio@4ever.photos</p>
+              <p style="margin:0 0 8px;font-family:Georgia,'Times New Roman',serif;font-size:13px;font-style:italic;color:#A86B85;">with love,</p>
+              <p style="margin:0 0 20px;font-family:'Brush Script MT','Segoe Script','Apple Chancery',cursive;font-size:42px;color:#4A1F3D;line-height:1.1;">Annette x</p>
+              <p style="margin:0 0 3px;font-family:Arial,sans-serif;font-size:11px;color:#A86B85;letter-spacing:0.12em;text-transform:uppercase;">4Ever Photos</p>
+              <p style="margin:0;font-family:Arial,sans-serif;font-size:11px;color:#C49AAA;">studio@4ever.photos</p>
             </td>
           </tr>
 
