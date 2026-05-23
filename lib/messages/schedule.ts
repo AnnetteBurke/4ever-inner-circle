@@ -1,6 +1,4 @@
 import { createAdminClient } from '@/lib/supabase'
-import { MESSAGE_TEMPLATES } from '@/content/messages'
-import type { RoleSlug } from '@/content/roles'
 import { buildVars, renderTemplate } from './render'
 
 type Person = {
@@ -34,15 +32,14 @@ export async function scheduleMessagesForPerson(person: Person, couple: Couple) 
   if (!person.role) return
 
   const supabase = createAdminClient()
-  const role = person.role as RoleSlug
 
-  const templates = MESSAGE_TEMPLATES.filter(t =>
-    Array.isArray(t.recipientRole)
-      ? t.recipientRole.includes(role)
-      : t.recipientRole === role
-  )
+  const { data: templates } = await supabase
+    .from('message_templates')
+    .select('*')
+    .eq('recipient_role', person.role)
+    .eq('active', true)
 
-  if (templates.length === 0) return
+  if (!templates || templates.length === 0) return
 
   const vars = buildVars({
     personName: person.name,
@@ -59,21 +56,19 @@ export async function scheduleMessagesForPerson(person: Person, couple: Couple) 
   const now = new Date()
 
   for (const template of templates) {
-    const sendDate = addDays(couple.wedding_date, template.sendOffsetDays)
-    const [hours, minutes] = (template.sendTime ?? '09:30').split(':').map(Number)
+    const sendDate = addDays(couple.wedding_date, template.send_offset_days)
+    const [hours, minutes] = (template.send_time ?? '09:30').split(':').map(Number)
     sendDate.setHours(hours, minutes, 0, 0)
 
-    // Skip if the send date has already passed
     if (sendDate < now) continue
 
     const body = renderTemplate(template.body, vars)
     const subject = template.subject ? renderTemplate(template.subject, vars) : null
 
-    // Upsert — if this message was already scheduled, update it
     await supabase.from('scheduled_messages').upsert({
       couple_id: couple.id,
       person_id: person.id,
-      template_id: template.id,
+      template_id: template.template_key,
       channel: template.channel,
       recipient_name: person.name,
       recipient_email: person.email,

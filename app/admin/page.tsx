@@ -63,12 +63,20 @@ export default async function AdminPage() {
           </div>
         )}
 
-        <Link
-          href="/admin/invite"
-          className="inline-block text-[11px] tracking-label uppercase border border-plum text-plum px-8 py-3 hover:bg-plum hover:text-cream transition-colors"
-        >
-          + Set up a new couple
-        </Link>
+        <div className="flex gap-4 flex-wrap">
+          <Link
+            href="/admin/invite"
+            className="inline-block text-[11px] tracking-label uppercase border border-plum text-plum px-8 py-3 hover:bg-plum hover:text-cream transition-colors"
+          >
+            + Set up a new couple
+          </Link>
+          <Link
+            href="/admin/templates"
+            className="inline-block text-[11px] tracking-label uppercase border border-mauve text-mauve px-8 py-3 hover:bg-mauve hover:text-cream transition-colors"
+          >
+            Message templates
+          </Link>
+        </div>
 
       </div>
     </main>
