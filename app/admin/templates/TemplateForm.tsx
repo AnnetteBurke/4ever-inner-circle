@@ -9,6 +9,7 @@ export type TemplateRecord = {
   template_key: string
   recipient_role: string
   channel: 'email' | 'sms' | 'whatsapp'
+  trigger_type: 'wedding_date' | 'on_signup'
   send_offset_days: number
   send_time: string
   subject: string | null
@@ -33,15 +34,23 @@ const VARIABLES = [
   { token: '{hair_makeup_start_time}', description: 'Hair & makeup start time' },
 ]
 
-function offsetLabel(days: number): string {
+function offsetLabel(days: number, triggerType: 'wedding_date' | 'on_signup'): string {
+  if (triggerType === 'on_signup') {
+    if (days === 0) return 'Same day they sign up'
+    if (days % 7 === 0) {
+      const w = days / 7
+      return `${w} ${w === 1 ? 'week' : 'weeks'} after signing up`
+    }
+    return `${days} ${days === 1 ? 'day' : 'days'} after signing up`
+  }
   if (days === 0) return 'Wedding day'
   const abs = Math.abs(days)
   const dir = days < 0 ? 'before' : 'after'
   if (abs % 7 === 0) {
     const w = abs / 7
-    return `${w} ${w === 1 ? 'week' : 'weeks'} ${dir}`
+    return `${w} ${w === 1 ? 'week' : 'weeks'} ${dir} the wedding`
   }
-  return `${abs} ${abs === 1 ? 'day' : 'days'} ${dir}`
+  return `${abs} ${abs === 1 ? 'day' : 'days'} ${dir} the wedding`
 }
 
 function slugify(str: string): string {
@@ -136,21 +145,58 @@ export default function TemplateForm({ initial, mode }: { initial: TemplateRecor
         </div>
       </div>
 
+      {/* Trigger type */}
+      <div className="space-y-2">
+        <label className="text-[11px] tracking-label uppercase text-whisper block">When is this triggered?</label>
+        <div className="grid grid-cols-2 gap-2 max-w-sm">
+          {([
+            { value: 'on_signup', label: 'When they sign up' },
+            { value: 'wedding_date', label: 'Relative to wedding date' },
+          ] as const).map(opt => (
+            <button
+              key={opt.value}
+              type="button"
+              onClick={() => {
+                set('trigger_type', opt.value)
+                if (opt.value === 'on_signup') set('send_offset_days', 0)
+                if (opt.value === 'wedding_date') set('send_offset_days', -28)
+              }}
+              className={`py-3 px-4 text-xs border text-left transition-colors ${
+                form.trigger_type === opt.value
+                  ? 'bg-plum border-plum text-cream'
+                  : 'border-hairline text-whisper hover:border-mauve hover:text-ink'
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+        {form.trigger_type === 'on_signup' && (
+          <p className="text-xs text-whisper/60 italic">Use this for welcome messages. It fires based on when the person joins, regardless of how far away the wedding is.</p>
+        )}
+        {form.trigger_type === 'wedding_date' && (
+          <p className="text-xs text-whisper/60 italic">Use this for reminders and briefings. It fires a set number of days before or after the wedding date.</p>
+        )}
+      </div>
+
       {/* Timing */}
       <div className="grid grid-cols-2 gap-6">
         <div className="space-y-2">
           <label className="text-[11px] tracking-label uppercase text-whisper block">
-            When to send
-            <span className="normal-case not-italic font-normal ml-2 text-whisper/60">(negative = before wedding, 0 = wedding day, positive = after)</span>
+            {form.trigger_type === 'on_signup' ? 'Days after signing up' : 'Days before or after wedding'}
+            {form.trigger_type === 'wedding_date' && (
+              <span className="normal-case not-italic font-normal ml-2 text-whisper/60">(negative = before, positive = after)</span>
+            )}
           </label>
           <div className="flex items-center gap-3">
             <input
               type="number"
               value={form.send_offset_days}
+              min={form.trigger_type === 'on_signup' ? 0 : undefined}
               onChange={e => set('send_offset_days', parseInt(e.target.value) || 0)}
               className={`${inputClass} max-w-[120px]`}
             />
-            <span className="text-sm text-mauve italic">{offsetLabel(form.send_offset_days)}</span>
+            <span className="text-sm text-mauve italic">{offsetLabel(form.send_offset_days, form.trigger_type)}</span>
           </div>
         </div>
 

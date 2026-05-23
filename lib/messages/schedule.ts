@@ -27,8 +27,11 @@ function addDays(dateStr: string, days: number): Date {
   return d
 }
 
-export async function scheduleMessagesForPerson(person: Person, couple: Couple) {
-  if (!couple.wedding_date) return
+export async function scheduleMessagesForPerson(
+  person: Person,
+  couple: Couple,
+  signupDate: Date = new Date()
+) {
   if (!person.role) return
 
   const supabase = createAdminClient()
@@ -56,7 +59,18 @@ export async function scheduleMessagesForPerson(person: Person, couple: Couple) 
   const now = new Date()
 
   for (const template of templates) {
-    const sendDate = addDays(couple.wedding_date, template.send_offset_days)
+    const triggerType = template.trigger_type ?? 'wedding_date'
+
+    let sendDate: Date
+
+    if (triggerType === 'on_signup') {
+      sendDate = addDays(signupDate.toISOString().split('T')[0], template.send_offset_days)
+    } else {
+      // wedding_date trigger — skip if no wedding date set
+      if (!couple.wedding_date) continue
+      sendDate = addDays(couple.wedding_date, template.send_offset_days)
+    }
+
     const [hours, minutes] = (template.send_time ?? '09:30').split(':').map(Number)
     sendDate.setHours(hours, minutes, 0, 0)
 

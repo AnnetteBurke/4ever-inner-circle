@@ -5,6 +5,7 @@ const EMPTY = {
   template_key: '',
   recipient_role: '',
   channel: 'whatsapp' as const,
+  trigger_type: 'wedding_date' as const,
   send_offset_days: -28,
   send_time: '09:30',
   subject: null,
