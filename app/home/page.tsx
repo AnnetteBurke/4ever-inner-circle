@@ -2,45 +2,7 @@ import { redirect } from 'next/navigation'
 import { createSupabaseServerClient } from '@/lib/supabase-server'
 import { createAdminClient } from '@/lib/supabase'
 import Link from 'next/link'
-
-const features = [
-  {
-    label: 'Your Circle',
-    tag: 'Your people',
-    desc: 'Add your bridal party, family and suppliers. We brief everyone at the right moment.',
-    href: '/home/people',
-  },
-  {
-    label: 'Day Plan',
-    tag: 'Your day',
-    desc: 'Walk us through the shape of your day. The more we know, the more we can anticipate every moment.',
-    href: '/home/day-plan',
-  },
-  {
-    label: 'Shot Requests',
-    tag: 'Photography',
-    desc: 'Tell us the specific group moments and people you want captured, beyond the standard family groups.',
-    href: '/home/shots',
-  },
-  {
-    label: 'Mood Board',
-    tag: 'Your vision',
-    desc: 'Your personal Pinterest, built in. Hair, flowers, venue, dress — all in one place, shared only with the right eyes.',
-    href: '/home/mood',
-  },
-  {
-    label: 'Calm Corner',
-    tag: 'The Bodytap Method',
-    desc: 'For the nerves, the worries, the butterflies and the stress. Five tapping coins, gifted with our compliments.',
-    href: '/home/calm',
-  },
-  {
-    label: 'Gift List',
-    tag: 'Photography gifts',
-    desc: 'A mobile portrait studio at your venue, extra coverage, fine-art albums. Let the people who love you give to your story.',
-    href: '/home/registry',
-  },
-]
+import DashboardCards from './DashboardCards'
 
 function getCountdown(weddingDate: string | null): { days: number | null; label: string } {
   if (!weddingDate) return { days: null, label: '' }
@@ -148,21 +110,7 @@ export default async function HomePage() {
 
       {/* Feature cards */}
       <div className="max-w-4xl mx-auto px-8 md:px-16 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-hairline border border-hairline">
-          {features.map((f) => (
-            <Link
-              key={f.href}
-              href={f.href}
-              className="bg-cream p-8 hover:bg-blush-soft transition-colors group"
-            >
-              <div className="text-[10px] tracking-label uppercase text-mauve mb-3">{f.tag}</div>
-              <h3 className="text-2xl font-light text-ink mb-3 group-hover:text-plum transition-colors">
-                {f.label}
-              </h3>
-              <p className="text-sm text-whisper leading-relaxed">{f.desc}</p>
-            </Link>
-          ))}
-        </div>
+        <DashboardCards />
       </div>
 
       {/* Photographer's Brief link */}
