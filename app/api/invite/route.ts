@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase'
+import { scheduleMessagesForPerson } from '@/lib/messages/schedule'
 
 export async function POST(request: Request) {
   const {
@@ -31,7 +32,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 
-  const { error: insertError } = await supabase.from('couples').insert({
+  const { data: couple, error: insertError } = await supabase.from('couples').insert({
     user_id: data.user.id,
     bride_name: brideName,
     groom_name: groomName,
@@ -43,10 +44,23 @@ export async function POST(request: Request) {
     venue_address: venueAddress || null,
     ceremony_name: ceremonyName || null,
     ceremony_address: ceremonyAddress || null,
-  })
+  }).select().single()
 
-  if (insertError) {
-    return NextResponse.json({ error: insertError.message }, { status: 500 })
+  if (insertError || !couple) {
+    return NextResponse.json({ error: insertError?.message ?? 'Failed to create couple' }, { status: 500 })
+  }
+
+  // Auto-add the bride as a person so on_signup messages fire immediately
+  const brideRole = (partner1Gender === 'man') ? 'groom' : 'bride'
+  const { data: bridePerson } = await supabase.from('people').insert({
+    couple_id: couple.id,
+    name: brideName,
+    role: brideRole,
+    email: email,
+  }).select().single()
+
+  if (bridePerson) {
+    scheduleMessagesForPerson(bridePerson, couple, new Date()).catch(() => {})
   }
 
   return NextResponse.json({ success: true })
