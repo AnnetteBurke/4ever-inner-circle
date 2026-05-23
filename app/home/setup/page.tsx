@@ -3,12 +3,35 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
+const VENUES = [
+  { name: 'Ballymascanlon Hotel', slug: 'ballymascanlon' },
+  { name: 'Bellingham Castle', slug: 'bellingham-castle' },
+  { name: 'Cabra Castle', slug: 'cabra-castle' },
+  { name: 'Carrickdale Hotel', slug: 'carrickdale-hotel' },
+  { name: 'Darver Castle', slug: 'darver-castle' },
+  { name: 'Four Seasons Carlingford', slug: 'four-seasons-carlingford' },
+  { name: 'Galgorm Hotel', slug: 'galgorm-hotel' },
+  { name: 'Harveys Point', slug: 'harveys-point' },
+  { name: 'Leighinmohr House', slug: 'leighinmohr-house' },
+  { name: 'Merchant Hotel', slug: 'merchant-hotel' },
+  { name: 'Ross Harbour', slug: 'ross-harbour' },
+  { name: 'Tinakilly', slug: 'tinakilly' },
+  { name: 'Tullyglass Hotel', slug: 'tullyglass-hotel' },
+  { name: 'Other venue', slug: '' },
+]
+
 export default function SetupPage() {
   const router = useRouter()
   const [weddingDate, setWeddingDate] = useState('')
+  const [venueSlug, setVenueSlug] = useState('')
   const [venueName, setVenueName] = useState('')
   const [venueAddress, setVenueAddress] = useState('')
   const [saving, setSaving] = useState(false)
+
+  function handleVenueSelect(slug: string, name: string) {
+    setVenueSlug(slug)
+    setVenueName(slug ? name : '')
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -20,12 +43,15 @@ export default function SetupPage() {
       body: JSON.stringify({
         wedding_date: weddingDate,
         venue_name: venueName,
+        venue_slug: venueSlug || null,
         venue_address: venueAddress,
       }),
     })
 
     router.replace('/home')
   }
+
+  const selectedVenue = VENUES.find(v => v.slug === venueSlug)
 
   return (
     <main className="min-h-screen bg-cream flex items-center justify-center px-8">
@@ -51,19 +77,39 @@ export default function SetupPage() {
               className="w-full border border-hairline bg-transparent px-4 py-3 text-ink text-base focus:outline-none focus:border-mauve"
             />
           </div>
+
           <div>
             <label className="text-[11px] tracking-label uppercase text-mauve block mb-2">
-              Venue name
+              Your venue
             </label>
-            <input
-              type="text"
-              required
-              value={venueName}
-              onChange={e => setVenueName(e.target.value)}
-              className="w-full border border-hairline bg-transparent px-4 py-3 text-ink text-base focus:outline-none focus:border-mauve"
-              placeholder="Darver Castle"
-            />
+            <div className="grid grid-cols-2 gap-2">
+              {VENUES.map(v => (
+                <button
+                  key={v.slug || 'other'}
+                  type="button"
+                  onClick={() => handleVenueSelect(v.slug, v.name)}
+                  className={`px-3 py-2.5 text-left text-sm border transition-colors ${
+                    selectedVenue?.slug === v.slug && selectedVenue?.name === v.name
+                      ? 'border-mauve bg-blush-soft text-plum'
+                      : 'border-hairline text-whisper hover:border-mauve hover:text-ink'
+                  }`}
+                >
+                  {v.name}
+                </button>
+              ))}
+            </div>
+            {venueSlug === '' && selectedVenue?.name === 'Other venue' && (
+              <input
+                type="text"
+                required
+                value={venueName}
+                onChange={e => setVenueName(e.target.value)}
+                placeholder="Type your venue name"
+                className="mt-3 w-full border border-hairline bg-transparent px-4 py-3 text-ink text-base focus:outline-none focus:border-mauve"
+              />
+            )}
           </div>
+
           <div>
             <label className="text-[11px] tracking-label uppercase text-mauve block mb-2">
               Venue address
@@ -76,9 +122,10 @@ export default function SetupPage() {
               placeholder="Full address for Google Maps pin drops"
             />
           </div>
+
           <button
             type="submit"
-            disabled={saving}
+            disabled={saving || !venueName}
             className="w-full py-4 text-[11px] tracking-label uppercase border border-plum text-plum hover:bg-plum hover:text-cream transition-colors disabled:opacity-50"
           >
             {saving ? 'Saving...' : 'Open my Inner Circle'}

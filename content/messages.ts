@@ -305,7 +305,7 @@ Annette
   // ─────────────────────────────────────────────────────────────
   {
     id: 'supplier_planner_coordination',
-    recipientRole: 'supplier_planner',
+    recipientRole: 'supplier_other',
     channel: 'email',
     sendOffsetDays: -7,
     subject: 'Final coordination — {couple_first_names}\'s day',
@@ -334,7 +334,7 @@ Annette
   // ─────────────────────────────────────────────────────────────
   {
     id: 'supplier_hair_makeup_timing',
-    recipientRole: 'supplier_hair_makeup',
+    recipientRole: 'supplier_hairdresser',
     channel: 'email',
     sendOffsetDays: -14,
     subject: 'Getting-ready photography for {bride_first_name}',

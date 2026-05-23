@@ -27,12 +27,25 @@ export type RoleSlug =
   | 'mother_of_groom'
   | 'sibling'
   // Suppliers
+  | 'supplier_hairdresser'
+  | 'supplier_makeup'
   | 'supplier_florist'
-  | 'supplier_planner'
+  | 'supplier_dressmaker'
+  | 'supplier_dress_supplier'
+  | 'supplier_jewellery'
+  | 'supplier_room_stylist'
+  | 'supplier_caterer'
+  | 'supplier_venue'
+  | 'supplier_celebrant'
+  | 'supplier_videographer'
+  | 'supplier_content_creator'
+  | 'supplier_ceremony_music'
+  | 'supplier_drinks_entertainment'
+  | 'supplier_meal_entertainment'
+  | 'supplier_dj'
+  | 'supplier_band'
   | 'supplier_cake'
-  | 'supplier_catering'
-  | 'supplier_band_dj'
-  | 'supplier_hair_makeup'
+  | 'supplier_cars'
   | 'supplier_other';
 
 export interface RoleDefinition {
@@ -66,13 +79,26 @@ export const ROLES: RoleDefinition[] = [
   { slug: 'sibling', label: 'Sibling', group: 'family', description: 'Brother or sister of the bride/groom.' },
 
   // Suppliers
+  { slug: 'supplier_hairdresser', label: 'Hairdresser', group: 'supplier', description: 'Wedding hairdresser.' },
+  { slug: 'supplier_makeup', label: 'Make-up Artist', group: 'supplier', description: 'Make-up artist.' },
   { slug: 'supplier_florist', label: 'Florist', group: 'supplier', description: 'Wedding florist.' },
-  { slug: 'supplier_planner', label: 'Wedding Planner', group: 'supplier', description: 'On-the-day or full planner.' },
-  { slug: 'supplier_cake', label: 'Cake Maker', group: 'supplier', description: 'Cake supplier.' },
-  { slug: 'supplier_catering', label: 'Caterer', group: 'supplier', description: 'Catering supplier.' },
-  { slug: 'supplier_band_dj', label: 'Band / DJ', group: 'supplier', description: 'Music supplier.' },
-  { slug: 'supplier_hair_makeup', label: 'Hair & Makeup', group: 'supplier', description: 'Beauty team.' },
-  { slug: 'supplier_other', label: 'Other Supplier', group: 'supplier', description: 'Anyone else providing a service.' }
+  { slug: 'supplier_dressmaker', label: 'Dressmaker', group: 'supplier', description: 'Dress designer or alterations.' },
+  { slug: 'supplier_dress_supplier', label: 'Dress Supplier', group: 'supplier', description: 'Bridal boutique or dress supplier.' },
+  { slug: 'supplier_jewellery', label: 'Jewellery Supplier', group: 'supplier', description: 'Rings, accessories and jewellery.' },
+  { slug: 'supplier_room_stylist', label: 'Room Stylist', group: 'supplier', description: 'Venue styling and decor.' },
+  { slug: 'supplier_caterer', label: 'Caterer', group: 'supplier', description: 'Catering supplier.' },
+  { slug: 'supplier_venue', label: 'Reception Venue', group: 'supplier', description: 'Reception venue coordinator.' },
+  { slug: 'supplier_celebrant', label: 'Celebrant', group: 'supplier', description: 'Ceremony celebrant or officiant.' },
+  { slug: 'supplier_videographer', label: 'Videographer', group: 'supplier', description: 'Wedding videographer.' },
+  { slug: 'supplier_content_creator', label: 'Content Creator', group: 'supplier', description: 'Social media content creator.' },
+  { slug: 'supplier_ceremony_music', label: 'Ceremony Music', group: 'supplier', description: 'Musician or singer for the ceremony.' },
+  { slug: 'supplier_drinks_entertainment', label: 'Drinks Reception Entertainment', group: 'supplier', description: 'Entertainment during drinks reception.' },
+  { slug: 'supplier_meal_entertainment', label: 'Meal Entertainment', group: 'supplier', description: 'Entertainment during the meal.' },
+  { slug: 'supplier_dj', label: 'DJ', group: 'supplier', description: 'Wedding DJ.' },
+  { slug: 'supplier_band', label: 'Band', group: 'supplier', description: 'Wedding band.' },
+  { slug: 'supplier_cake', label: 'Cake', group: 'supplier', description: 'Wedding cake supplier.' },
+  { slug: 'supplier_cars', label: 'Cars', group: 'supplier', description: 'Wedding transport.' },
+  { slug: 'supplier_other', label: 'Other Supplier', group: 'supplier', description: 'Anyone else providing a service.' },
 ];
 
 export const ROLE_GROUPS = ['couple', 'bridal_party', 'family', 'supplier'] as const;

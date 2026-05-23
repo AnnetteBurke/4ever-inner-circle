@@ -4,7 +4,8 @@ const nextConfig = {
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
-      { protocol: 'https', hostname: '4everphotos.uk' }
+      { protocol: 'https', hostname: '4everphotos.uk' },
+      { protocol: 'https', hostname: '*.supabase.co' }
     ]
   },
   // PWA-friendly headers

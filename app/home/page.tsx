@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import { createSupabaseServerClient } from '@/lib/supabase-server'
+import { createAdminClient } from '@/lib/supabase'
 import Link from 'next/link'
 
 const features = [
@@ -8,42 +9,36 @@ const features = [
     tag: 'Your people',
     desc: 'Add your bridal party, family and suppliers. We brief everyone at the right moment.',
     href: '/home/people',
-    accent: 'text-mauve',
+  },
+  {
+    label: 'Day Plan',
+    tag: 'Your day',
+    desc: 'Walk us through the shape of your day. The more we know, the more we can anticipate every moment.',
+    href: '/home/day-plan',
+  },
+  {
+    label: 'Shot Requests',
+    tag: 'Photography',
+    desc: 'Tell us the specific group moments and people you want captured, beyond the standard family groups.',
+    href: '/home/shots',
   },
   {
     label: 'Mood Board',
     tag: 'Your vision',
     desc: 'Your personal Pinterest, built in. Hair, flowers, venue, dress — all in one place, shared only with the right eyes.',
     href: '/home/mood',
-    accent: 'text-mauve',
-  },
-  {
-    label: 'Your Journey',
-    tag: 'The timeline',
-    desc: 'The full story of your day, built with your suppliers. Everyone knows where to be and when.',
-    href: '/home/journey',
-    accent: 'text-mauve',
   },
   {
     label: 'Calm Corner',
     tag: 'The Bodytap Method',
     desc: 'For the nerves, the worries, the butterflies and the stress. Five tapping coins, gifted with our compliments.',
     href: '/home/calm',
-    accent: 'text-mauve',
   },
   {
     label: 'Gift List',
     tag: 'Photography gifts',
     desc: 'A mobile portrait studio at your venue, extra coverage, fine-art albums. Let the people who love you give to your story.',
     href: '/home/registry',
-    accent: 'text-mauve',
-  },
-  {
-    label: 'Shared Album',
-    tag: 'Every moment',
-    desc: 'Your professional images alongside every angle captured by your guests. One place for it all.',
-    href: '/home/album',
-    accent: 'text-mauve',
   },
 ]
 
@@ -71,28 +66,60 @@ export default async function HomePage() {
     .eq('user_id', user.id)
     .single()
 
-  if (!couple?.wedding_date) redirect('/home/setup')
+  const { days, label } = getCountdown(couple?.wedding_date ?? null)
 
-  const { days, label } = getCountdown(couple.wedding_date)
+  const weddingDateFormatted = couple?.wedding_date
+    ? new Date(couple.wedding_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+    : null
 
-  const weddingDateFormatted = new Date(couple.wedding_date).toLocaleDateString('en-GB', {
-    day: 'numeric', month: 'long', year: 'numeric'
-  })
+  let venueImageUrl: string | null = null
+  let venueImages: string[] = []
+  if (couple?.venue_slug) {
+    const adminClient = createAdminClient()
+    const { data: files } = await adminClient.storage.from('Venues').list(couple.venue_slug, { limit: 20 })
+    if (files && files.length > 0) {
+      const imageFiles = files.filter(f =>
+        f.id !== null && /\.(jpg|jpeg|png|webp|gif|heic|heif)$/i.test(f.name)
+      )
+      const urls = imageFiles.map(f => {
+        const { data } = adminClient.storage.from('Venues').getPublicUrl(`${couple.venue_slug}/${f.name}`)
+        return data.publicUrl
+      })
+      venueImageUrl = urls[0] ?? null
+      venueImages = urls.slice(1)
+    }
+  }
 
   return (
     <main className="min-h-screen bg-cream">
 
       {/* Header */}
-      <div className="bg-plum text-cream px-8 md:px-16 pt-16 pb-20">
-        <div className="max-w-4xl mx-auto flex items-center justify-between gap-8">
+      <div
+        className="relative text-cream px-8 md:px-16 pt-16 pb-20 overflow-hidden"
+        style={venueImageUrl ? {
+          backgroundImage: `url(${venueImageUrl})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        } : { backgroundColor: '#4A1F3D' }}
+      >
+        {venueImageUrl && (
+          <div className="absolute inset-0 bg-plum/80" />
+        )}
+        <div className="relative max-w-4xl mx-auto flex items-center justify-between gap-8">
           <div className="flex-1">
-            <div className="text-[11px] tracking-label uppercase text-mauve-soft mb-4">
-              4Ever Inner Circle
-            </div>
+            <img
+              src="/brand/Inner Circle Landscap.svg"
+              alt="4Ever Inner Circle"
+              className="h-14 md:h-20 w-auto mb-5"
+            />
             <h1 className="text-4xl md:text-6xl font-light leading-tight mb-3 text-cream">
               {couple.bride_name} <span className="font-serif italic text-mauve-soft">&</span> {couple.groom_name}
             </h1>
-            <p className="text-cream/60 text-base">{couple.venue_name} · {weddingDateFormatted}</p>
+            {(couple?.venue_name || weddingDateFormatted) && (
+              <p className="text-cream/60 text-base">
+                {[couple?.venue_name, weddingDateFormatted].filter(Boolean).join(' · ')}
+              </p>
+            )}
           </div>
 
           {days !== null && (
@@ -103,6 +130,21 @@ export default async function HomePage() {
           )}
         </div>
       </div>
+
+      {/* Venue photo strip */}
+      {venueImages.length > 0 && (
+        <div className="flex gap-0.5 h-56 md:h-80 overflow-hidden">
+          {venueImages.slice(0, 5).map((url, i) => (
+            <div key={i} className="flex-1 overflow-hidden">
+              <img
+                src={url}
+                alt=""
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Feature cards */}
       <div className="max-w-4xl mx-auto px-8 md:px-16 py-16">
@@ -123,9 +165,25 @@ export default async function HomePage() {
         </div>
       </div>
 
+      {/* Photographer's Brief link */}
+      <div className="max-w-4xl mx-auto px-8 md:px-16 pb-8">
+        <Link
+          href="/home/brief"
+          className="flex items-center justify-between border border-mauve px-8 py-6 hover:bg-mauve hover:text-cream transition-colors group"
+        >
+          <div>
+            <div className="text-[10px] tracking-label uppercase text-mauve group-hover:text-cream/70 transition-colors mb-1">Photographer&apos;s Brief</div>
+            <p className="text-base font-light text-ink group-hover:text-cream transition-colors">
+              View your complete day brief — all locations, people, groups and plans in one place.
+            </p>
+          </div>
+          <span className="text-mauve group-hover:text-cream transition-colors text-xl ml-6 flex-shrink-0">→</span>
+        </Link>
+      </div>
+
       {/* Footer */}
       <div className="max-w-4xl mx-auto px-8 md:px-16 pb-16 flex justify-between items-center text-[11px] tracking-label uppercase text-whisper">
-        <span>4Ever Photos · Inner Circle</span>
+        <img src="/brand/Inner Circle.svg" alt="4Ever Inner Circle" className="h-6 w-auto opacity-40" />
         <form action="/auth/signout" method="post">
           <button type="submit" className="text-whisper hover:text-mauve transition-colors">
             Sign out
