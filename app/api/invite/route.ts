@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase'
 import { scheduleMessagesForPerson } from '@/lib/messages/schedule'
+import { sendEmail } from '@/lib/resend'
+import { sendWhatsApp } from '@/lib/twilio'
 
 export async function POST(request: Request) {
   const {
@@ -9,12 +11,18 @@ export async function POST(request: Request) {
     groomName,
     partner1Gender,
     partner2Gender,
+    partner1Mobile,
+    partner2Mobile,
+    partner2Email,
     weddingDate,
+    ceremonyTime,
     venueName,
     venueSlug,
     venueAddress,
     ceremonyName,
     ceremonyAddress,
+    bridePrep,
+    groomPrep,
   } = await request.json()
 
   if (!email || !brideName || !groomName) {
@@ -23,17 +31,46 @@ export async function POST(request: Request) {
 
   const supabase = createAdminClient()
 
-  const { data, error } = await supabase.auth.admin.inviteUserByEmail(email, {
-    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/confirm`,
-    data: { bride_name: brideName, groom_name: groomName },
+  // Create the user and get the invite link so we can send our own branded email
+  const { data: linkData, error: linkError } = await supabase.auth.admin.generateLink({
+    type: 'invite',
+    email,
+    options: {
+      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/confirm`,
+      data: { bride_name: brideName, groom_name: groomName },
+    },
   })
 
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
+  if (linkError) {
+    return NextResponse.json({ error: linkError.message }, { status: 500 })
   }
 
+  const inviteUrl = linkData.properties.action_link
+
+  // Send our own branded invitation email via Resend
+  await sendEmail({
+    to: email,
+    subject: `${brideName}, your 4Ever Inner Circle is ready`,
+    body: `Hi ${brideName},
+
+Thank you so much for booking 4Ever Photos for your wedding. We are genuinely excited to be part of your day.
+
+We have created something really special for you — your own 4Ever Inner Circle. It is a private platform built with the latest technology and designed entirely around you and ${groomName}. Everything in one place, bespoke to your wedding, accessible anytime from your phone.
+
+Inside you will find your day plan, your shot requests, your people all briefed and looked after, and a whole lot more waiting for you.
+
+To get started, all you need to do is click the button below and you are in.
+
+${inviteUrl}
+
+If this button does not work, copy and paste the link above into your browser.
+
+We cannot wait to show you what we have built for you.`,
+  })
+
+  // Create the couple record
   const { data: couple, error: insertError } = await supabase.from('couples').insert({
-    user_id: data.user.id,
+    user_id: linkData.user.id,
     bride_name: brideName,
     groom_name: groomName,
     partner_1_gender: partner1Gender || 'woman',
@@ -44,23 +81,51 @@ export async function POST(request: Request) {
     venue_address: venueAddress || null,
     ceremony_name: ceremonyName || null,
     ceremony_address: ceremonyAddress || null,
+    bride_mobile: partner1Mobile || null,
+    groom_mobile: partner2Mobile || null,
+    groom_email: partner2Email || null,
+    ceremony_time: ceremonyTime || null,
+    bride_prep_address: bridePrep || null,
+    groom_prep_address: groomPrep || null,
   }).select().single()
 
   if (insertError || !couple) {
     return NextResponse.json({ error: insertError?.message ?? 'Failed to create couple' }, { status: 500 })
   }
 
-  // Auto-add the bride as a person so on_signup messages fire immediately
-  const brideRole = (partner1Gender === 'man') ? 'groom' : 'bride'
-  const { data: bridePerson } = await supabase.from('people').insert({
+  // Auto-add partner 1 as a person so on_signup messages fire immediately
+  const p1Role = partner1Gender === 'man' ? 'groom' : 'bride'
+  const { data: p1Person } = await supabase.from('people').insert({
     couple_id: couple.id,
     name: brideName,
-    role: brideRole,
+    role: p1Role,
     email: email,
+    phone: partner1Mobile || null,
   }).select().single()
 
-  if (bridePerson) {
-    scheduleMessagesForPerson(bridePerson, couple, new Date()).catch(() => {})
+  if (p1Person) {
+    scheduleMessagesForPerson(p1Person, couple, new Date()).catch(() => {})
+  }
+
+  // Auto-add partner 2 if we have enough details
+  if (groomName && (partner2Email || partner2Mobile)) {
+    const p2Role = partner2Gender === 'woman' ? 'bride' : 'groom'
+    await supabase.from('people').insert({
+      couple_id: couple.id,
+      name: groomName,
+      role: p2Role,
+      email: partner2Email || null,
+      phone: partner2Mobile || null,
+    })
+  }
+
+  // Send WhatsApp nudge to partner 1 to check their inbox
+  if (partner1Mobile) {
+    const firstName = brideName.split(' ')[0]
+    sendWhatsApp({
+      to: partner1Mobile,
+      body: `Hi ${firstName}! An invitation email has just landed in your inbox from studio@4ever.photos. If you don't see it in the next few minutes, check your junk or spam folder. So excited to have you in the Inner Circle! Annette x`,
+    }).catch(() => {})
   }
 
   return NextResponse.json({ success: true })
