@@ -77,6 +77,10 @@ export default function InvitePage() {
     setForm(f => ({ ...f, [field]: value }))
   }
 
+  function setPhone(field: 'partner1Mobile' | 'partner2Mobile', value: string) {
+    setForm(f => ({ ...f, [field]: value.replace(/^\+440/, '+44') }))
+  }
+
   function handleVenueChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const slug = e.target.value
     if (slug === '_unset') {
@@ -206,7 +210,7 @@ export default function InvitePage() {
                 </div>
                 <div>
                   <label className={labelClass}>Mobile — for WhatsApp</label>
-                  <input type="tel" value={form.partner1Mobile} onChange={e => set('partner1Mobile', e.target.value)} className={inputClass} placeholder="+447700900000" />
+                  <input type="tel" value={form.partner1Mobile} onChange={e => setPhone('partner1Mobile', e.target.value)} className={inputClass} placeholder="+44 7xxx xxxxxx" />
                 </div>
               </div>
 
@@ -223,7 +227,7 @@ export default function InvitePage() {
                 </div>
                 <div>
                   <label className={labelClass}>Mobile — for WhatsApp</label>
-                  <input type="tel" value={form.partner2Mobile} onChange={e => set('partner2Mobile', e.target.value)} className={inputClass} placeholder="+447700900000" />
+                  <input type="tel" value={form.partner2Mobile} onChange={e => setPhone('partner2Mobile', e.target.value)} className={inputClass} placeholder="+44 7xxx xxxxxx" />
                 </div>
               </div>
             </div>

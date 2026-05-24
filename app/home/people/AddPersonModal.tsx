@@ -74,6 +74,10 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
   const [partnerSaving, setPartnerSaving] = useState(false)
   const [partnerError, setPartnerError] = useState('')
 
+  function normalisePhone(value: string) {
+    return value.replace(/^\+440/, '+44')
+  }
+
   function reset() {
     setName(''); setRole(''); setFamilyOrFriend(null); setSide('')
     setFamilyRelationship(''); setChildName(''); setPhone('+44'); setEmail('')
@@ -341,7 +345,7 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
                     <input
                       type="tel"
                       value={phone}
-                      onChange={e => setPhone(e.target.value)}
+                      onChange={e => setPhone(normalisePhone(e.target.value))}
                       className="w-full border border-hairline bg-transparent px-4 py-3 text-ink text-base focus:outline-none focus:border-mauve"
                       placeholder="+44 7xxx xxxxxx"
                     />
@@ -466,7 +470,7 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
                     <input
                       type="tel"
                       value={partnerPhone}
-                      onChange={e => setPartnerPhone(e.target.value)}
+                      onChange={e => setPartnerPhone(normalisePhone(e.target.value))}
                       className="w-full border border-hairline bg-transparent px-4 py-3 text-ink text-base focus:outline-none focus:border-mauve"
                       placeholder="+44 7xxx xxxxxx"
                     />
