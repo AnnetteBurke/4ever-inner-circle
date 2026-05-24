@@ -74,8 +74,8 @@ function buildEmailHtml(body: string): string {
           <!-- Footer -->
           <tr>
             <td style="background:#4A1F3D;padding:20px 48px;text-align:center;">
-              <p style="margin:0;font-family:Arial,sans-serif;font-size:10px;color:#C49AAA;letter-spacing:0.1em;">
-                You are receiving this because you are part of a couple&apos;s 4Ever Inner Circle.
+              <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:12px;font-style:italic;color:#C49AAA;line-height:1.6;">
+                The best wedding photographs begin long before we press the shutter.
               </p>
             </td>
           </tr>
