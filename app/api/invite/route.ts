@@ -51,6 +51,8 @@ export async function POST(request: Request) {
   await sendEmail({
     to: email,
     subject: `${brideName}, your 4Ever Inner Circle is ready`,
+    ctaUrl: inviteUrl,
+    ctaLabel: 'Open your Inner Circle',
     body: `Hi ${brideName},
 
 Thank you so much for booking 4Ever Photos for your wedding. We are genuinely excited to be part of your day.
@@ -59,11 +61,9 @@ We have created something really special for you — your own 4Ever Inner Circle
 
 Inside you will find your day plan, your shot requests, your people all briefed and looked after, and a whole lot more waiting for you.
 
-To get started, all you need to do is click the button below and you are in.
+To get started, just press the button below and you are in.
 
-${inviteUrl}
-
-If this button does not work, copy and paste the link above into your browser.
+If the button does not work, copy and paste this link into your browser: ${inviteUrl}
 
 We cannot wait to show you what we have built for you.`,
   })
