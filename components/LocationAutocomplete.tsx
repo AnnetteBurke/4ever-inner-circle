@@ -26,8 +26,11 @@ export function CeremonyAutocomplete({
 }) {
   const [open, setOpen] = useState(false)
 
-  const matches = nameValue.length > 1
-    ? suggestions.filter(s => s.name.toLowerCase().includes(nameValue.toLowerCase()))
+  // Show all suggestions on focus; filter once typing starts
+  const matches = open
+    ? (nameValue.length === 0
+        ? suggestions
+        : suggestions.filter(s => s.name.toLowerCase().includes(nameValue.toLowerCase())))
     : []
 
   function select(loc: NameAddressPair) {
@@ -43,6 +46,7 @@ export function CeremonyAutocomplete({
           type="text"
           value={nameValue}
           onChange={e => { onNameChange(e.target.value); setOpen(true) }}
+          onFocus={() => setOpen(true)}
           onBlur={() => setTimeout(() => setOpen(false), 150)}
           placeholder={namePlaceholder}
           className={inputClass}
@@ -90,8 +94,10 @@ export function PrepAutocomplete({
 }) {
   const [open, setOpen] = useState(false)
 
-  const matches = value.length > 1
-    ? suggestions.filter(s => s.toLowerCase().includes(value.toLowerCase()))
+  const matches = open
+    ? (value.length === 0
+        ? suggestions
+        : suggestions.filter(s => s.toLowerCase().includes(value.toLowerCase())))
     : []
 
   return (
@@ -101,6 +107,7 @@ export function PrepAutocomplete({
         type="text"
         value={value}
         onChange={e => { onChange(e.target.value); setOpen(true) }}
+        onFocus={() => setOpen(true)}
         onBlur={() => setTimeout(() => setOpen(false), 150)}
         placeholder="Hotel, house address..."
         className={inputClass}
