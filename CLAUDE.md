@@ -66,12 +66,17 @@ Her gaps: code, terminal commands, dev jargon.
 - **Sacramento** — elegant signature font for Annette's sign-off. Variable: `--font-sacramento`. Tailwind: `font-signature`. Used only on Annette's signature.
 
 **Voice**:
-- Warm, never bossy.
-- Considered, never rushed.
+- Loud and luxurious. This platform is the result of years of experience and genuine passion — it should feel that way.
+- Warm, exciting, alive. Annette is vibrant and present. The copy should be too.
+- Never quiet, hushed, considered, hidden, or retreating. The brand is called Love Out Loud — it means it.
+- Never corporate, brochure-like, or passively elegant. If it sounds like a luxury hotel leaflet, rewrite it.
 - British English (colour not color, organised not organized, behaviour not behavior).
-- Em-dashes for thought breaks, never hyphens-with-spaces.
+- No em-dashes (Annette's explicit instruction — use commas or line breaks instead).
 - Italics for emotional emphasis, not bold.
 - Use "we" when speaking on behalf of Annette/4Ever. Use "you" for the couple.
+- Words to NEVER use: considered, quiet (as brand positioning), curated, crafted, intentional, hidden, hushed, retreat.
+- Words that ARE Annette: real, alive, brilliant, exciting, love, together, vibrant, fabulous, genuine, years of experience, built for you.
+- Test: would Annette say this out loud to a bride with a big smile on her face? If yes, keep it. If it sounds like someone else wrote it, rewrite it.
 
 **Visual rules**:
 - Plenty of whitespace. The mockup margins are generous; don't shrink them.
@@ -224,6 +229,6 @@ If she hasn't moved them into this folder, ask her where they are.
 
 ## North Star
 
-> "Build slowly. Build beautifully. Build only what makes a couple's life quieter, not busier."
+> "The best wedding photographs begin long before we press the shutter."
 
-If a feature would add noise to a couple's life rather than calm, push back. Annette wants this to feel like a hand on the small of the back — present, supportive, never demanding.
+This platform is the result of years of real experience, real love for what Annette does, and a genuine desire to make every couple feel like the most important people in the world. It should feel exciting to open, brilliant to use, and completely unique — because it is. Build with that energy. If a feature feels flat or generic, make it better. If copy sounds like anyone else wrote it, rewrite it in Annette's voice.
