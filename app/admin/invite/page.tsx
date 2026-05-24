@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PhoneInput from '@/components/PhoneInput'
+import { CeremonyAutocomplete, PrepAutocomplete } from '@/components/LocationAutocomplete'
 
 const VENUES = [
   { name: 'Ballymascanlon Hotel', slug: 'ballymascanlon', address: 'Ballymascanlon, Dundalk, Co. Louth, Ireland' },
@@ -73,6 +74,18 @@ export default function InvitePage() {
   const [form, setForm] = useState<FormState>(empty)
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [errorMsg, setErrorMsg] = useState('')
+  const [ceremonyLocations, setCeremonyLocations] = useState<{ name: string; address: string }[]>([])
+  const [prepLocations, setPrepLocations] = useState<string[]>([])
+
+  useEffect(() => {
+    fetch('/api/locations')
+      .then(r => r.json())
+      .then(data => {
+        setCeremonyLocations(data.ceremony ?? [])
+        setPrepLocations(data.prep ?? [])
+      })
+      .catch(() => {})
+  }, [])
 
   function set(field: keyof FormState, value: string) {
     setForm(f => ({ ...f, [field]: value }))
@@ -270,27 +283,31 @@ export default function InvitePage() {
           {/* Ceremony */}
           <fieldset>
             <legend className="text-[11px] tracking-label uppercase text-mauve mb-4 block">Ceremony location</legend>
-            <div className="mb-4">
-              <input type="text" value={form.ceremonyName} onChange={e => set('ceremonyName', e.target.value)} className={inputClass} placeholder="St. Patrick's Church, Dundalk" />
-            </div>
-            <div>
-              <label className={labelClass}>Ceremony address</label>
-              <input type="text" value={form.ceremonyAddress} onChange={e => set('ceremonyAddress', e.target.value)} className={inputClass} placeholder="Full address for map links" />
-            </div>
+            <CeremonyAutocomplete
+              nameValue={form.ceremonyName}
+              addressValue={form.ceremonyAddress}
+              onNameChange={v => set('ceremonyName', v)}
+              onAddressChange={v => set('ceremonyAddress', v)}
+              suggestions={ceremonyLocations}
+            />
           </fieldset>
 
           {/* Getting ready */}
           <fieldset>
             <legend className="text-[11px] tracking-label uppercase text-mauve mb-4 block">Getting ready locations</legend>
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className={labelClass}>{marriageConfig.p1} getting ready</label>
-                <input type="text" value={form.bridePrep} onChange={e => set('bridePrep', e.target.value)} className={inputClass} placeholder="Hotel, house address..." />
-              </div>
-              <div>
-                <label className={labelClass}>{marriageConfig.p2} getting ready</label>
-                <input type="text" value={form.groomPrep} onChange={e => set('groomPrep', e.target.value)} className={inputClass} placeholder="Hotel, house address..." />
-              </div>
+              <PrepAutocomplete
+                value={form.bridePrep}
+                onChange={v => set('bridePrep', v)}
+                label={`${marriageConfig.p1} getting ready`}
+                suggestions={prepLocations}
+              />
+              <PrepAutocomplete
+                value={form.groomPrep}
+                onChange={v => set('groomPrep', v)}
+                label={`${marriageConfig.p2} getting ready`}
+                suggestions={prepLocations}
+              />
             </div>
           </fieldset>
 
