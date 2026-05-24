@@ -40,9 +40,9 @@ const sacramento = Sacramento({
    ───────────────────────────────────────────────────────────── */
 
 export const metadata: Metadata = {
-  title: '4Ever Inner Circle — A wedding experience, considered',
+  title: '4Ever Inner Circle — Your private wedding space by 4Ever Photos',
   description:
-    'A private space for booked clients of 4Ever Photos. Quiet care, the right rhythm, your people looked after.',
+    'A private space for booked clients of 4Ever Photos. Your people looked after, your day held with care.',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: '4Ever Inner Circle',
-    description: 'A wedding experience, considered. By 4Ever Photos.',
+    description: 'Your private wedding space, built with love by 4Ever Photos.',
     type: 'website'
   }
 };
