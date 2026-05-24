@@ -65,9 +65,7 @@ To get started, just press the button below and you are in.
 
 {{CTA}}
 
-We cannot wait to show you what we have built for you.
-
-If the button does not work, copy and paste this link into your browser: ${inviteUrl}`,
+We cannot wait to show you what we have built for you.`,
   })
 
   // Create the couple record
