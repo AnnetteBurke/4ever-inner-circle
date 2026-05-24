@@ -3,25 +3,31 @@ import { Resend } from 'resend'
 const resend = new Resend(process.env.RESEND_API_KEY)
 const FROM = process.env.RESEND_FROM_EMAIL ?? 'Annette at 4Ever <studio@4ever.photos>'
 
+function toParagraph(text: string) {
+  const lines = text.trim().replace(/\n/g, '<br>')
+  return `<p style="margin:0 0 20px;line-height:1.8;color:#2E3528;font-size:16px;font-family:Georgia,'Times New Roman',serif;">${lines}</p>`
+}
+
+function ctaButton(url: string, label: string) {
+  return `<p style="margin:0 0 20px;text-align:center;">
+    <a href="${url}" style="display:inline-block;background:#4A1F3D;color:#FAF4F0;font-family:Arial,sans-serif;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;padding:18px 48px;">${label}</a>
+  </p>`
+}
+
 function buildEmailHtml(body: string, ctaUrl?: string, ctaLabel = 'Open your Inner Circle'): string {
-  const paragraphs = body
+  // Replace {{CTA}} marker with the button inline, then convert remaining text to paragraphs
+  const processedBody = body
     .split(/\n\n+/)
     .map(para => {
-      const lines = para.trim().replace(/\n/g, '<br>')
-      return `<p style="margin:0 0 20px;line-height:1.8;color:#2E3528;font-size:16px;font-family:Georgia,'Times New Roman',serif;">${lines}</p>`
+      const trimmed = para.trim()
+      if (trimmed === '{{CTA}}') {
+        return ctaUrl ? ctaButton(ctaUrl, ctaLabel) : ''
+      }
+      return toParagraph(trimmed)
     })
     .join('')
 
-  const ctaBlock = ctaUrl ? `
-          <!-- CTA Button -->
-          <tr>
-            <td style="background:#FAF4F0;padding:0 32px 40px;text-align:center;">
-              <a href="${ctaUrl}"
-                style="display:inline-block;background:#4A1F3D;color:#FAF4F0 !important;font-family:Arial,sans-serif;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;padding:18px 48px;">
-                ${ctaLabel}
-              </a>
-            </td>
-          </tr>` : ''
+  const ctaBlock = '' // button is now inline via {{CTA}} marker
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -57,7 +63,7 @@ function buildEmailHtml(body: string, ctaUrl?: string, ctaLabel = 'Open your Inn
           <!-- Body -->
           <tr>
             <td style="background:#FAF4F0;padding:44px 32px 32px;">
-              ${paragraphs}
+              ${processedBody}
             </td>
           </tr>
 

@@ -63,9 +63,11 @@ Inside you will find your day plan, your shot requests, your people all briefed 
 
 To get started, just press the button below and you are in.
 
-If the button does not work, copy and paste this link into your browser: ${inviteUrl}
+{{CTA}}
 
-We cannot wait to show you what we have built for you.`,
+We cannot wait to show you what we have built for you.
+
+If the button does not work, copy and paste this link into your browser: ${inviteUrl}`,
   })
 
   // Create the couple record
