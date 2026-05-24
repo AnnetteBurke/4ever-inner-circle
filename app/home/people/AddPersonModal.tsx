@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { ROLES } from '@/content/roles'
+import PhoneInput from '@/components/PhoneInput'
 
 const FAMILY_RELATIONSHIPS = [
   'Mum', 'Dad', 'Step-mum', 'Step-dad',
@@ -73,10 +74,6 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
   const [partnerInPhotos, setPartnerInPhotos] = useState<boolean | null>(null)
   const [partnerSaving, setPartnerSaving] = useState(false)
   const [partnerError, setPartnerError] = useState('')
-
-  function normalisePhone(value: string) {
-    return value.replace(/^\+440/, '+44')
-  }
 
   function reset() {
     setName(''); setRole(''); setFamilyOrFriend(null); setSide('')
@@ -342,13 +339,7 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
 
                   <div>
                     <label className="text-[11px] tracking-label uppercase text-whisper block mb-2">Mobile number</label>
-                    <input
-                      type="tel"
-                      value={phone}
-                      onChange={e => setPhone(normalisePhone(e.target.value))}
-                      className="w-full border border-hairline bg-transparent px-4 py-3 text-ink text-base focus:outline-none focus:border-mauve"
-                      placeholder="+44 7xxx xxxxxx"
-                    />
+                    <PhoneInput value={phone} onChange={setPhone} containerClass="w-full" />
                   </div>
 
                   <div>
@@ -467,13 +458,7 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
 
                   <div>
                     <label className="text-[11px] tracking-label uppercase text-whisper block mb-2">Mobile number</label>
-                    <input
-                      type="tel"
-                      value={partnerPhone}
-                      onChange={e => setPartnerPhone(normalisePhone(e.target.value))}
-                      className="w-full border border-hairline bg-transparent px-4 py-3 text-ink text-base focus:outline-none focus:border-mauve"
-                      placeholder="+44 7xxx xxxxxx"
-                    />
+                    <PhoneInput value={partnerPhone} onChange={setPartnerPhone} containerClass="w-full" />
                   </div>
 
                   <div>

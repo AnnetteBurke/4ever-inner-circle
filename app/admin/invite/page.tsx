@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import PhoneInput from '@/components/PhoneInput'
 
 const VENUES = [
   { name: 'Ballymascanlon Hotel', slug: 'ballymascanlon', address: 'Ballymascanlon, Dundalk, Co. Louth, Ireland' },
@@ -75,10 +76,6 @@ export default function InvitePage() {
 
   function set(field: keyof FormState, value: string) {
     setForm(f => ({ ...f, [field]: value }))
-  }
-
-  function setPhone(field: 'partner1Mobile' | 'partner2Mobile', value: string) {
-    setForm(f => ({ ...f, [field]: value.replace(/^\+440/, '+44') }))
   }
 
   function handleVenueChange(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -210,7 +207,7 @@ export default function InvitePage() {
                 </div>
                 <div>
                   <label className={labelClass}>Mobile — for WhatsApp</label>
-                  <input type="tel" value={form.partner1Mobile} onChange={e => setPhone('partner1Mobile', e.target.value)} className={inputClass} placeholder="+44 7xxx xxxxxx" />
+                  <PhoneInput value={form.partner1Mobile} onChange={v => set('partner1Mobile', v)} containerClass="w-full" />
                 </div>
               </div>
 
@@ -227,7 +224,7 @@ export default function InvitePage() {
                 </div>
                 <div>
                   <label className={labelClass}>Mobile — for WhatsApp</label>
-                  <input type="tel" value={form.partner2Mobile} onChange={e => setPhone('partner2Mobile', e.target.value)} className={inputClass} placeholder="+44 7xxx xxxxxx" />
+                  <PhoneInput value={form.partner2Mobile} onChange={v => set('partner2Mobile', v)} containerClass="w-full" />
                 </div>
               </div>
             </div>
