@@ -239,7 +239,7 @@ export default function InvitePage() {
               </div>
               <div>
                 <label className={labelClass}>Ceremony time</label>
-                <input type="time" value={form.ceremonyTime} onChange={e => set('ceremonyTime', e.target.value)} className={inputClass} />
+                <input type="text" value={form.ceremonyTime} onChange={e => set('ceremonyTime', e.target.value)} className={inputClass} placeholder="e.g. 1:30pm" />
               </div>
             </div>
           </fieldset>
