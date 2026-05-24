@@ -56,7 +56,7 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
   const [side, setSide] = useState<'partner_1' | 'partner_2' | ''>('')
   const [familyRelationship, setFamilyRelationship] = useState('')
   const [childName, setChildName] = useState('')
-  const [phone, setPhone] = useState('')
+  const [phone, setPhone] = useState('+44')
   const [email, setEmail] = useState('')
   const [notes, setNotes] = useState('')
   const [saving, setSaving] = useState(false)
@@ -68,7 +68,7 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
 
   // Partner form fields
   const [partnerName, setPartnerName] = useState('')
-  const [partnerPhone, setPartnerPhone] = useState('')
+  const [partnerPhone, setPartnerPhone] = useState('+44')
   const [partnerEmail, setPartnerEmail] = useState('')
   const [partnerInPhotos, setPartnerInPhotos] = useState<boolean | null>(null)
   const [partnerSaving, setPartnerSaving] = useState(false)
@@ -76,10 +76,10 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
 
   function reset() {
     setName(''); setRole(''); setFamilyOrFriend(null); setSide('')
-    setFamilyRelationship(''); setChildName(''); setPhone(''); setEmail('')
+    setFamilyRelationship(''); setChildName(''); setPhone('+44'); setEmail('')
     setNotes(''); setError(''); setStep('main')
     setSavedPersonName(''); setSavedPersonSide('')
-    setPartnerName(''); setPartnerPhone(''); setPartnerEmail('')
+    setPartnerName(''); setPartnerPhone('+44'); setPartnerEmail('')
     setPartnerInPhotos(null); setPartnerError('')
   }
 
@@ -135,7 +135,7 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
       setSavedPersonName(name)
       setSavedPersonSide(side as 'partner_1' | 'partner_2' | '')
       setName(''); setRole(''); setFamilyOrFriend(null); setSide('')
-      setFamilyRelationship(''); setChildName(''); setPhone(''); setEmail('')
+      setFamilyRelationship(''); setChildName(''); setPhone('+44'); setEmail('')
       setNotes(''); setError('')
       setStep('partner_question')
     } else {
