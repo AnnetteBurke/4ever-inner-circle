@@ -404,13 +404,13 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
                 You have <span className="font-semibold text-plum">{people.length}</span> {people.length === 1 ? 'person' : 'people'} in <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a>. Make sure everyone you want in the family photographs is in there, because we build your suggested lists from exactly who you have added.
               </p>
               <p className="text-sm text-charcoal/70 leading-relaxed mb-3">
-                Work through the suggestions below. Add or remove people from each combination until it feels right, then hit Approve. You can have fun with it.
+                When all the family you want in the photographs are added, check back here and you will see a suggested list of combinations.
+              </p>
+              <p className="text-sm text-charcoal/70 leading-relaxed mb-3">
+                Consider each one. If someone is missing, go back to <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> and add them. If there is someone in the combination that you would like to remove, click their name and the box turns black, which means they will not be in that photograph.
               </p>
               <p className="text-sm text-charcoal/70 leading-relaxed mb-5">
-                Here is the part we love. When your lists are done, everyone in your family groups gets a WhatsApp a few days before the wedding with their scheduled time and location for their photograph. Then on the day itself, about 15 minutes before their shot, they get an updated message confirming exactly where and when to be. If the weather has shifted things or we have moved a location, they get that update too.
-              </p>
-              <p className="text-sm text-charcoal/70 leading-relaxed mb-5">
-                It means nobody disappears to their room when they are supposed to be in front of the camera.
+                We will WhatsApp everyone on the list a time and place to be, so that no one disappears to their room when they are supposed to be in front of the camera.
               </p>
             </>
           )}
@@ -430,7 +430,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
               <span className="text-[11px] tracking-label uppercase text-mauve-soft">{pending.length} remaining</span>
             </div>
             <p className="text-sm text-charcoal/70 leading-relaxed mb-8">
-              If someone is missing from a shot, click <span className="font-semibold text-plum">Add someone</span> to pop over to Our Circle and add them. To take anyone out of a particular shot, click their name and it goes dark. When you are happy with the combination, click <span className="font-semibold text-plum">Approve</span> and it joins your confirmed list.
+              Click a name to remove them from that image. When you have it right, press Approve and it joins the confirmed list.
             </p>
             <div className="space-y-4">
               {pending.map(shot => {
@@ -467,23 +467,23 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
                       <button
                         onClick={() => handleDecide(shot, 'approved', includedPeople)}
                         disabled={actioning === shot.id || includedPeople === ''}
-                        className="px-6 py-2.5 text-[11px] tracking-label uppercase bg-plum text-cream hover:bg-plum/90 transition-colors disabled:opacity-40"
+                        className="px-8 py-2.5 text-[11px] tracking-label uppercase bg-plum text-cream hover:bg-plum/90 transition-colors disabled:opacity-40"
                       >
-                        {actioning === shot.id ? 'Saving...' : 'Approve'}
+                        {actioning === shot.id ? 'Saving...' : 'Approve this image'}
                       </button>
                       <Link
                         href="/home/people"
                         target="_blank"
-                        className="px-6 py-2.5 text-[11px] tracking-label uppercase border border-mauve text-mauve hover:bg-mauve hover:text-cream transition-colors"
+                        className="px-8 py-2.5 text-[11px] tracking-label uppercase border border-mauve text-mauve hover:bg-mauve hover:text-cream transition-colors"
                       >
-                        Add someone
+                        Need to add someone?
                       </Link>
                       <button
                         onClick={() => handleDecide(shot, 'skipped')}
                         disabled={actioning === shot.id}
-                        className="px-6 py-2.5 text-[11px] tracking-label uppercase border border-hairline text-whisper hover:border-mauve hover:text-ink transition-colors disabled:opacity-40"
+                        className="px-8 py-2.5 text-[11px] tracking-label uppercase border border-hairline text-whisper hover:border-mauve hover:text-ink transition-colors disabled:opacity-40"
                       >
-                        Skip
+                        Skip - don&apos;t need this shot
                       </button>
                     </div>
                   </div>
