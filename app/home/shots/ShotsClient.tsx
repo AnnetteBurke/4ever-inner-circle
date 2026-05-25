@@ -349,22 +349,13 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
   return (
     <main className="min-h-screen bg-cream">
 
-      {/* Header — image 00 faded behind plum, same formula as home page */}
-      <div
-        className="relative text-cream px-8 md:px-16 pt-12 pb-12 overflow-hidden"
-        style={{ backgroundColor: '#4A1F3D' }}
-      >
-        {/* Desktop: image 00 */}
+      {/* Header — image 00 behind plum overlay, exact home page formula */}
+      <div className="relative text-cream px-8 md:px-16 pt-12 pb-12 overflow-hidden">
         <div
-          className="hidden md:block absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/00-family.jpg)` }}
         />
-        {/* Mobile: image 00 */}
-        <div
-          className="md:hidden absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/00-family.jpg)` }}
-        />
-        <div className="absolute inset-0 bg-plum/80" />
+        <div className="absolute inset-0" style={{ backgroundColor: 'rgba(74, 31, 61, 0.80)' }} />
         <div className="relative max-w-4xl mx-auto">
           <Link href="/home" className="text-[11px] tracking-label uppercase text-mauve-soft hover:text-cream transition-colors mb-6 block">
             ← Back to your Inner Circle
@@ -377,13 +368,28 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
         </div>
       </div>
 
-      {/* Single hero image below header */}
-      <div className="overflow-hidden">
-        <img
-          src="https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/08-family.jpg"
-          alt=""
-          className="w-full h-52 md:h-[420px] object-cover"
-        />
+      {/* Image strip directly below header — mobile: 2 cols h-40, desktop: 4 flex h-80 */}
+      <div className="md:hidden grid grid-cols-2 gap-0.5 h-40">
+        {['01','02'].map(n => (
+          <div key={n} className="overflow-hidden">
+            <img
+              src={`https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/${n}-family.jpg`}
+              alt=""
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ))}
+      </div>
+      <div className="hidden md:flex gap-0.5 h-80 overflow-hidden">
+        {['01','02','03','04'].map(n => (
+          <div key={n} className="flex-1 overflow-hidden">
+            <img
+              src={`https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/${n}-family.jpg`}
+              alt=""
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ))}
       </div>
 
       <div className="max-w-4xl mx-auto px-8 md:px-16 py-16 space-y-16">
@@ -564,25 +570,25 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
 
       </div>
 
-      {/* Bottom image strip — mobile: 2 cols, desktop: 4 flex */}
-      <div className="md:hidden grid grid-cols-2 gap-0.5">
-        {['01','02'].map(n => (
+      {/* Bottom image strip — mobile: 2 cols h-40, desktop: 3 flex h-80 */}
+      <div className="md:hidden grid grid-cols-2 gap-0.5 h-40">
+        {['05','06'].map(n => (
           <div key={n} className="overflow-hidden">
             <img
               src={`https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/${n}-family.jpg`}
               alt=""
-              className="w-full h-44 object-cover"
+              className="w-full h-full object-cover"
             />
           </div>
         ))}
       </div>
       <div className="hidden md:flex gap-0.5 h-80 overflow-hidden">
-        {['01','02','03','04'].map(n => (
+        {['05','06','07','08'].map(n => (
           <div key={n} className="flex-1 overflow-hidden">
             <img
               src={`https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/${n}-family.jpg`}
               alt=""
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+              className="w-full h-full object-cover"
             />
           </div>
         ))}
