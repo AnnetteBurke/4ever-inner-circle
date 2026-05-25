@@ -493,18 +493,22 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
           </div>
         )}
 
-        {/* Image break — 3 photos */}
-        <div className="grid grid-cols-3 gap-0.5 -mx-8 md:-mx-16">
-          {['04','05','06'].map(n => (
-            <div key={n} className="overflow-hidden">
-              <img
-                src={`https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/${n}-family.jpg`}
-                alt=""
-                className="w-full h-48 md:h-60 object-cover hover:scale-105 transition-transform duration-700"
-              />
-            </div>
-          ))}
-        </div>
+      </div>
+
+      {/* Image break — 3 photos, full bleed */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-0.5">
+        {['04','05','06'].map(n => (
+          <div key={n} className="overflow-hidden">
+            <img
+              src={`https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/${n}-family.jpg`}
+              alt=""
+              className="w-full h-48 md:h-64 object-cover hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+        ))}
+      </div>
+
+      <div className="max-w-4xl mx-auto px-8 md:px-16 py-16 space-y-16">
 
         {/* Extended family prompt */}
         <div className="border border-hairline px-8 py-8">
