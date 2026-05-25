@@ -486,7 +486,7 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
 
         {partner1IsMale && (
           <>
-            <Q label={twoGrooms ? "Are the lads heading to the pub before the ceremony?" : "Is the groom heading to the pub before the ceremony?"}>
+            <Q label="Are the lads heading to the pub before the ceremony?">
               <YesNo value={plan.bride_pub_stop} onChange={v => set('bride_pub_stop', v)} />
             </Q>
 
@@ -644,7 +644,7 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
               </>
             ) : (
               <>
-                <Q label={twoGrooms ? "Are the lads heading to the pub before the ceremony?" : "Is the groom heading to the pub before the ceremony?"}>
+                <Q label="Are the lads heading to the pub before the ceremony?">
                   <YesNo value={plan.groom_pub_stop} onChange={v => set('groom_pub_stop', v)} />
                 </Q>
 

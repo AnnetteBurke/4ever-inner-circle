@@ -134,6 +134,12 @@ export default function PeopleClient({ brideName, groomName, initialPeople }: Pr
                 />
               </div>
 
+              {section.group === 'family' && (
+                <p className="text-sm text-whisper italic mb-4">
+                  Don&apos;t forget children — nieces, nephews, and any little ones who will be in the family photographs. Add them here so we know to include them in the family groups on the day.
+                </p>
+              )}
+
               {sectionPeople.length === 0 ? (
                 <div className="border border-hairline px-8 py-8 text-center">
                   <p className="text-sm text-whisper italic">No one added yet.</p>
