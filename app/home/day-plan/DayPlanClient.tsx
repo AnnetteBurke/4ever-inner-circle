@@ -9,6 +9,7 @@ type DayPlan = {
   bride_prep_address: string | null
   bride_has_children: boolean
   bride_children_ages: string | null
+  bride_children_details: string | null
   bride_children_needs: string | null
   bride_dad_reveal: boolean
   bride_bridesmaids_reveal: boolean
@@ -16,13 +17,16 @@ type DayPlan = {
   bride_gifts_notes: string | null
   bride_prep_location_notes: string | null
   bride_pub_stop: boolean
+  bride_pub_address: string | null
   bride_personality_notes: string | null
   groom_prep_address: string | null
   groom_has_children: boolean
   groom_children_ages: string | null
+  groom_children_details: string | null
   groom_children_needs: string | null
   groom_personality_notes: string | null
   groom_pub_stop: boolean
+  groom_pub_address: string | null
   groom_dad_reveal: boolean
   groom_bridesmaids_reveal: boolean
   groom_gifts: boolean
@@ -91,6 +95,7 @@ const EMPTY: DayPlan = {
   bride_prep_address: null,
   bride_has_children: false,
   bride_children_ages: null,
+  bride_children_details: null,
   bride_children_needs: null,
   bride_dad_reveal: false,
   bride_bridesmaids_reveal: false,
@@ -98,13 +103,16 @@ const EMPTY: DayPlan = {
   bride_gifts_notes: null,
   bride_prep_location_notes: null,
   bride_pub_stop: false,
+  bride_pub_address: null,
   bride_personality_notes: null,
   groom_prep_address: null,
   groom_has_children: false,
   groom_children_ages: null,
+  groom_children_details: null,
   groom_children_needs: null,
   groom_personality_notes: null,
   groom_pub_stop: false,
+  groom_pub_address: null,
   groom_dad_reveal: false,
   groom_bridesmaids_reveal: false,
   groom_gifts: false,
@@ -211,6 +219,20 @@ function toggleSpeaker(current: string | null, id: string): string {
     : JSON.stringify([...arr, id])
 }
 
+type ChildEntry = { name: string; age: string }
+
+function parseChildren(json: string | null): ChildEntry[] {
+  const base: ChildEntry[] = [{ name: '', age: '' }, { name: '', age: '' }, { name: '', age: '' }]
+  if (!json) return base
+  try {
+    const parsed = JSON.parse(json) as ChildEntry[]
+    while (parsed.length < 3) parsed.push({ name: '', age: '' })
+    return parsed.slice(0, 3)
+  } catch {
+    return base
+  }
+}
+
 function Q({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
   return (
     <div className="space-y-3">
@@ -306,6 +328,13 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
   const twoGrooms = partner1Gender === 'man' && partner2Gender === 'man'
   const twoBrides = partner1Gender === 'woman' && partner2Gender === 'woman'
 
+  const speakerIds = parseSpeakers(plan.speeches_speakers)
+  const allSpeakerOptions = [
+    { id: 'partner_1', name: brideName },
+    { id: 'partner_2', name: groomName },
+    ...people,
+  ]
+
   return (
     <main className="min-h-screen bg-cream">
 
@@ -392,14 +421,35 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
 
         {plan.bride_has_children && (
           <>
-            <Field label="What age are they?">
-              <input
-                type="text"
-                value={plan.bride_children_ages ?? ''}
-                onChange={e => set('bride_children_ages', e.target.value || null)}
-                className={`${inputClass} max-w-sm`}
-                placeholder="e.g. 4 and 7"
-              />
+            <Field label="Tell us their names and ages" hint="Add up to three children. Leave blank if fewer.">
+              <div className="space-y-3 max-w-sm">
+                {parseChildren(plan.bride_children_details).map((child, i) => (
+                  <div key={i} className="grid grid-cols-2 gap-3">
+                    <input
+                      type="text"
+                      value={child.name}
+                      onChange={e => {
+                        const children = parseChildren(plan.bride_children_details)
+                        children[i] = { ...children[i], name: e.target.value }
+                        set('bride_children_details', JSON.stringify(children))
+                      }}
+                      className={inputClass}
+                      placeholder={`Child ${i + 1} name`}
+                    />
+                    <input
+                      type="text"
+                      value={child.age}
+                      onChange={e => {
+                        const children = parseChildren(plan.bride_children_details)
+                        children[i] = { ...children[i], age: e.target.value }
+                        set('bride_children_details', JSON.stringify(children))
+                      }}
+                      className={inputClass}
+                      placeholder="Age"
+                    />
+                  </div>
+                ))}
+              </div>
             </Field>
             <Field
               label="Do they have any special needs we should know about?"
@@ -436,9 +486,24 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
 
         {partner1IsMale && (
           <>
-            <Q label="Is the groom heading to the pub before the ceremony?">
+            <Q label={twoGrooms ? "Are the lads heading to the pub before the ceremony?" : "Is the groom heading to the pub before the ceremony?"}>
               <YesNo value={plan.bride_pub_stop} onChange={v => set('bride_pub_stop', v)} />
             </Q>
+
+            {plan.bride_pub_stop && (
+              <Field
+                label="Name and address of the pub"
+                hint="We need this so the photographer and cars know exactly where to go."
+              >
+                <input
+                  type="text"
+                  value={plan.bride_pub_address ?? ''}
+                  onChange={e => set('bride_pub_address', e.target.value || null)}
+                  className={inputClass}
+                  placeholder="e.g. The Crown Bar, 46 Great Victoria Street, Belfast, BT2 7BA"
+                />
+              </Field>
+            )}
 
             <Field
               label="Anything about his personality or interests we should know?"
@@ -516,14 +581,35 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
 
             {plan.groom_has_children && (
               <>
-                <Field label="What age are they?">
-                  <input
-                    type="text"
-                    value={plan.groom_children_ages ?? ''}
-                    onChange={e => set('groom_children_ages', e.target.value || null)}
-                    className={`${inputClass} max-w-sm`}
-                    placeholder="e.g. 3 and 6"
-                  />
+                <Field label="Tell us their names and ages" hint="Add up to three children. Leave blank if fewer.">
+                  <div className="space-y-3 max-w-sm">
+                    {parseChildren(plan.groom_children_details).map((child, i) => (
+                      <div key={i} className="grid grid-cols-2 gap-3">
+                        <input
+                          type="text"
+                          value={child.name}
+                          onChange={e => {
+                            const children = parseChildren(plan.groom_children_details)
+                            children[i] = { ...children[i], name: e.target.value }
+                            set('groom_children_details', JSON.stringify(children))
+                          }}
+                          className={inputClass}
+                          placeholder={`Child ${i + 1} name`}
+                        />
+                        <input
+                          type="text"
+                          value={child.age}
+                          onChange={e => {
+                            const children = parseChildren(plan.groom_children_details)
+                            children[i] = { ...children[i], age: e.target.value }
+                            set('groom_children_details', JSON.stringify(children))
+                          }}
+                          className={inputClass}
+                          placeholder="Age"
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </Field>
                 <Field
                   label="Do they have any special needs we should know about?"
@@ -558,9 +644,24 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
               </>
             ) : (
               <>
-                <Q label="Is the groom heading to the pub before the ceremony?">
+                <Q label={twoGrooms ? "Are the lads heading to the pub before the ceremony?" : "Is the groom heading to the pub before the ceremony?"}>
                   <YesNo value={plan.groom_pub_stop} onChange={v => set('groom_pub_stop', v)} />
                 </Q>
+
+                {plan.groom_pub_stop && (
+                  <Field
+                    label="Name and address of the pub"
+                    hint="We need this so the photographer and cars know exactly where to go."
+                  >
+                    <input
+                      type="text"
+                      value={plan.groom_pub_address ?? ''}
+                      onChange={e => set('groom_pub_address', e.target.value || null)}
+                      className={inputClass}
+                      placeholder="e.g. The Crown Bar, 46 Great Victoria Street, Belfast, BT2 7BA"
+                    />
+                  </Field>
+                )}
 
                 <Field
                   label="Anything about his personality or interests we should know?"
@@ -871,7 +972,7 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
             value={plan.room_entrance_style as 'announced' | 'bridal_party_first' | 'parents_bridal_party_first' | null}
             onChange={v => set('room_entrance_style', v)}
             options={[
-              { value: 'announced' as const, label: 'Bride & Groom announced' },
+              { value: 'announced' as const, label: 'Couple announced' },
               { value: 'bridal_party_first' as const, label: 'Bridal party then us' },
               { value: 'parents_bridal_party_first' as const, label: 'Parents, bridal party then us' },
             ]}
@@ -901,39 +1002,62 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
           </div>
         </Q>
 
-        <Q label="Who will be speaking?">
-          <div className="space-y-2 max-w-sm">
-            {[
-              { id: 'partner_1', name: brideName },
-              { id: 'partner_2', name: groomName },
-              ...people,
-            ].map(person => {
-              const selected = parseSpeakers(plan.speeches_speakers).includes(person.id)
-              return (
-                <button
-                  key={person.id}
-                  type="button"
-                  onClick={() => set('speeches_speakers', toggleSpeaker(plan.speeches_speakers, person.id))}
-                  className={`w-full py-3 px-4 text-sm border text-left transition-colors ${
-                    selected
-                      ? 'bg-plum border-plum text-cream'
-                      : 'border-hairline text-whisper hover:border-mauve hover:text-ink'
-                  }`}
-                >
-                  {person.name}
-                  {'role' in person && person.role && (
-                    <span className={`ml-2 text-[10px] tracking-label uppercase ${selected ? 'text-cream/60' : 'text-whisper/60'}`}>
-                      {person.role.replace(/_/g, ' ')}
-                    </span>
-                  )}
-                </button>
-              )
-            })}
-          </div>
-          {people.length === 0 && (
-            <p className="text-xs text-whisper/60 italic mt-2">
+        <Q
+          label="Who is speaking, and in what order?"
+          hint="Select each speaker in turn. A new slot appears automatically once each one is filled."
+        >
+          {people.length === 0 ? (
+            <p className="text-xs text-whisper/60 italic">
               Add people to Your Circle and they will appear here to select.
             </p>
+          ) : (
+            <div className="space-y-4 max-w-sm">
+              {([...speakerIds, '']).map((speakerId, idx) => {
+                const isEmptySlot = idx === speakerIds.length
+                const ordinals = ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh', 'Eighth']
+                const ordinal = ordinals[idx] ?? `Speaker ${idx + 1}`
+                const unavailable = speakerIds.filter((_, j) => j !== idx)
+                const options = allSpeakerOptions.filter(p => !unavailable.includes(p.id))
+
+                return (
+                  <div key={idx} className="flex gap-3 items-end">
+                    <div className="flex-1">
+                      <label className="text-[10px] tracking-label uppercase text-whisper/60 block mb-1">
+                        {ordinal} speaker
+                      </label>
+                      <select
+                        value={speakerId}
+                        onChange={e => {
+                          const next = [...speakerIds]
+                          if (isEmptySlot) next.push(e.target.value)
+                          else next[idx] = e.target.value
+                          set('speeches_speakers', JSON.stringify(next))
+                        }}
+                        className={inputClass}
+                      >
+                        {isEmptySlot && <option value="" disabled>Select from Your Circle</option>}
+                        {options.map(p => (
+                          <option key={p.id} value={p.id}>{p.name}</option>
+                        ))}
+                      </select>
+                    </div>
+                    {!isEmptySlot && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const next = speakerIds.filter((_, j) => j !== idx)
+                          set('speeches_speakers', next.length ? JSON.stringify(next) : null)
+                        }}
+                        className="pb-3 text-lg text-whisper hover:text-ink flex-shrink-0"
+                        aria-label="Remove speaker"
+                      >
+                        ×
+                      </button>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
           )}
         </Q>
 
@@ -996,10 +1120,6 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
           </Field>
         )}
 
-        <Q label="Is there a father-daughter dance?">
-          <YesNo value={plan.daddy_daughter_dance} onChange={v => set('daddy_daughter_dance', v)} />
-        </Q>
-
         {!twoGrooms && (
           <>
             <Q label="Are you wearing a second dress?">
@@ -1048,6 +1168,9 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
           </>
         )}
 
+        <Q label={twoGrooms || twoBrides ? "Are either of you doing a special dance with a parent?" : "Is there a father-daughter dance?"}>
+          <YesNo value={plan.daddy_daughter_dance} onChange={v => set('daddy_daughter_dance', v)} />
+        </Q>
 
         <Q
           label="Would you like evening outdoor shots after dinner?"
