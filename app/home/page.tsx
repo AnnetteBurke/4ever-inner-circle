@@ -35,6 +35,10 @@ export default async function HomePage() {
     ? new Date(couple.wedding_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
     : null
 
+  const FALLBACK_HERO = '/images/hero-couple.jpg'
+  const FALLBACK_MOBILE_HERO = '/images/dashboard-bg.jpg'
+  const FALLBACK_STRIP = ['/images/strip-1.jpg', '/images/strip-2.jpg', '/images/strip-3.jpg', '/images/strip-4.jpg']
+
   let venueImageUrl: string | null = null      // desktop hero (image 00 — wide panoramic)
   let mobileVenueImageUrl: string | null = null // mobile hero (image 05 — fields shot)
   let venueImages: string[] = []               // desktop strip images
@@ -56,6 +60,14 @@ export default async function HomePage() {
       // Mobile strip: bridge shot (index 9) left, bridal shot (index 2) right
       mobileStripImages = [urls[9] ?? urls[1], urls[2] ?? urls[1]].filter(Boolean) as string[]
     }
+  }
+
+  // No venue-specific images — use standard wedding photography fallbacks
+  if (!venueImageUrl) {
+    venueImageUrl = FALLBACK_HERO
+    mobileVenueImageUrl = FALLBACK_MOBILE_HERO
+    venueImages = FALLBACK_STRIP
+    mobileStripImages = [FALLBACK_STRIP[0], FALLBACK_STRIP[1]]
   }
 
   return (
