@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import { createSupabaseBrowserClient as createClient } from '@/lib/supabase-browser'
 
 type MoodImage = {
@@ -11,8 +11,13 @@ type MoodImage = {
   storage_path: string
 }
 
+type Person = {
+  id: string
+  name: string
+  role: string | null
+}
+
 const CATEGORIES = [
-  { value: 'all', label: 'All' },
   { value: 'hair', label: 'Hair' },
   { value: 'makeup', label: 'Make Up' },
   { value: 'flowers', label: 'Flowers' },
@@ -30,6 +35,132 @@ const CATEGORIES = [
   { value: 'details', label: 'Details' },
   { value: 'other', label: 'Other' },
 ]
+
+function ShareModal({
+  category,
+  coupleId,
+  onClose,
+}: {
+  category: string
+  coupleId: string
+  onClose: () => void
+}) {
+  const [people, setPeople] = useState<Person[]>([])
+  const [sharedWith, setSharedWith] = useState<string[]>([])
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+
+  const catLabel = CATEGORIES.find(c => c.value === category)?.label ?? category
+
+  useEffect(() => {
+    const supabase = createClient()
+    Promise.all([
+      supabase.from('people').select('id, name, role').eq('couple_id', coupleId).order('name'),
+      supabase.from('mood_board_shares').select('person_id').eq('couple_id', coupleId).eq('category', category),
+    ]).then(([peopleRes, sharesRes]) => {
+      setPeople(peopleRes.data ?? [])
+      setSharedWith((sharesRes.data ?? []).map((s: { person_id: string }) => s.person_id))
+      setLoading(false)
+    })
+  }, [coupleId, category])
+
+  async function save() {
+    setSaving(true)
+    const supabase = createClient()
+    await supabase.from('mood_board_shares').delete().eq('couple_id', coupleId).eq('category', category)
+    if (sharedWith.length > 0) {
+      await supabase.from('mood_board_shares').insert(
+        sharedWith.map(personId => ({ couple_id: coupleId, category, person_id: personId }))
+      )
+    }
+    setSaving(false)
+    onClose()
+  }
+
+  function toggle(personId: string) {
+    setSharedWith(prev =>
+      prev.includes(personId) ? prev.filter(id => id !== personId) : [...prev, personId]
+    )
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center px-6" onClick={onClose}>
+      <div className="absolute inset-0 bg-ink/40" />
+      <div className="relative bg-cream w-full max-w-md p-8" onClick={e => e.stopPropagation()}>
+        <div className="text-[11px] tracking-label uppercase text-mauve mb-2">Share folder</div>
+        <h2 className="text-2xl font-light text-ink mb-2">Who can see your {catLabel} folder?</h2>
+        <p className="text-sm text-whisper mb-8 leading-relaxed">
+          Tick anyone you'd like to share this section with. They'll get a private link straight to these images.
+        </p>
+
+        {loading ? (
+          <p className="text-sm text-whisper italic py-4">Loading your people...</p>
+        ) : people.length === 0 ? (
+          <div className="border border-hairline px-6 py-8 text-center mb-6">
+            <p className="text-sm text-whisper mb-4">You haven't added anyone to your Inner Circle yet.</p>
+            <a
+              href="/home/people"
+              className="text-[11px] tracking-label uppercase text-mauve border border-mauve px-4 py-2 hover:bg-mauve hover:text-cream transition-colors"
+            >
+              Add your people
+            </a>
+          </div>
+        ) : (
+          <div className="space-y-2 mb-8">
+            {people.map(person => (
+              <button
+                key={person.id}
+                onClick={() => toggle(person.id)}
+                className={`w-full flex items-center gap-4 px-4 py-3 border text-left transition-colors ${
+                  sharedWith.includes(person.id)
+                    ? 'border-mauve bg-blush-soft'
+                    : 'border-hairline hover:border-mauve'
+                }`}
+              >
+                <div className={`w-4 h-4 border flex-shrink-0 flex items-center justify-center ${
+                  sharedWith.includes(person.id) ? 'border-mauve bg-mauve' : 'border-whisper'
+                }`}>
+                  {sharedWith.includes(person.id) && (
+                    <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                      <path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  )}
+                </div>
+                <span className="text-sm text-ink flex-1">{person.name}</span>
+                {person.role && (
+                  <span className="text-[10px] tracking-label uppercase text-whisper">{person.role}</span>
+                )}
+              </button>
+            ))}
+            <a
+              href="/home/people"
+              className="flex items-center gap-3 px-4 py-3 border border-dashed border-mauve/40 hover:border-mauve text-sm text-mauve transition-colors"
+            >
+              <span className="text-lg leading-none">+</span>
+              Add someone new
+            </a>
+          </div>
+        )}
+
+        <div className="flex gap-3">
+          <button
+            onClick={save}
+            disabled={saving || loading}
+            className="flex-1 px-6 py-3 text-[11px] tracking-label uppercase bg-plum text-cream hover:bg-plum/80 transition-colors disabled:opacity-50"
+          >
+            {saving ? 'Saving...' : 'Save'}
+          </button>
+          <button
+            onClick={onClose}
+            className="px-6 py-3 text-[11px] tracking-label uppercase text-whisper border border-hairline hover:text-ink transition-colors"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 function ImageCard({
   image,
@@ -69,13 +200,7 @@ function ImageCard({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => { setHovered(false); setEditing(false) }}
     >
-      <img
-        src={image.url}
-        alt={image.caption ?? ''}
-        className="w-full h-56 object-cover"
-      />
-
-      {/* Hover overlay */}
+      <img src={image.url} alt={image.caption ?? ''} className="w-full h-56 object-cover" />
       <div className={`absolute inset-0 bg-plum/70 flex flex-col justify-end p-4 transition-opacity duration-200 ${hovered ? 'opacity-100' : 'opacity-0'}`}>
         {editing ? (
           <div className="space-y-2">
@@ -123,14 +248,13 @@ export default function MoodBoardClient({
   initialImages: MoodImage[]
 }) {
   const [images, setImages] = useState<MoodImage[]>(initialImages)
-  const [activeCategory, setActiveCategory] = useState('all')
+  const [activeCategory, setActiveCategory] = useState(CATEGORIES[0].value)
   const [uploading, setUploading] = useState(false)
-  const [uploadCategory, setUploadCategory] = useState('other')
+  const [shareModal, setShareModal] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const filtered = activeCategory === 'all'
-    ? images
-    : images.filter(img => img.category === activeCategory)
+  const categoryImages = images.filter(img => img.category === activeCategory)
+  const activeCatLabel = CATEGORIES.find(c => c.value === activeCategory)?.label ?? ''
 
   const handleFiles = useCallback(async (files: FileList) => {
     setUploading(true)
@@ -150,12 +274,11 @@ export default function MoodBoardClient({
 
       const { data: { publicUrl } } = supabase.storage.from('mood-board').getPublicUrl(path)
 
-      // Insert record
       const { data: record } = await supabase.from('mood_board_images').insert({
         couple_id: coupleId,
         storage_path: path,
         url: publicUrl,
-        category: uploadCategory,
+        category: activeCategory,
       }).select().single()
 
       if (record) {
@@ -164,7 +287,7 @@ export default function MoodBoardClient({
     }
 
     setUploading(false)
-  }, [coupleId, uploadCategory])
+  }, [coupleId, activeCategory])
 
   function handleDrop(e: React.DragEvent) {
     e.preventDefault()
@@ -173,96 +296,114 @@ export default function MoodBoardClient({
 
   return (
     <div>
-      {/* Upload area */}
-      <div
-        onDrop={handleDrop}
-        onDragOver={e => e.preventDefault()}
-        className="border border-dashed border-mauve/40 p-10 text-center mb-10 hover:border-mauve transition-colors cursor-pointer"
-        onClick={() => fileInputRef.current?.click()}
-      >
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          multiple
-          className="hidden"
-          onChange={e => e.target.files && handleFiles(e.target.files)}
-        />
-        {uploading ? (
-          <p className="text-sm text-mauve italic">Uploading...</p>
+
+      {/* Step 1 — Choose section */}
+      <div className="mb-10">
+        <p className="text-[11px] tracking-label uppercase text-mauve mb-2">Step 1</p>
+        <p className="text-sm text-ink mb-5">Choose which section you want to save your images into:</p>
+        <div className="flex flex-wrap gap-2">
+          {CATEGORIES.map(cat => {
+            const count = images.filter(i => i.category === cat.value).length
+            return (
+              <button
+                key={cat.value}
+                onClick={() => setActiveCategory(cat.value)}
+                className={`text-[11px] tracking-label uppercase px-4 py-2.5 border transition-colors ${
+                  activeCategory === cat.value
+                    ? 'bg-plum border-plum text-cream'
+                    : 'border-hairline text-whisper hover:border-mauve hover:text-ink'
+                }`}
+              >
+                {cat.label}
+                {count > 0 && (
+                  <span className="ml-1.5 opacity-60">{count}</span>
+                )}
+              </button>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* Step 2 — Upload */}
+      <div className="mb-12">
+        <p className="text-[11px] tracking-label uppercase text-mauve mb-2">Step 2</p>
+        <p className="text-sm text-ink mb-4">
+          Drop your <span className="font-medium">{activeCatLabel}</span> images below, or tap to choose from your phone or computer:
+        </p>
+        <div
+          onDrop={handleDrop}
+          onDragOver={e => e.preventDefault()}
+          className="border border-dashed border-mauve/40 p-10 text-center hover:border-mauve transition-colors cursor-pointer"
+          onClick={() => fileInputRef.current?.click()}
+        >
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            multiple
+            className="hidden"
+            onChange={e => e.target.files && handleFiles(e.target.files)}
+          />
+          {uploading ? (
+            <p className="text-sm text-mauve italic">Uploading...</p>
+          ) : (
+            <>
+              <p className="text-sm text-ink mb-1">Drop images here, or tap to upload</p>
+              <p className="text-xs text-whisper">JPG, PNG, HEIC — as many as you like</p>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Section images */}
+      <div className="border-t border-hairline pt-8">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h3 className="text-base font-light text-ink">{activeCatLabel}</h3>
+            <p className="text-xs text-whisper mt-0.5">
+              {categoryImages.length === 0
+                ? 'No images saved here yet'
+                : `${categoryImages.length} image${categoryImages.length === 1 ? '' : 's'}`
+              }
+            </p>
+          </div>
+          {categoryImages.length > 0 && (
+            <button
+              onClick={() => setShareModal(activeCategory)}
+              className="text-[11px] tracking-label uppercase text-mauve border border-mauve px-4 py-2 hover:bg-mauve hover:text-cream transition-colors"
+            >
+              Share this folder
+            </button>
+          )}
+        </div>
+
+        {categoryImages.length === 0 ? (
+          <div className="border border-hairline px-8 py-12 text-center">
+            <p className="text-sm text-whisper italic">
+              Nothing saved here yet. Choose your section above and drop in your first image.
+            </p>
+          </div>
         ) : (
-          <>
-            <p className="text-sm text-ink mb-1">Drop images here, or click to upload</p>
-            <p className="text-xs text-whisper">JPG, PNG, HEIC — as many as you like</p>
-          </>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-1">
+            {categoryImages.map(img => (
+              <ImageCard
+                key={img.id}
+                image={img}
+                coupleId={coupleId}
+                onDelete={id => setImages(prev => prev.filter(i => i.id !== id))}
+                onUpdate={(id, cap) => setImages(prev => prev.map(i => i.id === id ? { ...i, caption: cap } : i))}
+              />
+            ))}
+          </div>
         )}
       </div>
 
-      {/* Category for uploads */}
-      <div className="flex items-center gap-3 mb-8 flex-wrap">
-        <span className="text-[11px] tracking-label uppercase text-whisper">Upload into:</span>
-        {CATEGORIES.filter(c => c.value !== 'all').map(cat => (
-          <button
-            key={cat.value}
-            onClick={() => setUploadCategory(cat.value)}
-            className={`text-[11px] tracking-label uppercase px-4 py-2 border transition-colors ${
-              uploadCategory === cat.value
-                ? 'bg-mauve border-mauve text-cream'
-                : 'border-hairline text-whisper hover:border-mauve hover:text-ink'
-            }`}
-          >
-            {cat.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Category filter */}
-      {images.length > 0 && (
-        <div className="flex items-center gap-3 mb-8 flex-wrap border-t border-hairline pt-6">
-          <span className="text-[11px] tracking-label uppercase text-whisper">Show:</span>
-          {CATEGORIES.map(cat => (
-            <button
-              key={cat.value}
-              onClick={() => setActiveCategory(cat.value)}
-              className={`text-[11px] tracking-label uppercase px-4 py-2 border transition-colors ${
-                activeCategory === cat.value
-                  ? 'bg-plum border-plum text-cream'
-                  : 'border-hairline text-whisper hover:border-mauve hover:text-ink'
-              }`}
-            >
-              {cat.label}
-              {cat.value !== 'all' && (
-                <span className="ml-1 opacity-50">
-                  {images.filter(i => i.category === cat.value).length || ''}
-                </span>
-              )}
-            </button>
-          ))}
-        </div>
-      )}
-
-      {/* Grid */}
-      {filtered.length === 0 ? (
-        <div className="border border-hairline px-8 py-16 text-center">
-          <p className="text-sm text-whisper italic">
-            {images.length === 0
-              ? 'Nothing saved yet. Drop in your first image above.'
-              : 'No images in this category yet.'
-            }
-          </p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-1">
-          {filtered.map(img => (
-            <ImageCard
-              key={img.id}
-              image={img}
-              coupleId={coupleId}
-              onDelete={id => setImages(prev => prev.filter(i => i.id !== id))}
-              onUpdate={(id, caption) => setImages(prev => prev.map(i => i.id === id ? { ...i, caption } : i))}
-            />
-          ))}
-        </div>
+      {shareModal && (
+        <ShareModal
+          category={shareModal}
+          coupleId={coupleId}
+          onClose={() => setShareModal(null)}
+        />
       )}
     </div>
   )
