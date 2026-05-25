@@ -100,128 +100,105 @@ function generateSuggestions(
   const groom1 = categorizeSide(people, 'partner_2', false)
   const coupleChildren = people.filter(p => CHILD_RELATIONSHIPS.includes(p.family_relationship ?? ''))
 
-  // ── 1. Both families together ──────────────────────────────────────────────
+  // ── 1. Couple with bride's parents ───────────────────────────────────────
+  if (bride1.parents.length > 0) {
+    shots.push({
+      id: 'bride_parents',
+      label: `Couple with ${brideName}'s parents`,
+      people: withCouple(couple, bride1.parents),
+      shot_type: 'family',
+    })
+  }
+
+  // ── 2. Couple with both sets of parents ──────────────────────────────────
   if (bride1.parents.length > 0 && groom1.parents.length > 0) {
     shots.push({
       id: 'both_families_parents',
-      label: 'Both families: couple with both sets of parents',
+      label: 'Couple with both sets of parents',
       people: withCouple(couple, [...bride1.parents, ...groom1.parents]),
       shot_type: 'family',
     })
   }
 
-  // ── 2–7. Bride's side ──────────────────────────────────────────────────────
-  if (bride1.parents.length > 0) {
-    shots.push({
-      id: 'bride_parents',
-      label: `${brideName}'s parents`,
-      people: withCouple(couple, bride1.parents),
-      shot_type: 'family',
-    })
-
-    if (bride1.siblings.length > 0) {
-      const fullFamily = [...bride1.parents, ...bride1.siblings, ...bride1.siblingPartners, ...bride1.niblings]
-      shots.push({
-        id: 'bride_full_family',
-        label: `${brideName}'s full family`,
-        people: withCouple(couple, fullFamily),
-        shot_type: 'family',
-      })
-
-      if (bride1.siblingPartners.length > 0 || bride1.niblings.length > 0) {
-        shots.push({
-          id: 'bride_parents_siblings',
-          label: `${brideName}'s parents and siblings`,
-          people: withCouple(couple, [...bride1.parents, ...bride1.siblings]),
-          shot_type: 'family',
-        })
-      }
-
-      // Parents with all their children — bride included, groom removed
-      shots.push({
-        id: 'bride_parents_with_children',
-        label: `${brideName}'s parents with all their children`,
-        people: names([...bride1.parents, { id: 'bride', name: brideName } as Person, ...bride1.siblings]),
-        shot_type: 'family',
-      })
-
-      // Bride with siblings only — no groom
-      shots.push({
-        id: 'bride_siblings',
-        label: `${brideName}'s siblings`,
-        people: withPerson(brideName, bride1.siblings),
-        shot_type: 'family',
-      })
-    }
-
-    if (bride1.parents.length >= 2) {
-      shots.push({
-        id: 'bride_parents_alone',
-        label: `${brideName}'s parents alone`,
-        people: names(bride1.parents),
-        shot_type: 'family',
-      })
-    }
-  }
-
-  // ── 8–13. Groom's side ────────────────────────────────────────────────────
+  // ── 3. Couple with groom's parents ───────────────────────────────────────
   if (groom1.parents.length > 0) {
     shots.push({
       id: 'groom_parents',
-      label: `${groomName}'s parents`,
+      label: `Couple with ${groomName}'s parents`,
       people: withCouple(couple, groom1.parents),
       shot_type: 'family',
     })
-
-    if (groom1.siblings.length > 0) {
-      const fullFamily = [...groom1.parents, ...groom1.siblings, ...groom1.siblingPartners, ...groom1.niblings]
-      shots.push({
-        id: 'groom_full_family',
-        label: `${groomName}'s full family`,
-        people: withCouple(couple, fullFamily),
-        shot_type: 'family',
-      })
-
-      if (groom1.siblingPartners.length > 0 || groom1.niblings.length > 0) {
-        shots.push({
-          id: 'groom_parents_siblings',
-          label: `${groomName}'s parents and siblings`,
-          people: withCouple(couple, [...groom1.parents, ...groom1.siblings]),
-          shot_type: 'family',
-        })
-      }
-
-      shots.push({
-        id: 'groom_parents_with_children',
-        label: `${groomName}'s parents with all their children`,
-        people: names([...groom1.parents, { id: 'groom', name: groomName } as Person, ...groom1.siblings]),
-        shot_type: 'family',
-      })
-
-      // Groom with siblings only — no bride
-      shots.push({
-        id: 'groom_siblings',
-        label: `${groomName}'s siblings`,
-        people: withPerson(groomName, groom1.siblings),
-        shot_type: 'family',
-      })
-    }
-
-    if (groom1.parents.length >= 2) {
-      shots.push({
-        id: 'groom_parents_alone',
-        label: `${groomName}'s parents alone`,
-        people: names(groom1.parents),
-        shot_type: 'family',
-      })
-    }
   }
 
-  // ── Grandparents ──────────────────────────────────────────────────────────
+  // ── 4–7. Bride's family ──────────────────────────────────────────────────
+  if (bride1.parents.length > 0 && bride1.siblings.length > 0) {
+    shots.push({
+      id: 'bride_full_family',
+      label: `${brideName}'s full family`,
+      people: withCouple(couple, [...bride1.parents, ...bride1.siblings, ...bride1.siblingPartners, ...bride1.niblings]),
+      shot_type: 'family',
+    })
+    shots.push({
+      id: 'bride_immediate_family',
+      label: `${brideName}'s immediate family`,
+      people: withPerson(brideName, [...bride1.parents, ...bride1.siblings]),
+      shot_type: 'family',
+    })
+  }
+  if (bride1.siblings.length > 0) {
+    shots.push({
+      id: 'bride_siblings',
+      label: `${brideName}'s siblings`,
+      people: withPerson(brideName, bride1.siblings),
+      shot_type: 'family',
+    })
+  }
+  if (bride1.parents.length > 0) {
+    shots.push({
+      id: 'bride_parents_alone',
+      label: `${brideName}'s parents`,
+      people: names(bride1.parents),
+      shot_type: 'family',
+    })
+  }
+
+  // ── 8–11. Groom's family ─────────────────────────────────────────────────
+  if (groom1.parents.length > 0 && groom1.siblings.length > 0) {
+    shots.push({
+      id: 'groom_full_family',
+      label: `${groomName}'s full family`,
+      people: withCouple(couple, [...groom1.parents, ...groom1.siblings, ...groom1.siblingPartners, ...groom1.niblings]),
+      shot_type: 'family',
+    })
+    shots.push({
+      id: 'groom_immediate_family',
+      label: `${groomName}'s immediate family`,
+      people: withPerson(groomName, [...groom1.parents, ...groom1.siblings]),
+      shot_type: 'family',
+    })
+  }
+  if (groom1.siblings.length > 0) {
+    shots.push({
+      id: 'groom_siblings',
+      label: `${groomName}'s siblings`,
+      people: withPerson(groomName, groom1.siblings),
+      shot_type: 'family',
+    })
+  }
+  if (groom1.parents.length > 0) {
+    shots.push({
+      id: 'groom_parents_alone',
+      label: `${groomName}'s parents`,
+      people: names(groom1.parents),
+      shot_type: 'family',
+    })
+  }
+
+  // ── Grandparents ─────────────────────────────────────────────────────────
   if (bride1.grandparents.length > 0) {
     shots.push({
       id: 'bride_grandparents',
-      label: `${brideName}'s grandparents`,
+      label: `Couple with ${brideName}'s grandparents`,
       people: withCouple(couple, bride1.grandparents),
       shot_type: 'family',
     })
@@ -229,41 +206,17 @@ function generateSuggestions(
   if (groom1.grandparents.length > 0) {
     shots.push({
       id: 'groom_grandparents',
-      label: `${groomName}'s grandparents`,
+      label: `Couple with ${groomName}'s grandparents`,
       people: withCouple(couple, groom1.grandparents),
       shot_type: 'family',
     })
   }
-  if (bride1.grandparents.length > 0 && groom1.grandparents.length > 0) {
-    shots.push({
-      id: 'all_grandparents',
-      label: 'All grandparents together',
-      people: withCouple(couple, [...bride1.grandparents, ...groom1.grandparents]),
-      shot_type: 'family',
-    })
-  }
 
-  // ── Nieces, nephews, couple's children ───────────────────────────────────
-  const allNiblings = [...bride1.niblings, ...groom1.niblings]
-  if (allNiblings.length > 0) {
-    shots.push({
-      id: 'all_niblings',
-      label: 'All the little ones together',
-      people: names(allNiblings),
-      shot_type: 'family',
-    })
-    shots.push({
-      id: 'niblings_with_couple',
-      label: 'Couple with all the nieces and nephews',
-      people: withCouple(couple, allNiblings),
-      shot_type: 'family',
-    })
-  }
-
+  // ── Couple's own children ─────────────────────────────────────────────────
   if (coupleChildren.length > 0) {
     shots.push({
       id: 'couple_children',
-      label: "Couple with their children",
+      label: 'Couple with their children',
       people: withCouple(couple, coupleChildren),
       shot_type: 'family',
     })
