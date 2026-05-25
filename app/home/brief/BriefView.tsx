@@ -206,6 +206,37 @@ function sparklerWhoLabel(v: string | null) {
   return null
 }
 
+const LABEL_BY_REL = new Set(['Mum', 'Dad', 'Step-mum', 'Step-dad'])
+
+function personLabel(p: BriefPerson, brideName: string, groomName: string): string {
+  if (p.name === brideName) return brideName.split(' ')[0]
+  if (p.name === groomName) return groomName.split(' ')[0]
+  if (p.family_relationship && LABEL_BY_REL.has(p.family_relationship)) return p.family_relationship
+  return p.name.split(' ')[0]
+}
+
+function formatGroup(arr: BriefPerson[], brideName: string, groomName: string): string {
+  const labels = arr.map(p => personLabel(p, brideName, groomName))
+  const count: Record<string, number> = {}
+  labels.forEach(l => { count[l] = (count[l] ?? 0) + 1 })
+  return arr.map((p, i) => count[labels[i]] > 1 ? p.name : labels[i]).join(', ')
+}
+
+function formatPeopleStr(str: string | null, allPeople: BriefPerson[], brideName: string, groomName: string): string {
+  if (!str) return ''
+  const parts = str.split(', ')
+  const labels = parts.map(name => {
+    if (name === brideName) return brideName.split(' ')[0]
+    if (name === groomName) return groomName.split(' ')[0]
+    const p = allPeople.find(x => x.name === name)
+    if (p?.family_relationship && LABEL_BY_REL.has(p.family_relationship)) return p.family_relationship
+    return name.split(' ')[0]
+  })
+  const count: Record<string, number> = {}
+  labels.forEach(l => { count[l] = (count[l] ?? 0) + 1 })
+  return parts.map((n, i) => count[labels[i]] > 1 ? n : labels[i]).join(', ')
+}
+
 function generateFamilyGroups(people: BriefPerson[], brideName: string, groomName: string): string[] {
   const family = people.filter(p => {
     const rg = ROLES.find(r => r.slug === p.role)?.group
@@ -214,37 +245,37 @@ function generateFamilyGroups(people: BriefPerson[], brideName: string, groomNam
 
   const bSide = family.filter(p => p.side === 'partner_1')
   const gSide = family.filter(p => p.side === 'partner_2')
-  const names = (arr: BriefPerson[]) => arr.map(p => p.name).join(', ')
+  const fmt = (arr: BriefPerson[]) => formatGroup(arr, brideName, groomName)
 
   const bParents = bSide.filter(p => ['Mum','Dad','Step-mum','Step-dad'].includes(p.family_relationship ?? ''))
   const gParents = gSide.filter(p => ['Mum','Dad','Step-mum','Step-dad'].includes(p.family_relationship ?? ''))
   const bSiblings = bSide.filter(p => ['Sister','Brother','Step-sister','Step-brother'].includes(p.family_relationship ?? ''))
   const gSiblings = gSide.filter(p => ['Sister','Brother','Step-sister','Step-brother'].includes(p.family_relationship ?? ''))
-  const bSibPartners = bSide.filter(p => p.family_relationship === 'Partner' && p.in_family_photos)
-  const gSibPartners = gSide.filter(p => p.family_relationship === 'Partner' && p.in_family_photos)
+  const bSibPartners = bSide.filter(p => ['Partner','Sister-in-law','Brother-in-law'].includes(p.family_relationship ?? '') && p.in_family_photos)
+  const gSibPartners = gSide.filter(p => ['Partner','Sister-in-law','Brother-in-law'].includes(p.family_relationship ?? '') && p.in_family_photos)
   const bGrandparents = bSide.filter(p => ['Grandmother','Grandfather','Step-grandmother','Step-grandfather'].includes(p.family_relationship ?? ''))
   const gGrandparents = gSide.filter(p => ['Grandmother','Grandfather','Step-grandmother','Step-grandfather'].includes(p.family_relationship ?? ''))
 
   const shots: string[] = []
 
-  if (bParents.length > 0) shots.push(`Couple with ${brideName}'s parents — ${names(bParents)}`)
-  if (bParents.length > 0 && gParents.length > 0) shots.push(`Couple with both sets of parents — ${names([...bParents, ...gParents])}`)
-  if (gParents.length > 0) shots.push(`Couple with ${groomName}'s parents — ${names(gParents)}`)
+  if (bParents.length > 0) shots.push(`Couple with ${brideName}'s parents — ${fmt(bParents)}`)
+  if (bParents.length > 0 && gParents.length > 0) shots.push(`Couple with both sets of parents — ${fmt([...bParents, ...gParents])}`)
+  if (gParents.length > 0) shots.push(`Couple with ${groomName}'s parents — ${fmt(gParents)}`)
 
   const bImmediateAll = [...bParents, ...bSiblings, ...bSibPartners]
-  if (bImmediateAll.length > 0) shots.push(`${brideName}'s immediate family — ${names(bImmediateAll)}`)
-  if (bParents.length > 0 && bSiblings.length > 0) shots.push(`${brideName} with parents and siblings — ${names([...bParents, ...bSiblings])}`)
-  if (bParents.length >= 2) shots.push(`${brideName}'s parents together — ${names(bParents)}`)
-  if (bSiblings.length > 0) shots.push(`${brideName} with siblings — ${names(bSiblings)}`)
+  if (bImmediateAll.length > 0) shots.push(`${brideName}'s immediate family — ${fmt(bImmediateAll)}`)
+  if (bParents.length > 0 && bSiblings.length > 0) shots.push(`${brideName} with parents and siblings — ${fmt([...bParents, ...bSiblings])}`)
+  if (bParents.length >= 2) shots.push(`${brideName}'s parents together — ${fmt(bParents)}`)
+  if (bSiblings.length > 0) shots.push(`${brideName} with siblings — ${fmt(bSiblings)}`)
 
   const gImmediateAll = [...gParents, ...gSiblings, ...gSibPartners]
-  if (gImmediateAll.length > 0) shots.push(`${groomName}'s immediate family — ${names(gImmediateAll)}`)
-  if (gParents.length > 0 && gSiblings.length > 0) shots.push(`${groomName} with parents and siblings — ${names([...gParents, ...gSiblings])}`)
-  if (gParents.length >= 2) shots.push(`${groomName}'s parents together — ${names(gParents)}`)
-  if (gSiblings.length > 0) shots.push(`${groomName} with siblings — ${names(gSiblings)}`)
+  if (gImmediateAll.length > 0) shots.push(`${groomName}'s immediate family — ${fmt(gImmediateAll)}`)
+  if (gParents.length > 0 && gSiblings.length > 0) shots.push(`${groomName} with parents and siblings — ${fmt([...gParents, ...gSiblings])}`)
+  if (gParents.length >= 2) shots.push(`${groomName}'s parents together — ${fmt(gParents)}`)
+  if (gSiblings.length > 0) shots.push(`${groomName} with siblings — ${fmt(gSiblings)}`)
 
-  bGrandparents.forEach(gp => shots.push(`Couple with ${gp.name} (${brideName}'s side)`))
-  gGrandparents.forEach(gp => shots.push(`Couple with ${gp.name} (${groomName}'s side)`))
+  bGrandparents.forEach(gp => shots.push(`Couple with ${personLabel(gp, brideName, groomName)} (${brideName}'s side)`))
+  gGrandparents.forEach(gp => shots.push(`Couple with ${personLabel(gp, brideName, groomName)} (${groomName}'s side)`))
 
   return shots
 }
@@ -525,7 +556,7 @@ export default function BriefView({ couple, people, shots, plan, backHref, backL
                   <span className="text-[10px] tracking-label uppercase text-mauve-soft w-6 flex-shrink-0 pt-0.5">{String(i + 1).padStart(2, '0')}</span>
                   <div>
                     <span className="text-sm text-ink block">{shot.label}</span>
-                    {shot.people && <span className="text-sm text-whisper block mt-0.5">{shot.people}</span>}
+                    {shot.people && <span className="text-sm text-whisper block mt-0.5">{formatPeopleStr(shot.people, people, brideName, groomName)}</span>}
                     {shot.notes && <span className="text-xs text-whisper/70 italic block mt-0.5">{shot.notes}</span>}
                   </div>
                 </div>
