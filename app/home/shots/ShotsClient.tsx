@@ -429,29 +429,35 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
           <div className="text-[11px] tracking-label uppercase text-mauve mb-2">Before you start</div>
           {!hasAnyPeople ? (
             <>
-              <p className="text-base font-light text-ink mb-2">
-                Head to <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> and add your family first.
+              <p className="text-base font-light text-ink mb-3">
+                Head to <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> and add your family before you come back here.
               </p>
               <p className="text-sm text-charcoal/70 leading-relaxed mb-5">
-                We build your shot list from the people you add. Parents, siblings, step-parents, grandparents, nieces and nephews — the more you add, the more we can suggest. Once you have ticked your combinations, we send everyone a WhatsApp 10 minutes before their shot with the exact location so nobody gets lost.
+                We build your suggested shot list from exactly who you have added. Parents, siblings, step-parents, grandparents, nieces and nephews. The more detail you give us, the better your list will be.
               </p>
             </>
           ) : !familyInCircle ? (
             <>
-              <p className="text-base font-light text-ink mb-2">
-                Do you have all the family you want photographed in <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a>?
+              <p className="text-base font-light text-ink mb-3">
+                Do you have everyone in <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a>?
               </p>
               <p className="text-sm text-charcoal/70 leading-relaxed mb-5">
-                We can see people in your circle but not all the family relationships yet. Pop back to <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> and make sure parents, siblings and grandparents are all in there — the suggestions below will fill in automatically. Once ticked, we send everyone a WhatsApp 10 minutes before their shot with the exact location.
+                We can see people in your circle but the family relationships are not quite complete yet. Pop back to <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a>, make sure parents, siblings and grandparents are all in there, and your suggestions will appear below automatically.
               </p>
             </>
           ) : (
             <>
-              <p className="text-base font-light text-ink mb-2">
-                You have <span className="font-semibold text-plum">{people.length}</span> {people.length === 1 ? 'person' : 'people'} in <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a>. Is everyone there?
+              <p className="text-base font-light text-ink mb-3">
+                You have <span className="font-semibold text-plum">{people.length}</span> {people.length === 1 ? 'person' : 'people'} in <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a>. Make sure everyone you want in the family photographs is in there, because we build your suggested lists from exactly who you have added.
+              </p>
+              <p className="text-sm text-charcoal/70 leading-relaxed mb-3">
+                Work through the suggestions below. Add or remove people from each combination until it feels right, then hit Approve. You can have fun with it.
               </p>
               <p className="text-sm text-charcoal/70 leading-relaxed mb-5">
-                If you add anyone else, the suggestions below update automatically. Once you have ticked your combinations, we send everyone a WhatsApp 10 minutes before their shot with the exact location so nobody gets lost.
+                Here is the part we love. When your lists are done, everyone in your family groups gets a WhatsApp a few days before the wedding with their scheduled time and location for their photograph. Then on the day itself, about 15 minutes before their shot, they get an updated message confirming exactly where and when to be. If the weather has shifted things or we have moved a location, they get that update too.
+              </p>
+              <p className="text-sm text-charcoal/70 leading-relaxed mb-5">
+                It means nobody disappears to their room when they are supposed to be in front of the camera.
               </p>
             </>
           )}
