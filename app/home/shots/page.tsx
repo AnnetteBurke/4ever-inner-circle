@@ -9,22 +9,32 @@ export default async function ShotsPage() {
 
   const { data: couple } = await supabase
     .from('couples')
-    .select('id, bride_name, groom_name')
+    .select('id, bride_name, groom_name, partner_1_gender, partner_2_gender')
     .eq('user_id', user.id)
     .single()
   if (!couple) redirect('/login')
 
-  const { data: shots } = await supabase
-    .from('shot_requests')
-    .select('*')
-    .eq('couple_id', couple.id)
-    .order('created_at', { ascending: true })
+  const [{ data: shots }, { data: people }] = await Promise.all([
+    supabase
+      .from('shot_requests')
+      .select('*')
+      .eq('couple_id', couple.id)
+      .order('created_at', { ascending: true }),
+    supabase
+      .from('people')
+      .select('id, name, role, family_relationship, side, in_family_photos, is_family')
+      .eq('couple_id', couple.id)
+      .order('created_at', { ascending: true }),
+  ])
 
   return (
     <ShotsClient
       brideName={couple.bride_name}
       groomName={couple.groom_name}
+      partner1Gender={couple.partner_1_gender ?? 'woman'}
+      partner2Gender={couple.partner_2_gender ?? 'man'}
       initialShots={shots ?? []}
+      people={people ?? []}
     />
   )
 }

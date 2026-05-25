@@ -28,7 +28,7 @@ export async function POST(request: Request) {
   if (!couple) return NextResponse.json({ error: 'No couple record' }, { status: 404 })
 
   const body = await request.json()
-  const { label, people, notes } = body
+  const { label, people, notes, status, shot_type, generated_id } = body
 
   if (!label) return NextResponse.json({ error: 'Shot name is required' }, { status: 400 })
 
@@ -37,6 +37,9 @@ export async function POST(request: Request) {
     label,
     people: people || null,
     notes: notes || null,
+    status: status || 'approved',
+    shot_type: shot_type || 'custom',
+    generated_id: generated_id || null,
   }).select().single()
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
