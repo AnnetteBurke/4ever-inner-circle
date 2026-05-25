@@ -45,7 +45,7 @@ type Props = {
 
 const PARENT_RELATIONSHIPS = ['Mum', 'Dad', 'Step-mum', 'Step-dad']
 const SIBLING_RELATIONSHIPS = ['Sister', 'Brother', 'Step-sister', 'Step-brother']
-const SIBLING_PARTNER_RELATIONSHIPS = ['Sister-in-law', 'Brother-in-law']
+const SIBLING_PARTNER_RELATIONSHIPS = ['Sister-in-law', 'Brother-in-law', 'Partner']
 const GRANDPARENT_RELATIONSHIPS = ['Grandmother', 'Grandfather', 'Step-grandmother', 'Step-grandfather']
 const NIBLING_RELATIONSHIPS = ['Niece', 'Nephew']
 const CHILD_RELATIONSHIPS = ['Son', 'Daughter']
@@ -492,7 +492,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
                             : 'border-mauve text-mauve hover:bg-mauve hover:text-cream'
                         }`}
                       >
-                        Need to add someone?
+                        Add another person
                       </button>
                       <button
                         onClick={() => handleDecide(shot, 'skipped')}
