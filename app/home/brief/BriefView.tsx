@@ -462,7 +462,7 @@ export default function BriefView({ couple, people, shots, plan, backHref, backL
 
         <BriefSection n={twoPhotographers ? '06' : '05'} title="Family Groups">
           {familyGroups.length === 0 ? (
-            <p className="text-sm text-whisper italic">Add family members to &ldquo;Our Circle&rdquo; to generate the group list.</p>
+            <p className="text-sm text-whisper italic">Add family members to <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> to generate the group list.</p>
           ) : (
             <div className="space-y-0">
               {familyGroups.map((shot, i) => (
