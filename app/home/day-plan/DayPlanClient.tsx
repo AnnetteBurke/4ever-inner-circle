@@ -77,6 +77,8 @@ type CirclePerson = {
   id: string
   name: string
   role: string | null
+  phone: string | null
+  email: string | null
 }
 
 type Props = {
@@ -782,6 +784,45 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
             placeholder="e.g. We are doing a handfasting and my sister is singing after the vows as a surprise, or we have a sand ceremony that includes the children"
           />
         </Field>
+
+        {(() => {
+          const celebrant = people.find(p => p.role === 'supplier_celebrant')
+          return celebrant ? (
+            <div className="border border-hairline px-6 py-5 max-w-lg space-y-1">
+              <p className="text-[10px] tracking-label uppercase text-mauve mb-3">Your celebrant</p>
+              <p className="text-base font-light text-ink">{celebrant.name}</p>
+              {celebrant.phone && <p className="text-sm text-whisper">{celebrant.phone}</p>}
+              {celebrant.email && (
+                <p className="text-sm text-whisper">
+                  {celebrant.email}
+                  <span className="block text-[11px] italic text-mauve-soft mt-1">
+                    We will use this to introduce ourselves before your day.
+                  </span>
+                </p>
+              )}
+              {!celebrant.email && (
+                <p className="text-[11px] italic text-whisper mt-2">
+                  Add their email in{' '}
+                  <a href="/home/people" className="text-mauve underline underline-offset-2">Your Circle</a>
+                  {' '}and we will introduce ourselves before your day.
+                </p>
+              )}
+            </div>
+          ) : (
+            <div className="border border-hairline border-dashed px-6 py-5 max-w-lg">
+              <p className="text-sm text-ink font-light mb-1">Who is your celebrant, priest or minister?</p>
+              <p className="text-[11px] text-whisper mb-3">
+                Add them to Your Circle with their name, phone and email. We will know who we are walking in to meet, and if you give us their email we can introduce ourselves before the day.
+              </p>
+              <a
+                href="/home/people"
+                className="text-[11px] tracking-label uppercase text-mauve border border-mauve px-5 py-2 inline-block hover:bg-mauve hover:text-cream transition-colors"
+              >
+                Add to Your Circle
+              </a>
+            </div>
+          )
+        })()}
 
         <Field
           label="How is your celebrant with photography?"

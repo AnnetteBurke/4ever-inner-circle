@@ -16,7 +16,7 @@ export default async function DayPlanPage() {
 
   const [{ data: plan }, { data: people }] = await Promise.all([
     supabase.from('day_plan').select('*').eq('couple_id', couple.id).single(),
-    supabase.from('people').select('id, name, role').eq('couple_id', couple.id).order('created_at', { ascending: true }),
+    supabase.from('people').select('id, name, role, phone, email').eq('couple_id', couple.id).order('created_at', { ascending: true }),
   ])
 
   const photographerCount: 1 | 2 = couple.second_photographer_email ? 2 : 1
