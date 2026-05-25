@@ -100,7 +100,7 @@ export default async function SharePage({ params }: PageProps) {
         <CommentThread
           shareToken={token}
           initialComments={comments}
-          authorName={person?.name ?? ''}
+          supplierName={person?.name ?? ''}
           brideName={couple?.bride_name ?? 'the bride'}
         />
 

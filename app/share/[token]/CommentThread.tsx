@@ -12,16 +12,23 @@ type Comment = {
 export default function CommentThread({
   shareToken,
   initialComments,
-  authorName,
+  supplierName,
   brideName,
 }: {
   shareToken: string
   initialComments: Comment[]
-  authorName: string
+  supplierName: string
   brideName: string
 }) {
   const [comments, setComments] = useState<Comment[]>(initialComments)
-  const [name, setName] = useState(authorName)
+
+  // If the supplier has already commented, the bride is likely now viewing to reply.
+  // Flip the name field and heading accordingly.
+  const supplierHasCommented = initialComments.some(c => c.author_name === supplierName)
+  const replyingTo = supplierHasCommented ? supplierName : brideName
+  const defaultName = supplierHasCommented ? '' : supplierName
+
+  const [name, setName] = useState(defaultName)
   const [message, setMessage] = useState('')
   const [sending, setSending] = useState(false)
   const [sent, setSent] = useState(false)
@@ -61,10 +68,10 @@ export default function CommentThread({
     <div className="border-t border-hairline mt-16 pt-12">
       <div className="text-[11px] tracking-label uppercase text-mauve mb-2">Conversation</div>
       <h2 className="text-2xl font-light text-ink mb-8">
-        Leave a message for {brideName}
+        Leave a message for {replyingTo}
       </h2>
 
-      {/* Existing comments */}
+      {/* Thread */}
       {comments.length > 0 && (
         <div className="space-y-4 mb-10">
           {comments.map(comment => (
@@ -84,7 +91,7 @@ export default function CommentThread({
         <div className="border border-hairline px-6 py-8 text-center">
           <p className="text-sm text-ink mb-1 font-light">Message sent</p>
           <p className="text-xs text-whisper">
-            {brideName} will be notified and can reply here.
+            {replyingTo} will be notified and can reply here.
           </p>
           <button
             onClick={() => setSent(false)}
@@ -101,8 +108,9 @@ export default function CommentThread({
               type="text"
               value={name}
               onChange={e => setName(e.target.value)}
+              placeholder="Your name"
               required
-              className="w-full border border-hairline px-4 py-3 text-sm text-ink bg-transparent focus:outline-none focus:border-mauve transition-colors"
+              className="w-full border border-hairline px-4 py-3 text-sm text-ink bg-transparent focus:outline-none focus:border-mauve transition-colors placeholder-whisper"
             />
           </div>
           <div>
@@ -112,7 +120,7 @@ export default function CommentThread({
               onChange={e => setMessage(e.target.value)}
               required
               rows={4}
-              placeholder={`Write something to ${brideName}...`}
+              placeholder={`Write something to ${replyingTo}...`}
               className="w-full border border-hairline px-4 py-3 text-sm text-ink bg-transparent focus:outline-none focus:border-mauve transition-colors resize-none placeholder-whisper"
             />
           </div>
