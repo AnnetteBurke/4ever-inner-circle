@@ -3,6 +3,7 @@ import { createSupabaseServerClient } from '@/lib/supabase-server'
 import { createAdminClient } from '@/lib/supabase'
 import Link from 'next/link'
 import DashboardCards from './DashboardCards'
+import InstallNudge from '@/components/InstallNudge'
 
 function getCountdown(weddingDate: string | null): { days: number | null; label: string } {
   if (!weddingDate) return { days: null, label: '' }
@@ -34,8 +35,10 @@ export default async function HomePage() {
     ? new Date(couple.wedding_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
     : null
 
-  let venueImageUrl: string | null = null
-  let venueImages: string[] = []
+  let venueImageUrl: string | null = null      // desktop hero (image 00 — wide panoramic)
+  let mobileVenueImageUrl: string | null = null // mobile hero (image 05 — fields shot)
+  let venueImages: string[] = []               // desktop strip images
+  let mobileStripImages: string[] = []         // mobile strip: 2 hand-picked images
   if (couple?.venue_slug) {
     const adminClient = createAdminClient()
     const { data: files } = await adminClient.storage.from('Venues').list(couple.venue_slug, { limit: 20 })
@@ -48,7 +51,10 @@ export default async function HomePage() {
         return data.publicUrl
       })
       venueImageUrl = urls[0] ?? null
+      mobileVenueImageUrl = urls[5] ?? urls[urls.length - 1] ?? urls[0] ?? null
       venueImages = urls.slice(1)
+      // Mobile strip: bridge shot (index 9) left, bridal shot (index 2) right
+      mobileStripImages = [urls[9] ?? urls[1], urls[2] ?? urls[1]].filter(Boolean) as string[]
     }
   }
 
@@ -57,13 +63,23 @@ export default async function HomePage() {
 
       {/* Header */}
       <div
-        className="relative text-cream px-8 md:px-16 pt-16 pb-20 overflow-hidden"
-        style={venueImageUrl ? {
-          backgroundImage: `url(${venueImageUrl})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        } : { backgroundColor: '#4A1F3D' }}
+        className="relative text-cream px-8 md:px-16 pt-6 md:pt-16 pb-8 md:pb-20 overflow-hidden"
+        style={!venueImageUrl ? { backgroundColor: '#4A1F3D' } : undefined}
       >
+        {/* Desktop hero image (image 00 — wide panoramic, perfect on desktop) */}
+        {venueImageUrl && (
+          <div
+            className="hidden md:block absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${venueImageUrl})` }}
+          />
+        )}
+        {/* Mobile hero image (image 01 — better full-screen portrait) */}
+        {(mobileVenueImageUrl || venueImageUrl) && (
+          <div
+            className="md:hidden absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${mobileVenueImageUrl ?? venueImageUrl})` }}
+          />
+        )}
         {venueImageUrl && (
           <div className="absolute inset-0 bg-plum/80" />
         )}
@@ -95,18 +111,30 @@ export default async function HomePage() {
 
       {/* Venue photo strip */}
       {venueImages.length > 0 && (
-        <div className="flex gap-0.5 h-56 md:h-80 overflow-hidden">
-          {venueImages.slice(0, 5).map((url, i) => (
-            <div key={i} className="flex-1 overflow-hidden">
-              <img
-                src={url}
-                alt=""
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
-        </div>
+        <>
+          {/* Mobile: 2 images side by side */}
+          <div className="md:hidden grid grid-cols-2 gap-0.5 h-40">
+            {mobileStripImages.map((url, i) => (
+              <div key={i} className="overflow-hidden">
+                <img src={url} alt="" className="w-full h-full object-cover" />
+              </div>
+            ))}
+          </div>
+          {/* Desktop: up to 5 images in a flex strip */}
+          <div className="hidden md:flex gap-0.5 h-80 overflow-hidden">
+            {venueImages.slice(0, 5).map((url, i) => (
+              <div key={i} className="flex-1 overflow-hidden">
+                <img src={url} alt="" className="w-full h-full object-cover" />
+              </div>
+            ))}
+          </div>
+        </>
       )}
+
+      {/* Install nudge */}
+      <div className="max-w-4xl mx-auto pt-10">
+        <InstallNudge />
+      </div>
 
       {/* Feature cards */}
       <div className="max-w-4xl mx-auto px-8 md:px-16 py-16">

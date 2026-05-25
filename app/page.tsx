@@ -9,6 +9,7 @@ import EditSection from '@/components/sections/EditSection';
 import RegistrySection from '@/components/sections/RegistrySection';
 import GuestAlbumSection from '@/components/sections/GuestAlbumSection';
 import SignatureBlock from '@/components/sections/SignatureBlock';
+import SignInSection from '@/components/sections/SignInSection';
 import Footer from '@/components/Footer';
 
 /**
@@ -36,6 +37,7 @@ export default function HomePage() {
         <RegistrySection />
         <GuestAlbumSection />
         <SignatureBlock />
+        <SignInSection />
       </main>
       <Footer />
     </>

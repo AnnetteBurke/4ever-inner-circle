@@ -11,10 +11,21 @@ export default function Nav() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent md:bg-cream/95 md:backdrop-blur-md md:border-b md:border-hairline">
       <div className="max-w-container mx-auto flex items-center justify-between px-12 py-5">
-        <div className="brand-mark">
-          <span className="brand-mark__four text-[30px]">4ever</span>
-          <span className="brand-mark__pill">Inner Circle</span>
-        </div>
+        <a href="/">
+          {/* On mobile (transparent nav over dark hero): show logo in original colours */}
+          <img
+            src="/brand/Inner Circle Landscap.svg"
+            alt="4Ever Inner Circle"
+            className="h-9 w-auto block md:hidden"
+          />
+          {/* On desktop (cream background): invert + hue-rotate keeps mauve as mauve, turns white dark */}
+          <img
+            src="/brand/Inner Circle Landscap.svg"
+            alt="4Ever Inner Circle"
+            className="h-9 w-auto hidden md:block"
+            style={{ filter: 'invert(1) hue-rotate(180deg)' }}
+          />
+        </a>
         <div className="hidden md:flex gap-9">
           {links.map((link) => (
             <a
@@ -25,9 +36,6 @@ export default function Nav() {
               {link.label}
             </a>
           ))}
-        </div>
-        <div className="hidden md:block text-[11px] tracking-small-caps uppercase text-mauve font-medium">
-          Sarah &amp; James
         </div>
       </div>
     </nav>

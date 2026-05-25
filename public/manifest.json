@@ -1,8 +1,8 @@
 {
   "name": "4Ever Inner Circle",
   "short_name": "Inner Circle",
-  "description": "A wedding experience, considered. By 4Ever Photos.",
-  "start_url": "/",
+  "description": "Your private wedding space by 4Ever Photos.",
+  "start_url": "/home",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#FAF4F0",

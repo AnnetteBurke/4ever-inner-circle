@@ -1,38 +1,100 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createSupabaseBrowserClient } from '@/lib/supabase-browser'
 
+const inputClass = 'w-full border border-hairline bg-transparent px-4 py-3 text-ink text-base focus:outline-none focus:border-mauve'
+
 export default function AuthConfirmPage() {
   const router = useRouter()
+  const [linkExpired, setLinkExpired] = useState(false)
+  const [email, setEmail] = useState('')
+  const [sent, setSent] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const supabase = createSupabaseBrowserClient()
 
-    // Tokens arrive in the URL hash for invite flow
     const hashParams = new URLSearchParams(window.location.hash.substring(1))
     const access_token = hashParams.get('access_token')
     const refresh_token = hashParams.get('refresh_token')
 
     if (access_token && refresh_token) {
       supabase.auth.setSession({ access_token, refresh_token }).then(({ error }) => {
-        router.replace(error ? '/login' : '/home')
+        if (error) setLinkExpired(true)
+        else router.replace('/home')
       })
       return
     }
 
-    // Fallback: PKCE code in query string
     const code = new URLSearchParams(window.location.search).get('code')
     if (code) {
       supabase.auth.exchangeCodeForSession(code).then(({ error }) => {
-        router.replace(error ? '/login' : '/home')
+        if (error) setLinkExpired(true)
+        else router.replace('/home')
       })
       return
     }
 
-    router.replace('/login')
+    setLinkExpired(true)
   }, [router])
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setLoading(true)
+    await fetch('/api/auth/magic-link', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    })
+    setSent(true)
+    setLoading(false)
+  }
+
+  if (sent) {
+    return (
+      <main className="min-h-screen bg-cream flex items-center justify-center">
+        <div className="text-center max-w-lg px-8">
+          <div className="text-[11px] tracking-label uppercase text-mauve mb-6">4Ever Inner Circle</div>
+          <h1 className="text-4xl font-light text-ink mb-4">Check your inbox</h1>
+          <p className="font-serif italic text-xl text-plum mb-8">Your new link is on its way</p>
+          <p className="text-base text-whisper leading-relaxed">
+            We have sent a fresh sign-in link to <span className="text-ink">{email}</span>. Click it and you will be straight in.
+          </p>
+        </div>
+      </main>
+    )
+  }
+
+  if (linkExpired) {
+    return (
+      <main className="min-h-screen bg-cream flex items-center justify-center">
+        <div className="max-w-md w-full px-8">
+          <div className="text-[11px] tracking-label uppercase text-mauve mb-6 text-center">4Ever Inner Circle</div>
+          <h1 className="text-4xl font-light text-ink mb-2 text-center">This link has expired</h1>
+          <p className="font-serif italic text-xl text-plum mb-10 text-center">Enter your email and we will send a fresh one</p>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="your@email.com"
+              className={inputClass}
+            />
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-4 text-[11px] tracking-label uppercase border border-plum text-plum hover:bg-plum hover:text-cream transition-colors disabled:opacity-50"
+            >
+              {loading ? 'Sending...' : 'Send me a new link'}
+            </button>
+          </form>
+        </div>
+      </main>
+    )
+  }
 
   return (
     <main className="min-h-screen bg-cream flex items-center justify-center">
