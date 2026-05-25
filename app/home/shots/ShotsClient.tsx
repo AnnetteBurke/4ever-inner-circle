@@ -236,6 +236,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
   const [saving, setSaving] = useState(false)
   const [actioning, setActioning] = useState<string | null>(null)
   const [excluded, setExcluded] = useState<Record<string, string[]>>({})
+  const [confirming, setConfirming] = useState<Record<string, string | null>>({})
   const [added, setAdded] = useState<Record<string, string[]>>({})
   const [addingTo, setAddingTo] = useState<string | null>(null)
   const [allPeople, setAllPeople] = useState(people)
@@ -252,12 +253,13 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
     return name.split(' ')[0]
   }
 
-  function togglePerson(shotId: string, name: string) {
-    setExcluded(prev => {
-      const current = prev[shotId] ?? []
-      const already = current.includes(name)
-      return { ...prev, [shotId]: already ? current.filter(n => n !== name) : [...current, name] }
-    })
+  function handleChipClick(shotId: string, name: string) {
+    if (confirming[shotId] === name) {
+      setExcluded(prev => ({ ...prev, [shotId]: [...(prev[shotId] ?? []), name] }))
+      setConfirming(prev => ({ ...prev, [shotId]: null }))
+    } else {
+      setConfirming(prev => ({ ...prev, [shotId]: name }))
+    }
   }
 
   const approvedIds = new Set(shots.filter(s => s.generated_id && s.status === 'approved').map(s => s.generated_id!))
@@ -446,31 +448,29 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
                 const personNames = shot.people.split(', ')
                 const allPersonNames = [...personNames, ...addedNames]
                 const includedPeople = allPersonNames.filter(n => !shotExcluded.includes(n)).join(', ')
-                const inShotSet = new Set(allPersonNames)
-                const availableFromCircle = allPeople.filter(p => !inShotSet.has(p.name))
+                const includedNames = allPersonNames.filter(n => !shotExcluded.includes(n))
+                const includedSet = new Set(includedNames)
+                const availableFromCircle = allPeople.filter(p => !includedSet.has(p.name))
                 const isAddingHere = addingTo === shot.id
                 return (
                   <div key={shot.id} className="border border-hairline px-6 py-6">
                     <p className="text-[11px] tracking-label uppercase text-mauve mb-4">{shot.label}</p>
                     <div className="flex flex-wrap gap-2 mb-5">
-                      {allPersonNames.map(name => {
-                        const isOut = shotExcluded.includes(name)
+                      {includedNames.map(name => {
+                        const isConfirming = confirming[shot.id] === name
                         const label = getPersonLabel(name)
                         return (
                           <button
                             key={name}
                             type="button"
-                            onClick={() => togglePerson(shot.id, name)}
+                            onClick={() => handleChipClick(shot.id, name)}
                             className={`px-4 py-3 text-center min-w-[72px] transition-colors ${
-                              isOut ? 'bg-ink' : 'bg-blush-soft'
+                              isConfirming ? 'bg-cream border border-mauve' : 'bg-blush-soft'
                             }`}
                           >
-                            <span className={`block text-[11px] tracking-label uppercase leading-tight ${isOut ? 'text-cream/50' : 'text-plum'}`}>
-                              {label}
+                            <span className={`block text-[11px] tracking-label uppercase leading-tight ${isConfirming ? 'text-mauve' : 'text-plum'}`}>
+                              {isConfirming ? 'Remove?' : label}
                             </span>
-                            {isOut && (
-                              <span className="block text-[9px] text-cream/30 mt-0.5 italic">not included</span>
-                            )}
                           </button>
                         )
                       })}
