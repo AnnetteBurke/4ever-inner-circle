@@ -349,9 +349,23 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
   return (
     <main className="min-h-screen bg-cream">
 
-      {/* Header */}
-      <div className="bg-plum text-cream px-8 md:px-16 pt-12 pb-12">
-        <div className="max-w-4xl mx-auto">
+      {/* Header — image 00 faded behind plum, same formula as home page */}
+      <div
+        className="relative text-cream px-8 md:px-16 pt-12 pb-12 overflow-hidden"
+        style={{ backgroundColor: '#4A1F3D' }}
+      >
+        {/* Desktop: image 00 */}
+        <div
+          className="hidden md:block absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/00-family.jpg)` }}
+        />
+        {/* Mobile: image 00 */}
+        <div
+          className="md:hidden absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/00-family.jpg)` }}
+        />
+        <div className="absolute inset-0 bg-plum/80" />
+        <div className="relative max-w-4xl mx-auto">
           <Link href="/home" className="text-[11px] tracking-label uppercase text-mauve-soft hover:text-cream transition-colors mb-6 block">
             ← Back to your Inner Circle
           </Link>
