@@ -236,11 +236,18 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
   const [saving, setSaving] = useState(false)
   const [actioning, setActioning] = useState<string | null>(null)
   const [excluded, setExcluded] = useState<Record<string, string[]>>({})
+  const [added, setAdded] = useState<Record<string, string[]>>({})
+  const [addingTo, setAddingTo] = useState<string | null>(null)
+  const [allPeople, setAllPeople] = useState(people)
+  const [newPersonName, setNewPersonName] = useState('')
+  const [newPersonRel, setNewPersonRel] = useState('')
+  const [newPersonSide, setNewPersonSide] = useState('')
+  const [savingNew, setSavingNew] = useState(false)
 
   function getPersonLabel(name: string): string {
     if (name === brideName) return brideName.split(' ')[0]
     if (name === groomName) return groomName.split(' ')[0]
-    const person = people.find(p => p.name === name)
+    const person = allPeople.find(p => p.name === name)
     if (person?.family_relationship) return person.family_relationship
     return name.split(' ')[0]
   }
@@ -435,13 +442,18 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
             <div className="space-y-4">
               {pending.map(shot => {
                 const shotExcluded = excluded[shot.id] ?? []
+                const addedNames = added[shot.id] ?? []
                 const personNames = shot.people.split(', ')
-                const includedPeople = personNames.filter(n => !shotExcluded.includes(n)).join(', ')
+                const allPersonNames = [...personNames, ...addedNames]
+                const includedPeople = allPersonNames.filter(n => !shotExcluded.includes(n)).join(', ')
+                const inShotSet = new Set(allPersonNames)
+                const availableFromCircle = allPeople.filter(p => !inShotSet.has(p.name))
+                const isAddingHere = addingTo === shot.id
                 return (
                   <div key={shot.id} className="border border-hairline px-6 py-6">
                     <p className="text-[11px] tracking-label uppercase text-mauve mb-4">{shot.label}</p>
                     <div className="flex flex-wrap gap-2 mb-5">
-                      {personNames.map(name => {
+                      {allPersonNames.map(name => {
                         const isOut = shotExcluded.includes(name)
                         const label = getPersonLabel(name)
                         return (
@@ -471,13 +483,17 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
                       >
                         {actioning === shot.id ? 'Saving...' : 'Approve this image'}
                       </button>
-                      <Link
-                        href="/home/people"
-                        target="_blank"
-                        className="px-8 py-2.5 text-[11px] tracking-label uppercase border border-mauve text-mauve hover:bg-mauve hover:text-cream transition-colors"
+                      <button
+                        type="button"
+                        onClick={() => setAddingTo(isAddingHere ? null : shot.id)}
+                        className={`px-8 py-2.5 text-[11px] tracking-label uppercase border transition-colors ${
+                          isAddingHere
+                            ? 'border-mauve bg-mauve text-cream'
+                            : 'border-mauve text-mauve hover:bg-mauve hover:text-cream'
+                        }`}
                       >
                         Need to add someone?
-                      </Link>
+                      </button>
                       <button
                         onClick={() => handleDecide(shot, 'skipped')}
                         disabled={actioning === shot.id}
@@ -486,6 +502,117 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
                         Skip - don&apos;t need this shot
                       </button>
                     </div>
+
+                    {/* Add-someone panel */}
+                    {isAddingHere && (
+                      <div className="border-t border-hairline mt-5 pt-5 space-y-5">
+
+                        {/* From Our Circle */}
+                        {availableFromCircle.length > 0 && (
+                          <div>
+                            <p className="text-[11px] tracking-label uppercase text-whisper mb-3">Already in Our Circle — tap to add to this shot</p>
+                            <div className="flex flex-wrap gap-2">
+                              {availableFromCircle.map(p => (
+                                <button
+                                  key={p.id}
+                                  type="button"
+                                  onClick={() => setAdded(prev => ({ ...prev, [shot.id]: [...(prev[shot.id] ?? []), p.name] }))}
+                                  className="px-4 py-2.5 bg-cream border border-mauve text-[11px] tracking-label uppercase text-mauve hover:bg-mauve hover:text-cream transition-colors"
+                                >
+                                  + {p.family_relationship ?? p.name.split(' ')[0]}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Add someone brand new */}
+                        <div>
+                          <p className="text-[11px] tracking-label uppercase text-whisper mb-3">Add someone new to Our Circle</p>
+                          <div className="flex flex-wrap gap-2 items-end">
+                            <input
+                              type="text"
+                              value={newPersonName}
+                              onChange={e => setNewPersonName(e.target.value)}
+                              placeholder="Full name"
+                              className="border border-hairline px-3 py-2.5 text-sm text-ink bg-transparent focus:outline-none focus:border-mauve"
+                              style={{ width: '140px' }}
+                            />
+                            <div className="relative">
+                              <select
+                                value={newPersonRel}
+                                onChange={e => setNewPersonRel(e.target.value)}
+                                className="border border-hairline px-3 py-2.5 text-sm text-ink bg-cream focus:outline-none focus:border-mauve appearance-none pr-7"
+                              >
+                                <option value="">Relationship</option>
+                                <option value="Mum">Mum</option>
+                                <option value="Dad">Dad</option>
+                                <option value="Step-mum">Step-mum</option>
+                                <option value="Step-dad">Step-dad</option>
+                                <option value="Sister">Sister</option>
+                                <option value="Brother">Brother</option>
+                                <option value="Sister-in-law">Sister-in-law</option>
+                                <option value="Brother-in-law">Brother-in-law</option>
+                                <option value="Grandmother">Grandmother</option>
+                                <option value="Grandfather">Grandfather</option>
+                                <option value="Aunt">Aunt</option>
+                                <option value="Uncle">Uncle</option>
+                              </select>
+                              <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-whisper text-xs">▾</span>
+                            </div>
+                            <div className="relative">
+                              <select
+                                value={newPersonSide}
+                                onChange={e => setNewPersonSide(e.target.value)}
+                                className="border border-hairline px-3 py-2.5 text-sm text-ink bg-cream focus:outline-none focus:border-mauve appearance-none pr-7"
+                              >
+                                <option value="">Whose side?</option>
+                                <option value="partner_1">{brideName}&apos;s</option>
+                                <option value="partner_2">{groomName}&apos;s</option>
+                              </select>
+                              <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-whisper text-xs">▾</span>
+                            </div>
+                            <button
+                              type="button"
+                              disabled={!newPersonName.trim() || !newPersonRel || !newPersonSide || savingNew}
+                              onClick={async () => {
+                                setSavingNew(true)
+                                const res = await fetch('/api/people', {
+                                  method: 'POST',
+                                  headers: { 'Content-Type': 'application/json' },
+                                  body: JSON.stringify({
+                                    name: newPersonName.trim(),
+                                    family_relationship: newPersonRel,
+                                    side: newPersonSide,
+                                    is_family: true,
+                                  }),
+                                })
+                                if (res.ok) {
+                                  const saved = await res.json()
+                                  setAllPeople(prev => [...prev, saved])
+                                  setAdded(prev => ({ ...prev, [shot.id]: [...(prev[shot.id] ?? []), newPersonName.trim()] }))
+                                  setNewPersonName('')
+                                  setNewPersonRel('')
+                                  setNewPersonSide('')
+                                }
+                                setSavingNew(false)
+                              }}
+                              className="px-5 py-2.5 text-[11px] tracking-label uppercase bg-plum text-cream hover:bg-plum/90 transition-colors disabled:opacity-40"
+                            >
+                              {savingNew ? 'Adding...' : 'Add'}
+                            </button>
+                          </div>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => setAddingTo(null)}
+                          className="text-[11px] tracking-label uppercase text-whisper hover:text-ink transition-colors"
+                        >
+                          Done
+                        </button>
+                      </div>
+                    )}
                   </div>
                 )
               })}
