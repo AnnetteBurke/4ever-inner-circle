@@ -349,11 +349,17 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
   return (
     <main className="min-h-screen bg-cream">
 
-      {/* Header — image 00 behind plum overlay, exact home page formula */}
+      {/* Header — image behind plum overlay */}
       <div className="relative text-cream px-8 md:px-16 pt-12 pb-12 overflow-hidden">
+        {/* Desktop: 00 — wide landscape group shot */}
         <div
-          className="absolute inset-0 bg-cover bg-center"
+          className="hidden md:block absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/00-family.jpg)` }}
+        />
+        {/* Mobile: 02 — tighter crop, works better portrait */}
+        <div
+          className="md:hidden absolute inset-0 bg-cover bg-top"
+          style={{ backgroundImage: `url(https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/02-family.jpg)` }}
         />
         <div className="absolute inset-0" style={{ backgroundColor: 'rgba(74, 31, 61, 0.80)' }} />
         <div className="relative max-w-4xl mx-auto">
@@ -381,7 +387,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
         ))}
       </div>
       <div className="hidden md:flex gap-0.5 h-80 overflow-hidden">
-        {['01','02','extra','04'].map(n => (
+        {['01','02','08','04'].map(n => (
           <div key={n} className="flex-1 overflow-hidden">
             <img
               src={`https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/${n}-family.jpg`}
@@ -583,7 +589,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
         ))}
       </div>
       <div className="hidden md:flex gap-0.5 h-80 overflow-hidden">
-        {['05','06','07','08'].map(n => (
+        {['05','06','07','extra'].map(n => (
           <div key={n} className="flex-1 overflow-hidden">
             <img
               src={`https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/${n}-family.jpg`}
