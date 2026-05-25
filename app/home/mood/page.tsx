@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Suspense } from 'react'
 import { redirect } from 'next/navigation'
 import { createSupabaseServerClient } from '@/lib/supabase-server'
 import MoodBoardClient from './MoodBoardClient'
@@ -61,13 +62,15 @@ export default async function MoodBoardPage() {
 
       {/* Board */}
       <div className="max-w-3xl mx-auto px-8 md:px-16 py-14">
-        <MoodBoardClient
-          coupleId={couple.id}
-          coupleName={couple.bride_name ?? ''}
-          weddingDate={couple.wedding_date ?? null}
-          initialImages={imagesRes.data ?? []}
-          categoryShares={categoryShares}
-        />
+        <Suspense>
+          <MoodBoardClient
+            coupleId={couple.id}
+            coupleName={couple.bride_name ?? ''}
+            weddingDate={couple.wedding_date ?? null}
+            initialImages={imagesRes.data ?? []}
+            categoryShares={categoryShares}
+          />
+        </Suspense>
       </div>
 
     </main>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useCallback, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { createSupabaseBrowserClient as createClient } from '@/lib/supabase-browser'
 
 type MoodImage = {
@@ -316,8 +317,11 @@ export default function MoodBoardClient({
   initialImages: MoodImage[]
   categoryShares: Record<string, string>
 }) {
+  const searchParams = useSearchParams()
+  const initialCategory = CATEGORIES.find(c => c.value === searchParams.get('category'))?.value ?? CATEGORIES[0].value
+
   const [images, setImages] = useState<MoodImage[]>(initialImages)
-  const [activeCategory, setActiveCategory] = useState(CATEGORIES[0].value)
+  const [activeCategory, setActiveCategory] = useState(initialCategory)
   const [uploading, setUploading] = useState(false)
   const [shareModal, setShareModal] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)

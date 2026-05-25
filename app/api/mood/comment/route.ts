@@ -80,7 +80,7 @@ export async function POST(request: Request) {
           to: brideUser.email,
           subject: `${authorName} has left a message on your ${catLabel} folder`,
           body: `Hi ${couple.bride_name ?? 'lovely'},\n\n${authorName} has left you a message on your ${catLabel} inspiration folder:\n\n"${message.trim()}"\n\nClick below to view the conversation and reply:\n\n{{CTA}}`,
-          ctaUrl: `${siteUrl}/home/mood`,
+          ctaUrl: `${siteUrl}/home/mood?category=${share.category}`,
           ctaLabel: 'Go to your mood board',
         })
       }
