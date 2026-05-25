@@ -381,7 +381,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
         ))}
       </div>
       <div className="hidden md:flex gap-0.5 h-80 overflow-hidden">
-        {['01','02','03','04'].map(n => (
+        {['01','02','extra','04'].map(n => (
           <div key={n} className="flex-1 overflow-hidden">
             <img
               src={`https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/${n}-family.jpg`}
