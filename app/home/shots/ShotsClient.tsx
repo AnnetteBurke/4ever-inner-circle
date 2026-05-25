@@ -257,6 +257,15 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
     return name.split(' ')[0]
   }
 
+  function formatPeopleForDisplay(peopleStr: string | null): string {
+    if (!peopleStr) return ''
+    const names = peopleStr.split(', ')
+    const labels = names.map(n => getPersonLabel(n))
+    const count: Record<string, number> = {}
+    labels.forEach(l => { count[l] = (count[l] ?? 0) + 1 })
+    return names.map((n, i) => count[labels[i]] > 1 ? n : labels[i]).join(', ')
+  }
+
   function handleChipClick(shotId: string, name: string) {
     if (confirming[shotId] === name) {
       setExcluded(prev => ({ ...prev, [shotId]: [...(prev[shotId] ?? []), name] }))
@@ -648,7 +657,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
                       </span>
                       <div>
                         <p className="text-base font-light text-ink">{shot.label}</p>
-                        {shot.people && <p className="text-sm text-whisper mt-0.5">{shot.people}</p>}
+                        {shot.people && <p className="text-sm text-whisper mt-0.5">{formatPeopleForDisplay(shot.people)}</p>}
                         {shot.notes && <p className="text-sm text-mauve italic mt-0.5">{shot.notes}</p>}
                       </div>
                     </div>
