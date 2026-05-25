@@ -15,9 +15,10 @@ export default async function SharePage({ params }: PageProps) {
   const { token } = await params
   const supabase = createAdminClient()
 
+  // Look up the token to find couple + category
   const { data: share } = await supabase
     .from('mood_board_shares')
-    .select('couple_id, category, person_id')
+    .select('couple_id, category')
     .eq('share_token', token)
     .single()
 
@@ -32,9 +33,19 @@ export default async function SharePage({ params }: PageProps) {
     )
   }
 
-  const [coupleRes, personRes, imagesRes, commentsRes] = await Promise.all([
+  // Fetch all shares for this category so we can show the full group + shared thread
+  const { data: allShares } = await supabase
+    .from('mood_board_shares')
+    .select('share_token, person_id')
+    .eq('couple_id', share.couple_id)
+    .eq('category', share.category)
+
+  const allTokens = (allShares ?? []).map(s => s.share_token)
+  const allPersonIds = (allShares ?? []).map(s => s.person_id)
+
+  const [coupleRes, peopleRes, imagesRes, commentsRes] = await Promise.all([
     supabase.from('couples').select('bride_name, wedding_date').eq('id', share.couple_id).single(),
-    supabase.from('people').select('name').eq('id', share.person_id).single(),
+    supabase.from('people').select('name').in('id', allPersonIds),
     supabase.from('mood_board_images')
       .select('id, url, caption')
       .eq('couple_id', share.couple_id)
@@ -42,12 +53,12 @@ export default async function SharePage({ params }: PageProps) {
       .order('created_at', { ascending: false }),
     supabase.from('mood_board_comments')
       .select('id, author_name, message, created_at')
-      .eq('share_token', token)
+      .in('share_token', allTokens)
       .order('created_at', { ascending: true }),
   ])
 
   const couple = coupleRes.data
-  const person = personRes.data
+  const sharedPeople = (peopleRes.data ?? []).map(p => p.name)
   const images = imagesRes.data ?? []
   const comments = commentsRes.data ?? []
   const catLabel = CATEGORY_LABELS[share.category] ?? share.category
@@ -100,7 +111,7 @@ export default async function SharePage({ params }: PageProps) {
         <CommentThread
           shareToken={token}
           initialComments={comments}
-          supplierName={person?.name ?? ''}
+          sharedPeople={sharedPeople}
           brideName={couple?.bride_name ?? 'the bride'}
         />
 

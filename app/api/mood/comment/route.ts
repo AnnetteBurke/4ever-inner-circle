@@ -11,7 +11,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 }
 
 export async function POST(request: Request) {
-  const { shareToken, authorName, message } = await request.json()
+  const { shareToken, authorName, message, notifyAll } = await request.json()
 
   if (!shareToken || !authorName?.trim() || !message?.trim()) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
@@ -21,7 +21,7 @@ export async function POST(request: Request) {
 
   const { data: share } = await supabase
     .from('mood_board_shares')
-    .select('couple_id, category, person_id')
+    .select('couple_id, category')
     .eq('share_token', shareToken)
     .single()
 
@@ -39,38 +39,52 @@ export async function POST(request: Request) {
 
   const catLabel = CATEGORY_LABELS[share.category] ?? share.category
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? ''
-  const viewUrl = `${siteUrl}/share/${shareToken}`
 
-  const [coupleRes, personRes] = await Promise.all([
-    supabase.from('couples').select('bride_name, user_id').eq('id', share.couple_id).single(),
-    supabase.from('people').select('name, email').eq('id', share.person_id).single(),
-  ])
+  const { data: couple } = await supabase
+    .from('couples')
+    .select('bride_name, user_id')
+    .eq('id', share.couple_id)
+    .single()
 
-  const couple = coupleRes.data
-  const supplier = personRes.data
+  if (notifyAll) {
+    // Bride is sending — email everyone in the share group for this category
+    const { data: allShares } = await supabase
+      .from('mood_board_shares')
+      .select('share_token, person_id')
+      .eq('couple_id', share.couple_id)
+      .eq('category', share.category)
 
-  // If the commenter is the supplier, email the bride. If it's anyone else (the bride), email the supplier.
-  const isSupplier = authorName.trim() === supplier?.name
+    for (const s of allShares ?? []) {
+      const { data: person } = await supabase
+        .from('people')
+        .select('name, email')
+        .eq('id', s.person_id)
+        .single()
 
-  if (isSupplier && couple?.user_id) {
-    const { data: { user: brideUser } } = await supabase.auth.admin.getUserById(couple.user_id)
-    if (brideUser?.email) {
+      if (!person?.email) continue
+
       await sendEmail({
-        to: brideUser.email,
-        subject: `${authorName} has left a message on your ${catLabel} folder`,
-        body: `Hi ${couple.bride_name ?? 'lovely'},\n\n${authorName} has seen your ${catLabel} inspiration and left you a message:\n\n"${message.trim()}"\n\nClick below to view the conversation and reply:\n\n{{CTA}}`,
-        ctaUrl: viewUrl,
+        to: person.email,
+        subject: `${couple?.bride_name ?? 'The bride'} has left a message on the ${catLabel} folder`,
+        body: `Hi ${person.name},\n\n${couple?.bride_name ?? 'The bride'} has left a message in the ${catLabel} inspiration folder:\n\n"${message.trim()}"\n\nClick below to view the conversation and reply:\n\n{{CTA}}`,
+        ctaUrl: `${siteUrl}/share/${s.share_token}`,
         ctaLabel: 'View and reply',
       })
     }
-  } else if (!isSupplier && supplier?.email) {
-    await sendEmail({
-      to: supplier.email,
-      subject: `${couple?.bride_name ?? 'The bride'} has replied on the ${catLabel} folder`,
-      body: `Hi ${supplier.name},\n\n${couple?.bride_name ?? 'The bride'} has replied to your message on the ${catLabel} inspiration folder:\n\n"${message.trim()}"\n\nClick below to view the conversation and reply:\n\n{{CTA}}`,
-      ctaUrl: viewUrl,
-      ctaLabel: 'View and reply',
-    })
+  } else {
+    // Supplier or guest is sending — email the bride only
+    if (couple?.user_id) {
+      const { data: { user: brideUser } } = await supabase.auth.admin.getUserById(couple.user_id)
+      if (brideUser?.email) {
+        await sendEmail({
+          to: brideUser.email,
+          subject: `${authorName} has left a message on your ${catLabel} folder`,
+          body: `Hi ${couple.bride_name ?? 'lovely'},\n\n${authorName} has left you a message on your ${catLabel} inspiration folder:\n\n"${message.trim()}"\n\nClick below to view the conversation and reply:\n\n{{CTA}}`,
+          ctaUrl: `${siteUrl}/share/${shareToken}`,
+          ctaLabel: 'View and reply',
+        })
+      }
+    }
   }
 
   return NextResponse.json({ success: true })
