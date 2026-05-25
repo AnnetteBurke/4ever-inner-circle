@@ -177,11 +177,7 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
         notes: `Partner of ${savedPersonName}`,
         is_family: true,
         side: savedPersonSide || null,
-        family_relationship: ['Sister', 'Step-sister'].includes(savedPersonRelationship)
-          ? 'Brother-in-law'
-          : ['Brother', 'Step-brother'].includes(savedPersonRelationship)
-            ? 'Sister-in-law'
-            : 'Partner',
+        family_relationship: 'Partner',
         child_name: null,
         in_family_photos: partnerInPhotos,
       }),
