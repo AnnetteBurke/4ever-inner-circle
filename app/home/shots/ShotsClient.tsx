@@ -475,18 +475,18 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
                         )
                       })}
                     </div>
-                    <div className="flex flex-wrap gap-3">
+                    <div className="grid grid-cols-3 gap-2">
                       <button
                         onClick={() => handleDecide(shot, 'approved', includedPeople)}
                         disabled={actioning === shot.id || includedPeople === ''}
-                        className="px-8 py-2.5 text-[11px] tracking-label uppercase bg-plum text-cream hover:bg-plum/90 transition-colors disabled:opacity-40"
+                        className="py-3 px-2 text-[10px] tracking-label uppercase leading-tight text-center bg-plum text-cream hover:bg-plum/90 transition-colors disabled:opacity-40"
                       >
                         {actioning === shot.id ? 'Saving...' : 'Approve this image'}
                       </button>
                       <button
                         type="button"
                         onClick={() => setAddingTo(isAddingHere ? null : shot.id)}
-                        className={`px-8 py-2.5 text-[11px] tracking-label uppercase border transition-colors ${
+                        className={`py-3 px-2 text-[10px] tracking-label uppercase leading-tight text-center border transition-colors ${
                           isAddingHere
                             ? 'border-mauve bg-mauve text-cream'
                             : 'border-mauve text-mauve hover:bg-mauve hover:text-cream'
@@ -497,9 +497,9 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
                       <button
                         onClick={() => handleDecide(shot, 'skipped')}
                         disabled={actioning === shot.id}
-                        className="px-8 py-2.5 text-[11px] tracking-label uppercase border border-hairline text-whisper hover:border-mauve hover:text-ink transition-colors disabled:opacity-40"
+                        className="py-3 px-2 text-[10px] tracking-label uppercase leading-tight text-center border border-hairline text-whisper hover:border-mauve hover:text-ink transition-colors disabled:opacity-40"
                       >
-                        Skip - don&apos;t need this shot
+                        Skip this shot
                       </button>
                     </div>
 
