@@ -350,16 +350,10 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
     <main className="min-h-screen bg-cream">
 
       {/* Header — image behind plum overlay */}
-      <div className="relative text-cream px-8 md:px-16 pt-12 pb-12 overflow-hidden">
-        {/* Desktop: 00 — wide landscape group shot */}
+      <div className="relative text-cream px-8 md:px-16 pt-8 md:pt-12 pb-8 md:pb-12 overflow-hidden">
         <div
-          className="hidden md:block absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/00-family.jpg)` }}
-        />
-        {/* Mobile: 02 — tighter crop, works better portrait */}
-        <div
-          className="md:hidden absolute inset-0 bg-cover bg-top"
-          style={{ backgroundImage: `url(https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/02-family.jpg)` }}
         />
         <div className="absolute inset-0" style={{ backgroundColor: 'rgba(74, 31, 61, 0.88)' }} />
         <div className="relative max-w-4xl mx-auto">
@@ -430,7 +424,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
           )}
           <Link
             href="/home/people"
-            className="inline-block text-[11px] tracking-label uppercase border border-plum text-plum px-6 py-3 hover:bg-plum hover:text-cream transition-colors"
+            className="inline-block text-[11px] tracking-label uppercase bg-plum text-cream border border-plum px-6 py-3 hover:bg-plum/90 transition-colors"
           >
             Add more people to <strong>Our Circle</strong>
           </Link>
@@ -531,7 +525,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
           </p>
           <Link
             href="/home/people"
-            className="inline-block text-[11px] tracking-label uppercase border border-hairline text-whisper px-5 py-2 hover:border-mauve hover:text-ink transition-colors"
+            className="inline-block text-[11px] tracking-label uppercase bg-plum text-cream border border-plum px-5 py-2 hover:bg-plum/90 transition-colors"
           >
             Add extended family to <strong>Our Circle</strong>
           </Link>
@@ -545,7 +539,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
             </div>
             <button
               onClick={() => setCustomOpen(true)}
-              className="text-[11px] tracking-label uppercase text-mauve border border-mauve px-5 py-2 hover:bg-mauve hover:text-cream transition-colors flex-shrink-0 ml-6"
+              className="text-[11px] tracking-label uppercase bg-plum text-cream border border-plum px-5 py-2 hover:bg-plum/90 transition-colors flex-shrink-0 ml-6"
             >
               + Add shot
             </button>
