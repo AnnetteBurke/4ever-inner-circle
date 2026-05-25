@@ -1048,9 +1048,18 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
           hint="Select each speaker in turn. A new slot appears automatically once each one is filled."
         >
           {people.length === 0 ? (
-            <p className="text-xs text-whisper/60 italic">
-              Add people to Your Circle and they will appear here to select.
-            </p>
+            <div className="border border-hairline border-dashed px-6 py-5 max-w-lg">
+              <p className="text-sm text-ink font-light mb-1">Add your speakers to Your Circle first</p>
+              <p className="text-[11px] text-whisper mb-3">
+                Pop in each person who will be speaking — best man, father of the bride, the couple themselves — with their name and any contact details you have. Once they are in Your Circle, they will appear here to select and we can send them speech tips and timings at just the right moment.
+              </p>
+              <a
+                href="/home/people"
+                className="text-[11px] tracking-label uppercase text-mauve border border-mauve px-5 py-2 inline-block hover:bg-mauve hover:text-cream transition-colors"
+              >
+                Go to Your Circle
+              </a>
+            </div>
           ) : (
             <div className="space-y-4 max-w-sm">
               {([...speakerIds, '']).map((speakerId, idx) => {
