@@ -73,6 +73,7 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
   // Saved sibling info for partner step
   const [savedPersonName, setSavedPersonName] = useState('')
   const [savedPersonSide, setSavedPersonSide] = useState<'partner_1' | 'partner_2' | ''>('')
+  const [savedPersonRelationship, setSavedPersonRelationship] = useState('')
 
   // Partner form fields
   const [partnerName, setPartnerName] = useState('')
@@ -148,6 +149,7 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
     if (isSibling) {
       setSavedPersonName(name)
       setSavedPersonSide(side as 'partner_1' | 'partner_2' | '')
+      setSavedPersonRelationship(familyRelationship)
       setName(''); setRole(''); setFamilyOrFriend(null); setSide('')
       setFamilyRelationship(''); setChildName(''); setPhone('+44'); setEmail('')
       setNotes(''); setError('')
@@ -175,7 +177,11 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
         notes: `Partner of ${savedPersonName}`,
         is_family: true,
         side: savedPersonSide || null,
-        family_relationship: 'Partner',
+        family_relationship: ['Sister', 'Step-sister'].includes(savedPersonRelationship)
+          ? 'Brother-in-law'
+          : ['Brother', 'Step-brother'].includes(savedPersonRelationship)
+            ? 'Sister-in-law'
+            : 'Partner',
         child_name: null,
         in_family_photos: partnerInPhotos,
       }),

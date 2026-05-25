@@ -53,6 +53,8 @@ const CHILD_RELATIONSHIPS = ['Son', 'Daughter']
 const BRIDE_PARENT_ROLES = ['father_of_bride', 'mother_of_bride', 'parent_of_bride']
 const GROOM_PARENT_ROLES = ['father_of_groom', 'mother_of_groom', 'parent_of_groom']
 
+const LABEL_BY_RELATIONSHIP = new Set(['Mum', 'Dad', 'Step-mum', 'Step-dad'])
+
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function names(people: Person[]) {
@@ -249,7 +251,9 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
     if (name === brideName) return brideName.split(' ')[0]
     if (name === groomName) return groomName.split(' ')[0]
     const person = allPeople.find(p => p.name === name)
-    if (person?.family_relationship) return person.family_relationship
+    if (person?.family_relationship && LABEL_BY_RELATIONSHIP.has(person.family_relationship)) {
+      return person.family_relationship
+    }
     return name.split(' ')[0]
   }
 
@@ -519,7 +523,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
                                   onClick={() => setAdded(prev => ({ ...prev, [shot.id]: [...(prev[shot.id] ?? []), p.name] }))}
                                   className="px-4 py-2.5 bg-cream border border-mauve text-[11px] tracking-label uppercase text-mauve hover:bg-mauve hover:text-cream transition-colors"
                                 >
-                                  + {p.family_relationship ?? p.name.split(' ')[0]}
+                                  + {p.family_relationship && LABEL_BY_RELATIONSHIP.has(p.family_relationship) ? p.family_relationship : p.name.split(' ')[0]}
                                 </button>
                               ))}
                             </div>
