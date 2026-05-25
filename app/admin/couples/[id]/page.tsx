@@ -2,6 +2,8 @@ import { createAdminClient } from '@/lib/supabase'
 import { notFound } from 'next/navigation'
 import EditCoupleForm from './EditCoupleForm'
 
+export const dynamic = 'force-dynamic'
+
 export default async function EditCouplePage({ params }: { params: { id: string } }) {
   const supabase = createAdminClient()
 
