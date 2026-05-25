@@ -1,22 +1,12 @@
 import { createAdminClient } from '@/lib/supabase'
+import CommentThread from './CommentThread'
 
 const CATEGORY_LABELS: Record<string, string> = {
-  hair: 'Hair',
-  makeup: 'Make Up',
-  flowers: 'Flowers',
-  dress: 'Dress',
-  shoes: 'Shoes',
-  bridesmaids: 'Bridesmaids',
-  groomswear: 'Groomswear',
-  flowergirls: 'Flower Girls',
-  pageboys: 'Page Boys',
-  mob: 'MOB',
-  venue: 'Venue',
-  cars: 'Ceremony Cars',
-  cakes: 'Cakes',
-  photos: 'Photos',
-  details: 'Details',
-  other: 'Other',
+  hair: 'Hair', makeup: 'Make Up', flowers: 'Flowers', dress: 'Dress',
+  shoes: 'Shoes', bridesmaids: 'Bridesmaids', groomswear: 'Groomswear',
+  flowergirls: 'Flower Girls', pageboys: 'Page Boys', mob: 'MOB',
+  venue: 'Venue', cars: 'Ceremony Cars', cakes: 'Cakes',
+  photos: 'Photos', details: 'Details', other: 'Other',
 }
 
 type PageProps = { params: Promise<{ token: string }> }
@@ -27,7 +17,7 @@ export default async function SharePage({ params }: PageProps) {
 
   const { data: share } = await supabase
     .from('mood_board_shares')
-    .select('couple_id, category')
+    .select('couple_id, category, person_id')
     .eq('share_token', token)
     .single()
 
@@ -42,17 +32,24 @@ export default async function SharePage({ params }: PageProps) {
     )
   }
 
-  const [coupleRes, imagesRes] = await Promise.all([
+  const [coupleRes, personRes, imagesRes, commentsRes] = await Promise.all([
     supabase.from('couples').select('bride_name, wedding_date').eq('id', share.couple_id).single(),
+    supabase.from('people').select('name').eq('id', share.person_id).single(),
     supabase.from('mood_board_images')
       .select('id, url, caption')
       .eq('couple_id', share.couple_id)
       .eq('category', share.category)
       .order('created_at', { ascending: false }),
+    supabase.from('mood_board_comments')
+      .select('id, author_name, message, created_at')
+      .eq('share_token', token)
+      .order('created_at', { ascending: true }),
   ])
 
   const couple = coupleRes.data
+  const person = personRes.data
   const images = imagesRes.data ?? []
+  const comments = commentsRes.data ?? []
   const catLabel = CATEGORY_LABELS[share.category] ?? share.category
 
   const weddingDateFormatted = couple?.wedding_date
@@ -97,11 +94,19 @@ export default async function SharePage({ params }: PageProps) {
                 </div>
               ))}
             </div>
-            <p className="text-xs text-whisper mt-8 text-center italic">
-              This is a private link shared with you by {couple?.bride_name ?? 'the couple'} via 4Ever Inner Circle.
-            </p>
           </>
         )}
+
+        <CommentThread
+          shareToken={token}
+          initialComments={comments}
+          authorName={person?.name ?? ''}
+          brideName={couple?.bride_name ?? 'the bride'}
+        />
+
+        <p className="text-xs text-whisper mt-12 text-center italic">
+          Private link shared by {couple?.bride_name ?? 'the couple'} via 4Ever Inner Circle.
+        </p>
       </div>
 
     </main>
