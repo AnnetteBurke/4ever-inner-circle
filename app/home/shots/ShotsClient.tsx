@@ -357,7 +357,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
           <div className="text-[11px] tracking-label uppercase text-mauve-soft mb-3">Photography</div>
           <h1 className="text-4xl md:text-5xl font-light text-cream leading-tight">Family Shot List</h1>
           <p className="text-cream/60 text-base mt-3 max-w-xl">
-            We have built your family group shots from Our Circle. Work through each suggestion and tell us which ones you want. The more you include, the more time we will need, so choose the ones that genuinely matter.
+            We have built your family group shots from &ldquo;Our Circle&rdquo;. Work through each suggestion and tell us which ones you want. The more you include, the more time we will need, so choose the ones that genuinely matter.
           </p>
         </div>
       </div>
@@ -368,15 +368,15 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
         {!familyInCircle && (
           <div className="border border-mauve/40 bg-blush-soft px-8 py-8">
             <div className="text-[11px] tracking-label uppercase text-mauve mb-2">Before you start</div>
-            <p className="text-base font-light text-ink mb-2">Our Circle doesn't have any family members yet.</p>
+            <p className="text-base font-light text-ink mb-2">&ldquo;Our Circle&rdquo; doesn&apos;t have any family members yet.</p>
             <p className="text-sm text-charcoal/70 leading-relaxed mb-5">
-              To build your family shot list, we need to know who is coming. Add parents, siblings, step-parents, grandparents, nieces and nephews into Our Circle first. The more detail you add, the more accurate your shot list will be.
+              To build your family shot list, we need to know who is coming. Add parents, siblings, step-parents, grandparents, nieces and nephews into &ldquo;Our Circle&rdquo; first. The more detail you add, the more accurate your shot list will be.
             </p>
             <Link
               href="/home/people"
               className="inline-block text-[11px] tracking-label uppercase border border-plum text-plum px-6 py-3 hover:bg-plum hover:text-cream transition-colors"
             >
-              Go to Our Circle
+              Go to &ldquo;Our Circle&rdquo;
             </Link>
           </div>
         )}
@@ -389,7 +389,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
               <span className="text-[11px] tracking-label uppercase text-mauve-soft">{pending.length} remaining</span>
             </div>
             <p className="text-sm text-whisper italic mb-8">
-              Based on the people in Our Circle. Include the ones you want and skip the rest. Remember to ask your parents if there are any they would love themselves — this is a family day too.
+              Based on the people in &ldquo;Our Circle&rdquo;. Include the ones you want and skip the rest. Remember to ask your parents if there are any they would love themselves — this is a family day too.
             </p>
             <div className="space-y-3">
               {pending.map(shot => (
@@ -471,13 +471,13 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
           <div className="text-[11px] tracking-label uppercase text-mauve mb-3">Extended family</div>
           <p className="text-base font-light text-ink mb-2">Do you want to include aunts, uncles, or cousins?</p>
           <p className="text-sm text-charcoal/70 leading-relaxed mb-4">
-            If either of you has extended family you would love to include — a photo of your mum with her sisters, or a big cousins shot — add them into Our Circle and they will appear in your suggestions. Just know that every extra group takes time, so be selective.
+            If either of you has extended family you would love to include — a photo of your mum with her sisters, or a big cousins shot — add them into &ldquo;Our Circle&rdquo; and they will appear in your suggestions. Just know that every extra group takes time, so be selective.
           </p>
           <Link
             href="/home/people"
             className="inline-block text-[11px] tracking-label uppercase border border-hairline text-whisper px-5 py-2 hover:border-mauve hover:text-ink transition-colors"
           >
-            Add extended family to Our Circle
+            Add extended family to &ldquo;Our Circle&rdquo;
           </Link>
         </div>
 

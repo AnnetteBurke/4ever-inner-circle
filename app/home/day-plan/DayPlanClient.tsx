@@ -456,7 +456,7 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
             <div className="border border-hairline border-dashed px-5 py-4 max-w-lg">
               <p className="text-[11px] text-whisper italic">
                 Any additional needs or considerations for your children can be noted in{' '}
-                <a href="/home/people" className="text-mauve underline underline-offset-2">Our Circle</a>
+                <a href="/home/people" className="text-mauve underline underline-offset-2">&ldquo;Our Circle&rdquo;</a>
                 {' '}— we check those for every person when planning your day.
               </p>
             </div>
@@ -611,7 +611,7 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
                 <div className="border border-hairline border-dashed px-5 py-4 max-w-lg">
                   <p className="text-[11px] text-whisper italic">
                     Any additional needs or considerations for your children can be noted in{' '}
-                    <a href="/home/people" className="text-mauve underline underline-offset-2">Our Circle</a>
+                    <a href="/home/people" className="text-mauve underline underline-offset-2">&ldquo;Our Circle&rdquo;</a>
                     {' '}— we check those for every person when planning your day.
                   </p>
                 </div>
@@ -793,7 +793,7 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
               {!celebrant.email && (
                 <p className="text-[11px] italic text-whisper mt-2">
                   Add their email in{' '}
-                  <a href="/home/people" className="text-mauve underline underline-offset-2">Our Circle</a>
+                  <a href="/home/people" className="text-mauve underline underline-offset-2">&ldquo;Our Circle&rdquo;</a>
                   {' '}and we will introduce ourselves before your day.
                 </p>
               )}
