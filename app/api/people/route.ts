@@ -30,7 +30,7 @@ export async function POST(request: Request) {
   if (!couple) return NextResponse.json({ error: 'No couple record' }, { status: 404 })
 
   const body = await request.json()
-  const { name, role, phone, email, notes, is_family, side, family_relationship, child_name, age, in_family_photos } = body
+  const { name, role, phone, email, notes, is_family, side, family_relationship, child_name, age, additional_needs, in_family_photos } = body
 
   if (!name) return NextResponse.json({ error: 'Name is required' }, { status: 400 })
 
@@ -46,6 +46,7 @@ export async function POST(request: Request) {
     family_relationship: family_relationship || null,
     child_name: child_name || null,
     age: age ?? null,
+    additional_needs: additional_needs || null,
     in_family_photos: in_family_photos || false,
   }).select().single()
 

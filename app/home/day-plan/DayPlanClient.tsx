@@ -453,18 +453,13 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
                 ))}
               </div>
             </Field>
-            <Field
-              label="Do they have any special needs we should know about?"
-              hint="Anything that helps us make the morning easier and the photographs better."
-            >
-              <textarea
-                value={plan.bride_children_needs ?? ''}
-                onChange={e => set('bride_children_needs', e.target.value || null)}
-                rows={2}
-                className={textareaClass}
-                placeholder="e.g. My son has autism and does best with a calm, quiet start"
-              />
-            </Field>
+            <div className="border border-hairline border-dashed px-5 py-4 max-w-lg">
+              <p className="text-[11px] text-whisper italic">
+                Any additional needs or considerations for your children can be noted in{' '}
+                <a href="/home/people" className="text-mauve underline underline-offset-2">Your Circle</a>
+                {' '}— we check those for every person when planning your day.
+              </p>
+            </div>
           </>
         )}
 
@@ -613,18 +608,13 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
                     ))}
                   </div>
                 </Field>
-                <Field
-                  label="Do they have any special needs we should know about?"
-                  hint="Anything that helps us make the morning easier and the photographs better."
-                >
-                  <textarea
-                    value={plan.groom_children_needs ?? ''}
-                    onChange={e => set('groom_children_needs', e.target.value || null)}
-                    rows={2}
-                    className={textareaClass}
-                    placeholder="e.g. She is very shy and warms up slowly"
-                  />
-                </Field>
+                <div className="border border-hairline border-dashed px-5 py-4 max-w-lg">
+                  <p className="text-[11px] text-whisper italic">
+                    Any additional needs or considerations for your children can be noted in{' '}
+                    <a href="/home/people" className="text-mauve underline underline-offset-2">Your Circle</a>
+                    {' '}— we check those for every person when planning your day.
+                  </p>
+                </div>
               </>
             )}
 

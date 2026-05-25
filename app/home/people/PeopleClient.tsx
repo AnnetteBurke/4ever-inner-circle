@@ -17,6 +17,7 @@ type Person = {
   family_relationship: string | null
   child_name: string | null
   age: number | null
+  additional_needs: string | null
   in_family_photos: boolean
 }
 
@@ -186,6 +187,9 @@ export default function PeopleClient({ brideName, groomName, initialPeople }: Pr
                         <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-whisper">
                           {person.phone && <span>{person.phone}</span>}
                           {person.email && <span>{person.email}</span>}
+                          {person.additional_needs && (
+                            <span className="italic text-mauve w-full">{person.additional_needs}</span>
+                          )}
                           {person.notes && person.family_relationship !== 'Partner' && (
                             <span className="italic">{person.notes}</span>
                           )}

@@ -34,6 +34,7 @@ type Person = {
   family_relationship: string | null
   child_name: string | null
   age: number | null
+  additional_needs: string | null
   in_family_photos: boolean
 }
 
@@ -62,6 +63,7 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
   const [familyRelationship, setFamilyRelationship] = useState('')
   const [childName, setChildName] = useState('')
   const [age, setAge] = useState('')
+  const [additionalNeeds, setAdditionalNeeds] = useState('')
   const [phone, setPhone] = useState('+44')
   const [email, setEmail] = useState('')
   const [notes, setNotes] = useState('')
@@ -82,7 +84,7 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
 
   function reset() {
     setName(''); setRole(''); setFamilyOrFriend(null); setSide('')
-    setFamilyRelationship(''); setChildName(''); setAge(''); setPhone('+44'); setEmail('')
+    setFamilyRelationship(''); setChildName(''); setAge(''); setAdditionalNeeds(''); setPhone('+44'); setEmail('')
     setNotes(''); setError(''); setStep('main')
     setSavedPersonName(''); setSavedPersonSide('')
     setPartnerName(''); setPartnerPhone('+44'); setPartnerEmail('')
@@ -131,6 +133,7 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
         family_relationship: needsRelationship ? familyRelationship : null,
         child_name: isChildRole ? childName : null,
         age: isChildRelationship && childAgeNum !== null ? childAgeNum : null,
+        additional_needs: additionalNeeds || null,
         in_family_photos: false,
       }),
     })
@@ -381,6 +384,17 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
                       />
                     </div>
                   )}
+
+                  <div>
+                    <label className="text-[11px] tracking-label uppercase text-whisper block mb-2">Additional needs or considerations</label>
+                    <textarea
+                      value={additionalNeeds}
+                      onChange={e => setAdditionalNeeds(e.target.value)}
+                      rows={2}
+                      className="w-full border border-hairline bg-transparent px-4 py-3 text-ink text-base focus:outline-none focus:border-mauve resize-none"
+                      placeholder="e.g. Autism, uses a wheelchair, mobility issues, serious illness — anything we should be aware of on the day"
+                    />
+                  </div>
 
                   {isOtherSupplier ? (
                     <div>
