@@ -8,9 +8,7 @@ type DayPlan = {
   guest_count: number | null
   bride_prep_address: string | null
   bride_has_children: boolean
-  bride_children_ages: string | null
   bride_children_details: string | null
-  bride_children_needs: string | null
   bride_dad_reveal: boolean
   bride_bridesmaids_reveal: boolean
   bride_gifts: boolean
@@ -21,9 +19,7 @@ type DayPlan = {
   bride_personality_notes: string | null
   groom_prep_address: string | null
   groom_has_children: boolean
-  groom_children_ages: string | null
   groom_children_details: string | null
-  groom_children_needs: string | null
   groom_personality_notes: string | null
   groom_pub_stop: boolean
   groom_pub_address: string | null
@@ -96,9 +92,7 @@ const EMPTY: DayPlan = {
   guest_count: null,
   bride_prep_address: null,
   bride_has_children: false,
-  bride_children_ages: null,
   bride_children_details: null,
-  bride_children_needs: null,
   bride_dad_reveal: false,
   bride_bridesmaids_reveal: false,
   bride_gifts: false,
@@ -109,9 +103,7 @@ const EMPTY: DayPlan = {
   bride_personality_notes: null,
   groom_prep_address: null,
   groom_has_children: false,
-  groom_children_ages: null,
   groom_children_details: null,
-  groom_children_needs: null,
   groom_personality_notes: null,
   groom_pub_stop: false,
   groom_pub_address: null,
