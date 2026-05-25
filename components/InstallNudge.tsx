@@ -77,7 +77,7 @@ export default function InstallNudge() {
           <div className="flex gap-3 items-start">
             <span className="text-[10px] tracking-label uppercase text-plum font-medium mt-0.5 flex-shrink-0">Step 1</span>
             <p className="text-xs text-whisper leading-relaxed">
-              Look for this icon <ShareIcon /> at the bottom of your Safari browser. If you can't see it straight away, tap the <span className="font-medium text-ink">•••</span> button first — it will be in there.
+              Look for this icon <ShareIcon /> in the bar at the top of your Safari browser. If you can't see it straight away, tap the <span className="font-medium text-ink">•••</span> button and it will be in there.
             </p>
           </div>
           <div className="flex gap-3 items-start">
@@ -93,7 +93,9 @@ export default function InstallNudge() {
             </p>
           </div>
           <p className="text-[10px] text-whisper pt-1 border-t border-plum/15 leading-relaxed">
-            Not doing it right now? You can always request a new link from the sign-in section at the bottom of our website.
+            If you can't find it right now, just go to{' '}
+            <a href="/#signin" className="underline text-plum/70">our website</a>
+            {' '}and at the bottom you can request a new link any time.
           </p>
         </div>
       ) : (
@@ -110,7 +112,9 @@ export default function InstallNudge() {
             </button>
           )}
           <p className="text-[10px] text-whisper leading-relaxed">
-            Not doing it right now? You can always request a new link from the sign-in section at the bottom of our website.
+            If you can't find it right now, just go to{' '}
+            <a href="/#signin" className="underline text-plum/70">our website</a>
+            {' '}and at the bottom you can request a new link any time.
           </p>
         </div>
       )}

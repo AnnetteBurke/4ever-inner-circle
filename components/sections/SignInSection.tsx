@@ -20,7 +20,7 @@ export default function SignInSection() {
   }
 
   return (
-    <section className="bg-plum py-20 px-8">
+    <section id="signin" className="bg-plum py-20 px-8">
       <div className="max-w-xl mx-auto text-center">
         <div className="text-[11px] tracking-label uppercase text-mauve-soft mb-4">
           Already booked with us?
