@@ -384,9 +384,6 @@ export default function MoodBoardClient({
                 }`}
               >
                 {cat.label}
-                {count > 0 && (
-                  <span className="ml-1.5 opacity-60">{count}</span>
-                )}
               </button>
             )
           })}
