@@ -82,7 +82,7 @@ function FeatureCard({ feature }: { feature: Feature }) {
 
 const features: Feature[] = [
   {
-    label: 'Your Circle',
+    label: 'Our Circle',
     tag: 'Your people',
     desc: 'Add your bridal party, family and suppliers. We brief everyone at the right moment.',
     href: '/home/people',

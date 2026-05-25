@@ -113,7 +113,7 @@ export default function PeopleClient({ brideName, groomName, initialPeople }: Pr
             ← Back to your Inner Circle
           </Link>
           <div className="text-[11px] tracking-label uppercase text-mauve-soft mb-3">Your people</div>
-          <h1 className="text-4xl md:text-5xl font-light text-cream leading-tight">Your Circle</h1>
+          <h1 className="text-4xl md:text-5xl font-light text-cream leading-tight">Our Circle</h1>
           <p className="text-cream/60 text-base mt-3">
             Add the key people in your wedding. We will brief each of them at exactly the right moment.
           </p>

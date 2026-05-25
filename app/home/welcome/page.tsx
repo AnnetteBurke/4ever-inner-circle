@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 const whatIsInside = [
   {
-    label: 'Your Circle',
+    label: 'Our Circle',
     desc: 'Add your bridal party, family and suppliers. We brief everyone at the right moment.',
   },
   {

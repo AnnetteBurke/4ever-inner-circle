@@ -456,7 +456,7 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
             <div className="border border-hairline border-dashed px-5 py-4 max-w-lg">
               <p className="text-[11px] text-whisper italic">
                 Any additional needs or considerations for your children can be noted in{' '}
-                <a href="/home/people" className="text-mauve underline underline-offset-2">Your Circle</a>
+                <a href="/home/people" className="text-mauve underline underline-offset-2">Our Circle</a>
                 {' '}— we check those for every person when planning your day.
               </p>
             </div>
@@ -611,7 +611,7 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
                 <div className="border border-hairline border-dashed px-5 py-4 max-w-lg">
                   <p className="text-[11px] text-whisper italic">
                     Any additional needs or considerations for your children can be noted in{' '}
-                    <a href="/home/people" className="text-mauve underline underline-offset-2">Your Circle</a>
+                    <a href="/home/people" className="text-mauve underline underline-offset-2">Our Circle</a>
                     {' '}— we check those for every person when planning your day.
                   </p>
                 </div>
@@ -793,7 +793,7 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
               {!celebrant.email && (
                 <p className="text-[11px] italic text-whisper mt-2">
                   Add their email in{' '}
-                  <a href="/home/people" className="text-mauve underline underline-offset-2">Your Circle</a>
+                  <a href="/home/people" className="text-mauve underline underline-offset-2">Our Circle</a>
                   {' '}and we will introduce ourselves before your day.
                 </p>
               )}
@@ -802,13 +802,13 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
             <div className="border border-hairline border-dashed px-6 py-5 max-w-lg">
               <p className="text-sm text-ink font-light mb-1">Who is your celebrant, priest or minister?</p>
               <p className="text-[11px] text-whisper mb-3">
-                Add them to Your Circle with their name, phone and email. We will know who we are walking in to meet, and if you give us their email we can introduce ourselves before the day.
+                Add them to Our Circle with their name, phone and email. We will know who we are walking in to meet, and if you give us their email we can introduce ourselves before the day.
               </p>
               <a
                 href="/home/people"
                 className="text-[11px] tracking-label uppercase text-mauve border border-mauve px-5 py-2 inline-block hover:bg-mauve hover:text-cream transition-colors"
               >
-                Add to Your Circle
+                Add to Our Circle
               </a>
             </div>
           )
@@ -1039,15 +1039,15 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
         >
           {people.length === 0 ? (
             <div className="border border-hairline border-dashed px-6 py-5 max-w-lg">
-              <p className="text-sm text-ink font-light mb-1">Add your speakers to Your Circle first</p>
+              <p className="text-sm text-ink font-light mb-1">Add your speakers to Our Circle first</p>
               <p className="text-[11px] text-whisper mb-3">
-                Pop in each person who will be speaking — best man, father of the bride, the couple themselves — with their name and any contact details you have. Once they are in Your Circle, they will appear here to select and we can send them speech tips and timings at just the right moment.
+                Pop in each person who will be speaking — best man, father of the bride, the couple themselves — with their name and any contact details you have. Once they are in Our Circle, they will appear here to select and we can send them speech tips and timings at just the right moment.
               </p>
               <a
                 href="/home/people"
                 className="text-[11px] tracking-label uppercase text-mauve border border-mauve px-5 py-2 inline-block hover:bg-mauve hover:text-cream transition-colors"
               >
-                Go to Your Circle
+                Go to Our Circle
               </a>
             </div>
           ) : (
@@ -1075,7 +1075,7 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
                         }}
                         className={inputClass}
                       >
-                        {isEmptySlot && <option value="" disabled>Select from Your Circle</option>}
+                        {isEmptySlot && <option value="" disabled>Select from Our Circle</option>}
                         {options.map(p => (
                           <option key={p.id} value={p.id}>{p.name}</option>
                         ))}
