@@ -94,7 +94,7 @@ function generateSuggestions(
   groomName: string,
 ): GeneratedShot[] {
   const shots: GeneratedShot[] = []
-  const couple = `${brideName} and ${groomName}`
+  const couple = `${brideName}, ${groomName}`
 
   const bride1 = categorizeSide(people, 'partner_1', true)
   const groom1 = categorizeSide(people, 'partner_2', false)
