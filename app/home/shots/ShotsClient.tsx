@@ -363,6 +363,19 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
         </div>
       </div>
 
+      {/* Family image strip — 4 photos full bleed */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-0.5">
+        {['00','01','02','03'].map(n => (
+          <div key={n} className="overflow-hidden">
+            <img
+              src={`https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/${n}-family.jpg`}
+              alt=""
+              className="w-full h-56 md:h-72 object-cover hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+        ))}
+      </div>
+
       <div className="max-w-4xl mx-auto px-8 md:px-16 py-16 space-y-16">
 
         {/* Prerequisite nudge — shown always, content changes based on count */}
@@ -480,6 +493,19 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
           </div>
         )}
 
+        {/* Image break — 3 photos */}
+        <div className="grid grid-cols-3 gap-0.5 -mx-8 md:-mx-16">
+          {['04','05','06'].map(n => (
+            <div key={n} className="overflow-hidden">
+              <img
+                src={`https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/${n}-family.jpg`}
+                alt=""
+                className="w-full h-48 md:h-60 object-cover hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+          ))}
+        </div>
+
         {/* Extended family prompt */}
         <div className="border border-hairline px-8 py-8">
           <div className="text-[11px] tracking-label uppercase text-mauve mb-3">Extended family</div>
@@ -538,6 +564,19 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
           )}
         </div>
 
+      </div>
+
+      {/* Final image pair */}
+      <div className="grid grid-cols-2 gap-0.5">
+        {['07','08'].map(n => (
+          <div key={n} className="overflow-hidden">
+            <img
+              src={`https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/${n}-family.jpg`}
+              alt=""
+              className="w-full h-64 md:h-96 object-cover hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+        ))}
       </div>
 
       {/* Custom shot modal */}
