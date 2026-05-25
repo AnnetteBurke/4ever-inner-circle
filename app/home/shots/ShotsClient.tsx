@@ -361,7 +361,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
           className="md:hidden absolute inset-0 bg-cover bg-top"
           style={{ backgroundImage: `url(https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/02-family.jpg)` }}
         />
-        <div className="absolute inset-0" style={{ backgroundColor: 'rgba(74, 31, 61, 0.80)' }} />
+        <div className="absolute inset-0" style={{ backgroundColor: 'rgba(74, 31, 61, 0.88)' }} />
         <div className="relative max-w-4xl mx-auto">
           <Link href="/home" className="text-[11px] tracking-label uppercase text-mauve-soft hover:text-cream transition-colors mb-6 block">
             ← Back to your Inner Circle
@@ -369,25 +369,31 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
           <div className="text-[11px] tracking-label uppercase text-mauve-soft mb-3">Photography</div>
           <h1 className="text-4xl md:text-5xl font-light text-cream leading-tight">Family Shot List</h1>
           <p className="text-cream/60 text-base mt-3 max-w-xl">
-            We build your family group shots from the people you add to <a href="/home/people" className="font-semibold text-cream underline underline-offset-2 hover:text-mauve-soft transition-colors">Our Circle</a>. Make your way there and add everyone you want included in your photo list, then come back here and tick the combinations you want. We make sure everyone knows where they need to be by sending them a WhatsApp message 10 minutes beforehand with the location details.
+            Your family group shots, built from the people in <a href="/home/people" className="font-semibold text-cream underline underline-offset-2 hover:text-mauve-soft transition-colors">Our Circle</a>. Tick the combinations you want and we handle everything on the day.
           </p>
         </div>
       </div>
 
-      {/* Image strip directly below header — mobile: 2 cols h-40, desktop: 4 flex h-80 */}
-      <div className="md:hidden grid grid-cols-2 gap-0.5 h-40">
-        {['01','02'].map(n => (
-          <div key={n} className="overflow-hidden">
-            <img
-              src={`https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/${n}-family.jpg`}
-              alt=""
-              className="w-full h-full object-cover"
-            />
-          </div>
-        ))}
+      {/* Image strip directly below header — mobile: 2 cols h-32, desktop: 4 flex h-80 */}
+      <div className="md:hidden grid grid-cols-2 gap-0.5 h-32">
+        <div className="overflow-hidden">
+          <img
+            src="https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/01-family.jpg"
+            alt=""
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="overflow-hidden">
+          <img
+            src="https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/02-family.jpg"
+            alt=""
+            className="w-full h-full object-cover"
+            style={{ objectPosition: '70% center' }}
+          />
+        </div>
       </div>
       <div className="hidden md:flex gap-0.5 h-80 overflow-hidden">
-        {['01','02','08','04'].map(n => (
+        {['01','02','extra','04'].map(n => (
           <div key={n} className="flex-1 overflow-hidden">
             <img
               src={`https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/${n}-family.jpg`}
@@ -409,7 +415,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
                 <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> doesn&apos;t have any family members yet.
               </p>
               <p className="text-sm text-charcoal/70 leading-relaxed mb-5">
-                To build your family shot list, we need to know who is coming. Add parents, siblings, step-parents, grandparents, nieces and nephews into <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> first. The more detail you add, the more accurate your shot list will be.
+                To build your family shot list, we need to know who is coming. Add parents, siblings, step-parents, grandparents, nieces and nephews into <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> first. The more detail you add, the more accurate your shot list will be. Once you have ticked your combinations, we send everyone a WhatsApp 10 minutes before their shot with the exact location so nobody gets lost.
               </p>
             </>
           ) : (
@@ -418,7 +424,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
                 You have <span className="font-semibold text-plum">{people.length}</span> {people.length === 1 ? 'person' : 'people'} in <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a>.
               </p>
               <p className="text-sm text-charcoal/70 leading-relaxed mb-5">
-                If you want more people included in your shot list, add them to <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> first and the suggestions here will update automatically.
+                Add anyone else to <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> and the suggestions here update automatically. Once you have ticked your combinations, we send everyone a WhatsApp 10 minutes before their shot with the exact location so nobody gets lost.
               </p>
             </>
           )}
@@ -576,20 +582,9 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
 
       </div>
 
-      {/* Bottom image strip — mobile: 2 cols h-40, desktop: 3 flex h-80 */}
-      <div className="md:hidden grid grid-cols-2 gap-0.5 h-40">
-        {['05','06'].map(n => (
-          <div key={n} className="overflow-hidden">
-            <img
-              src={`https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/${n}-family.jpg`}
-              alt=""
-              className="w-full h-full object-cover"
-            />
-          </div>
-        ))}
-      </div>
+      {/* Bottom image strip — desktop only */}
       <div className="hidden md:flex gap-0.5 h-80 overflow-hidden">
-        {['05','06','07','extra'].map(n => (
+        {['05','06','07','08'].map(n => (
           <div key={n} className="flex-1 overflow-hidden">
             <img
               src={`https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/${n}-family.jpg`}
