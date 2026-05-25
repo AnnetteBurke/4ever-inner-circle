@@ -273,7 +273,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
   const [shots, setShots] = useState<ShotRecord[]>(initialShots)
   const [customOpen, setCustomOpen] = useState(false)
   const [customLabel, setCustomLabel] = useState('')
-  const [customPeople, setCustomPeople] = useState('')
+  const [contactPersonId, setContactPersonId] = useState('')
   const [customNotes, setCustomNotes] = useState('')
   const [saving, setSaving] = useState(false)
   const [actioning, setActioning] = useState<string | null>(null)
@@ -320,12 +320,13 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
     e.preventDefault()
     if (!customLabel) return
     setSaving(true)
+    const contactName = people.find(p => p.id === contactPersonId)?.name ?? null
     const res = await fetch('/api/shots', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         label: customLabel,
-        people: customPeople || null,
+        people: contactName,
         notes: customNotes || null,
         status: 'approved',
         shot_type: 'custom',
@@ -334,7 +335,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
     if (res.ok) {
       const saved = await res.json()
       setShots(prev => [...prev, saved])
-      setCustomLabel(''); setCustomPeople(''); setCustomNotes('')
+      setCustomLabel(''); setContactPersonId(''); setCustomNotes('')
       setCustomOpen(false)
     }
     setSaving(false)
@@ -357,29 +358,42 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
           <div className="text-[11px] tracking-label uppercase text-mauve-soft mb-3">Photography</div>
           <h1 className="text-4xl md:text-5xl font-light text-cream leading-tight">Family Shot List</h1>
           <p className="text-cream/60 text-base mt-3 max-w-xl">
-            We have built your family group shots from <a href="/home/people" className="font-semibold text-cream underline underline-offset-2 hover:text-mauve-soft transition-colors">Our Circle</a>. Work through each suggestion and tell us which ones you want. The more you include, the more time we will need, so choose the ones that genuinely matter.
+            We build your family group shots from the people you add to <a href="/home/people" className="font-semibold text-cream underline underline-offset-2 hover:text-mauve-soft transition-colors">Our Circle</a>. Make your way there and add everyone you want included in your photo list, then come back here and tick the combinations you want. We make sure everyone knows where they need to be by sending them a WhatsApp message 10 minutes beforehand with the location details.
           </p>
         </div>
       </div>
 
       <div className="max-w-4xl mx-auto px-8 md:px-16 py-16 space-y-16">
 
-        {/* Prerequisite nudge */}
-        {!familyInCircle && (
-          <div className="border border-mauve/40 bg-blush-soft px-8 py-8">
-            <div className="text-[11px] tracking-label uppercase text-mauve mb-2">Before you start</div>
-            <p className="text-base font-light text-ink mb-2"><a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> doesn&apos;t have any family members yet.</p>
-            <p className="text-sm text-charcoal/70 leading-relaxed mb-5">
-              To build your family shot list, we need to know who is coming. Add parents, siblings, step-parents, grandparents, nieces and nephews into <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> first. The more detail you add, the more accurate your shot list will be.
-            </p>
-            <Link
-              href="/home/people"
-              className="inline-block text-[11px] tracking-label uppercase border border-plum text-plum px-6 py-3 hover:bg-plum hover:text-cream transition-colors"
-            >
-              Go to Our Circle
-            </Link>
-          </div>
-        )}
+        {/* Prerequisite nudge — shown always, content changes based on count */}
+        <div className="border border-mauve/40 bg-blush-soft px-8 py-8">
+          <div className="text-[11px] tracking-label uppercase text-mauve mb-2">Before you start</div>
+          {!familyInCircle ? (
+            <>
+              <p className="text-base font-light text-ink mb-2">
+                <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> doesn&apos;t have any family members yet.
+              </p>
+              <p className="text-sm text-charcoal/70 leading-relaxed mb-5">
+                To build your family shot list, we need to know who is coming. Add parents, siblings, step-parents, grandparents, nieces and nephews into <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> first. The more detail you add, the more accurate your shot list will be.
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="text-base font-light text-ink mb-2">
+                You have <span className="font-semibold text-plum">{people.length}</span> {people.length === 1 ? 'person' : 'people'} in <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a>.
+              </p>
+              <p className="text-sm text-charcoal/70 leading-relaxed mb-5">
+                If you want more people included in your shot list, add them to <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> first and the suggestions here will update automatically.
+              </p>
+            </>
+          )}
+          <Link
+            href="/home/people"
+            className="inline-block text-[11px] tracking-label uppercase border border-plum text-plum px-6 py-3 hover:bg-plum hover:text-cream transition-colors"
+          >
+            Add more people to <strong>Our Circle</strong>
+          </Link>
+        </div>
 
         {/* Pending suggestions */}
         {pending.length > 0 && (
@@ -471,13 +485,13 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
           <div className="text-[11px] tracking-label uppercase text-mauve mb-3">Extended family</div>
           <p className="text-base font-light text-ink mb-2">Do you want to include aunts, uncles, or cousins?</p>
           <p className="text-sm text-charcoal/70 leading-relaxed mb-4">
-            If either of you has extended family you would love to include — a photo of your mum with her sisters, or a big cousins shot — add them into <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> and they will appear in your suggestions. Just know that every extra group takes time, so be selective.
+            If either of you has extended family you would love to include — a photo of your mum with her sisters, or a big cousins shot — add them into <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> and they will appear in your suggestions. Remember, group photographs take time and we love gathering everyone, but make sure you pick the combinations that are important to you.
           </p>
           <Link
             href="/home/people"
             className="inline-block text-[11px] tracking-label uppercase border border-hairline text-whisper px-5 py-2 hover:border-mauve hover:text-ink transition-colors"
           >
-            Add extended family to Our Circle
+            Add extended family to <strong>Our Circle</strong>
           </Link>
         </div>
 
@@ -531,8 +545,11 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
         <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center">
           <div className="absolute inset-0 bg-ink/40" onClick={() => setCustomOpen(false)} />
           <div className="relative bg-cream w-full max-w-md mx-auto px-8 py-10 max-h-[90vh] overflow-y-auto">
-            <div className="text-[11px] tracking-label uppercase text-mauve mb-2">Special request</div>
-            <h2 className="text-2xl font-light text-ink mb-8">Add a shot</h2>
+            <div className="text-[11px] tracking-label uppercase text-mauve mb-2">Friends and special shots</div>
+            <h2 className="text-2xl font-light text-ink mb-2">Add a shot</h2>
+            <p className="text-sm text-whisper leading-relaxed mb-8">
+              For each group, pick one person from <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> as the contact. We will send them a WhatsApp 10 minutes before the shot with the exact location, and they gather everyone. This is the single biggest time-saver on the day.
+            </p>
             <form onSubmit={handleCustomSubmit} className="space-y-6">
               <div>
                 <label className="text-[11px] tracking-label uppercase text-whisper block mb-2">What do you want to call this shot?</label>
@@ -546,14 +563,34 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
                 />
               </div>
               <div>
-                <label className="text-[11px] tracking-label uppercase text-whisper block mb-2">Who is in this shot? (optional)</label>
-                <textarea
-                  value={customPeople}
-                  onChange={e => setCustomPeople(e.target.value)}
-                  rows={3}
-                  placeholder="List names or describe the group"
-                  className="w-full border border-hairline bg-transparent px-4 py-3 text-ink text-base focus:outline-none focus:border-mauve resize-none"
-                />
+                <label className="text-[11px] tracking-label uppercase text-whisper block mb-2">Who should we contact to gather this group?</label>
+                {people.length === 0 ? (
+                  <div className="border border-dashed border-hairline px-4 py-4">
+                    <p className="text-sm text-whisper italic mb-2">No one in Our Circle yet.</p>
+                    <a href="/home/people" className="text-[11px] tracking-label uppercase text-mauve hover:text-ink transition-colors">Add people to Our Circle first</a>
+                  </div>
+                ) : (
+                  <>
+                    <div className="relative">
+                      <select
+                        value={contactPersonId}
+                        onChange={e => setContactPersonId(e.target.value)}
+                        className="w-full border border-hairline px-4 py-3 text-sm text-ink bg-cream focus:outline-none focus:border-mauve appearance-none pr-8"
+                      >
+                        <option value="">Select a contact person</option>
+                        {people.map(p => (
+                          <option key={p.id} value={p.id}>{p.name}</option>
+                        ))}
+                      </select>
+                      <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-whisper text-xs">▾</span>
+                    </div>
+                    {!contactPersonId && (
+                      <p className="text-xs text-whisper mt-1.5 italic">
+                        If the right person isn&apos;t here yet, <a href="/home/people" className="text-mauve hover:text-ink transition-colors">add them to Our Circle</a> first.
+                      </p>
+                    )}
+                  </>
+                )}
               </div>
               <div>
                 <label className="text-[11px] tracking-label uppercase text-whisper block mb-2">Anything else we should know? (optional)</label>
