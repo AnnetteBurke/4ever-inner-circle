@@ -3,6 +3,10 @@
     {
       "path": "/api/cron/send-messages",
       "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/cron/wedding-brief",
+      "schedule": "0 7 * * *"
     }
   ]
 }
