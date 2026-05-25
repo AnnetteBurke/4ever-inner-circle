@@ -420,7 +420,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
                 When all the family you want in the photographs are added, check back here and you will see a suggested list of combinations.
               </p>
               <p className="text-sm text-charcoal/70 leading-relaxed mb-3">
-                Consider each combination. If someone is missing, click the <span className="font-semibold text-plum">Need to add someone</span> button. If you want to remove someone, click their name and you will have that option.
+                Consider each combination. If someone is missing, click the <span className="font-semibold text-plum">Add another person</span> button. If you want to remove someone, click their name and you will have that option.
               </p>
               <p className="text-sm text-charcoal/70 leading-relaxed mb-5">
                 We will WhatsApp everyone on the list a time and place to be, so that no one disappears to their room when they are supposed to be in front of the camera.
