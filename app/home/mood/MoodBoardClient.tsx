@@ -426,34 +426,44 @@ export default function MoodBoardClient({
 
       {/* Section images */}
       <div className="border-t border-hairline pt-8">
-        <div className="flex items-start justify-between gap-4 mb-6">
-          <div>
-            <h3 className="text-base font-light text-ink">{activeCatLabel}</h3>
-            <p className="text-xs text-whisper mt-0.5">
-              {categoryImages.length === 0
-                ? 'No images saved here yet'
-                : `${categoryImages.length} image${categoryImages.length === 1 ? '' : 's'}`
-              }
+        <div className="mb-8">
+          <h3 className="text-base font-light text-ink mb-0.5">{activeCatLabel}</h3>
+          <p className="text-xs text-whisper mb-6">
+            {categoryImages.length === 0
+              ? 'No images saved here yet'
+              : `${categoryImages.length} image${categoryImages.length === 1 ? '' : 's'}`
+            }
+          </p>
+
+          {/* Share this folder */}
+          <div className="mb-5">
+            <p className="text-xs text-whisper leading-relaxed mb-2">
+              Share this folder with your suppliers or bridal party so they can see your inspiration and leave their thoughts.
             </p>
-          </div>
-          <div className="flex items-center gap-3 flex-shrink-0">
-            {categoryShares[activeCategory] && (
-              <a
-                href={`/share/${categoryShares[activeCategory]}`}
-                className="text-[11px] tracking-label uppercase text-mauve border border-mauve px-4 py-2 hover:bg-mauve hover:text-cream transition-colors"
-              >
-                View conversation
-              </a>
-            )}
             {categoryImages.length > 0 && (
               <button
                 onClick={() => setShareModal(activeCategory)}
-                className="text-[11px] tracking-label uppercase text-ink border border-hairline px-4 py-2 hover:border-mauve hover:text-mauve transition-colors"
+                className="text-[11px] tracking-label uppercase text-mauve border border-mauve px-4 py-2 hover:bg-mauve hover:text-cream transition-colors"
               >
                 Share this folder
               </button>
             )}
           </div>
+
+          {/* View conversation */}
+          {categoryShares[activeCategory] && (
+            <div>
+              <p className="text-xs text-whisper leading-relaxed mb-2">
+                Any messages between you and the people you have shared this folder with are stored here.
+              </p>
+              <a
+                href={`/share/${categoryShares[activeCategory]}`}
+                className="text-[11px] tracking-label uppercase text-ink border border-hairline px-4 py-2 hover:border-mauve hover:text-mauve transition-colors inline-block"
+              >
+                View conversation
+              </a>
+            </div>
+          )}
         </div>
 
         {categoryImages.length === 0 ? (
