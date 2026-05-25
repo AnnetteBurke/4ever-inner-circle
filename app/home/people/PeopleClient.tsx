@@ -24,6 +24,8 @@ type Person = {
 type Props = {
   brideName: string
   groomName: string
+  partner1Gender: string
+  partner2Gender: string
   initialPeople: Person[]
 }
 
@@ -49,23 +51,37 @@ function sideLabel(side: string | null, brideName: string, groomName: string) {
   return null
 }
 
-export default function PeopleClient({ brideName, groomName, initialPeople }: Props) {
+export default function PeopleClient({ brideName, groomName, partner1Gender, partner2Gender, initialPeople }: Props) {
   const [people, setPeople] = useState<Person[]>(initialPeople)
   const [deleting, setDeleting] = useState<string | null>(null)
 
+  const sameSex = partner1Gender === partner2Gender
+  const ALL_PARTY_ROLES = [...BRIDE_PARTY_ROLES, ...GROOM_PARTY_ROLES]
+
+  const partySections: SectionDef[] = sameSex
+    ? [{
+        label: 'Wedding Party',
+        group: 'bridal_party',
+        filter: (p: Person) => ALL_PARTY_ROLES.includes(p.role ?? ''),
+        showSide: false,
+      }]
+    : [
+        {
+          label: `${brideName}'s Party`,
+          group: 'bridal_party',
+          filter: (p: Person) => BRIDE_PARTY_ROLES.includes(p.role ?? ''),
+          showSide: true,
+        },
+        {
+          label: `${groomName}'s Party`,
+          group: 'bridal_party',
+          filter: (p: Person) => GROOM_PARTY_ROLES.includes(p.role ?? ''),
+          showSide: true,
+        },
+      ]
+
   const SECTIONS: SectionDef[] = [
-    {
-      label: `${brideName}'s Party`,
-      group: 'bridal_party',
-      filter: p => BRIDE_PARTY_ROLES.includes(p.role ?? ''),
-      showSide: true,
-    },
-    {
-      label: `${groomName}'s Party`,
-      group: 'bridal_party',
-      filter: p => GROOM_PARTY_ROLES.includes(p.role ?? ''),
-      showSide: true,
-    },
+    ...partySections,
     {
       label: `${brideName}'s Family`,
       group: 'family',

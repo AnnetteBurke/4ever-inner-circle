@@ -9,7 +9,7 @@ export default async function PeoplePage() {
 
   const { data: couple } = await supabase
     .from('couples')
-    .select('id, bride_name, groom_name')
+    .select('id, bride_name, groom_name, partner_1_gender, partner_2_gender')
     .eq('user_id', user.id)
     .single()
 
@@ -25,6 +25,8 @@ export default async function PeoplePage() {
     <PeopleClient
       brideName={couple.bride_name}
       groomName={couple.groom_name}
+      partner1Gender={couple.partner_1_gender ?? 'woman'}
+      partner2Gender={couple.partner_2_gender ?? 'man'}
       initialPeople={people ?? []}
     />
   )
