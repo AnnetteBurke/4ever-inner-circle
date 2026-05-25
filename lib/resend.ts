@@ -88,9 +88,9 @@ function buildEmailHtml(body: string, ctaUrl?: string, ctaLabel = 'Open your Inn
           <tr>
             <td class="es" bgcolor="#FAF4F0" style="padding:28px 40px 44px;">
               <p style="margin:0 0 8px;font-family:Georgia,'Times New Roman',serif;font-size:13px;font-style:italic;color:#A86B85;">with love,</p>
-              <p style="margin:0 0 20px;font-family:'Brush Script MT','Segoe Script','Apple Chancery',cursive;font-size:42px;color:#4A1F3D;line-height:1.1;">Annette x</p>
+              <p style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:38px;font-style:italic;font-weight:400;color:#4A1F3D;line-height:1.1;">Annette x</p>
               <p style="margin:0 0 3px;font-family:Arial,sans-serif;font-size:11px;color:#A86B85;letter-spacing:0.12em;text-transform:uppercase;">4Ever Photos</p>
-              <p style="margin:0;font-family:Arial,sans-serif;font-size:11px;color:#C49AAA;">studio@4ever.photos</p>
+              <p style="margin:0;font-family:Arial,sans-serif;font-size:11px;"><a href="mailto:studio@4ever.photos" style="color:#C49AAA;text-decoration:none;">studio@4ever.photos</a></p>
             </td>
           </tr>
 
