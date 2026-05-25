@@ -16,6 +16,7 @@ type Person = {
   side: string | null
   family_relationship: string | null
   child_name: string | null
+  age: number | null
   in_family_photos: boolean
 }
 
@@ -159,6 +160,11 @@ export default function PeopleClient({ brideName, groomName, initialPeople }: Pr
                           {person.family_relationship && (
                             <span className="text-[11px] tracking-label uppercase text-mauve-soft">
                               {person.family_relationship}
+                            </span>
+                          )}
+                          {person.age !== null && person.age !== undefined && (
+                            <span className="text-[11px] tracking-label uppercase text-mauve-soft">
+                              Age {person.age}
                             </span>
                           )}
                           {person.child_name && (

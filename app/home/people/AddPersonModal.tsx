@@ -5,6 +5,7 @@ import { ROLES } from '@/content/roles'
 import PhoneInput from '@/components/PhoneInput'
 
 const FAMILY_RELATIONSHIPS = [
+  'Son', 'Daughter',
   'Mum', 'Dad', 'Step-mum', 'Step-dad',
   'Sister', 'Brother', 'Step-sister', 'Step-brother',
   'Sister-in-law', 'Brother-in-law',
@@ -13,6 +14,8 @@ const FAMILY_RELATIONSHIPS = [
   'Step-grandmother', 'Step-grandfather',
   'Aunt', 'Uncle', 'Cousin', 'Other',
 ]
+
+const CHILD_RELATIONSHIPS = ['Son', 'Daughter']
 
 const SIBLING_RELATIONSHIPS = ['Sister', 'Brother', 'Step-sister', 'Step-brother']
 
@@ -30,6 +33,7 @@ type Person = {
   side: string | null
   family_relationship: string | null
   child_name: string | null
+  age: number | null
   in_family_photos: boolean
 }
 
@@ -57,6 +61,7 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
   const [side, setSide] = useState<'partner_1' | 'partner_2' | ''>('')
   const [familyRelationship, setFamilyRelationship] = useState('')
   const [childName, setChildName] = useState('')
+  const [age, setAge] = useState('')
   const [phone, setPhone] = useState('+44')
   const [email, setEmail] = useState('')
   const [notes, setNotes] = useState('')
@@ -77,7 +82,7 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
 
   function reset() {
     setName(''); setRole(''); setFamilyOrFriend(null); setSide('')
-    setFamilyRelationship(''); setChildName(''); setPhone('+44'); setEmail('')
+    setFamilyRelationship(''); setChildName(''); setAge(''); setPhone('+44'); setEmail('')
     setNotes(''); setError(''); setStep('main')
     setSavedPersonName(''); setSavedPersonSide('')
     setPartnerName(''); setPartnerPhone('+44'); setPartnerEmail('')
@@ -91,6 +96,10 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
   const isFamily = group === 'family' || familyOrFriend === 'family'
   const needsSide = isFamily
   const needsRelationship = isFamily
+
+  const isChildRelationship = CHILD_RELATIONSHIPS.includes(familyRelationship)
+  const childAgeNum = age ? parseInt(age) : null
+  const showPhone = !isChildRelationship || (childAgeNum !== null && childAgeNum >= 12)
 
   function isValid() {
     if (!name) return false
@@ -121,6 +130,7 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
         side: needsSide ? side : null,
         family_relationship: needsRelationship ? familyRelationship : null,
         child_name: isChildRole ? childName : null,
+        age: isChildRelationship && childAgeNum !== null ? childAgeNum : null,
         in_family_photos: false,
       }),
     })
@@ -337,21 +347,40 @@ export default function AddPersonModal({ group, brideName, groomName, onAdd }: P
                     </div>
                   )}
 
-                  <div>
-                    <label className="text-[11px] tracking-label uppercase text-whisper block mb-2">Mobile number</label>
-                    <PhoneInput value={phone} onChange={setPhone} containerClass="w-full" />
-                  </div>
+                  {isChildRelationship && (
+                    <div>
+                      <label className="text-[11px] tracking-label uppercase text-whisper block mb-2">Age</label>
+                      <input
+                        type="number"
+                        min={0}
+                        max={30}
+                        value={age}
+                        onChange={e => setAge(e.target.value)}
+                        className="w-full border border-hairline bg-transparent px-4 py-3 text-ink text-base focus:outline-none focus:border-mauve"
+                        placeholder="e.g. 8"
+                      />
+                    </div>
+                  )}
 
-                  <div>
-                    <label className="text-[11px] tracking-label uppercase text-whisper block mb-2">Email address</label>
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={e => setEmail(e.target.value)}
-                      className="w-full border border-hairline bg-transparent px-4 py-3 text-ink text-base focus:outline-none focus:border-mauve"
-                      placeholder="email@example.com"
-                    />
-                  </div>
+                  {showPhone && (
+                    <div>
+                      <label className="text-[11px] tracking-label uppercase text-whisper block mb-2">Mobile number</label>
+                      <PhoneInput value={phone} onChange={setPhone} containerClass="w-full" />
+                    </div>
+                  )}
+
+                  {showPhone && (
+                    <div>
+                      <label className="text-[11px] tracking-label uppercase text-whisper block mb-2">Email address</label>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        className="w-full border border-hairline bg-transparent px-4 py-3 text-ink text-base focus:outline-none focus:border-mauve"
+                        placeholder="email@example.com"
+                      />
+                    </div>
+                  )}
 
                   {isOtherSupplier ? (
                     <div>
