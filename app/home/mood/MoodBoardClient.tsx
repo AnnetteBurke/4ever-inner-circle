@@ -438,7 +438,7 @@ export default function MoodBoardClient({
           {/* Share this folder */}
           <div className="mb-5">
             <p className="text-xs text-whisper leading-relaxed mb-2">
-              Share this folder with your suppliers or bridal party so they can see your inspiration and leave their thoughts.
+              Give your supplier or bridal party a private link to this folder. They can see your inspiration, leave their thoughts, and you can all stay on the same page without a single email chain.
             </p>
             {categoryImages.length > 0 && (
               <button

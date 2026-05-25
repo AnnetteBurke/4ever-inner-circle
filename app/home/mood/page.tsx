@@ -51,8 +51,10 @@ export default async function MoodBoardPage() {
             Mood Board
           </h1>
           <p className="text-cream/70 text-base leading-relaxed max-w-lg">
-            Save everything you love. Hair, flowers, venue details, dress moments, table styling.
-            Private, organised, and shared only with us.
+            This is so much more than a Pinterest board. Keep all your inspiration here, sorted by category and shared privately with exactly the right people.
+          </p>
+          <p className="text-cream/55 text-sm leading-relaxed max-w-lg mt-3">
+            Add your hair ideas to Hair, then give your hairdresser access. After your trial, photograph the result and add it here so everyone knows what was approved. Your florist sees Flowers. Your cake maker sees Cakes. Every supplier gets a private link to their section and can leave their thoughts. Nothing gets lost in someone's inbox. Everything lives here, building your whole wedding vision in one place.
           </p>
         </div>
       </div>

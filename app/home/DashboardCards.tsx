@@ -105,7 +105,7 @@ const features: Feature[] = [
   {
     label: 'Mood Board',
     tag: 'Your vision',
-    desc: 'Your personal Pinterest, built in. Hair, flowers, venue, dress — all in one place, shared only with the right eyes.',
+    desc: 'Keep every bit of inspiration in one place, sorted by category and shared privately with the right people. Your hairdresser sees Hair. Your florist sees Flowers. Nobody sees anything they shouldn\'t.',
     href: '/home/mood',
     // videoSrc: 'https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/annette-videos/mood-board.mp4',
   },
