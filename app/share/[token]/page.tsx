@@ -1,6 +1,8 @@
 import { createAdminClient } from '@/lib/supabase'
 import CommentThread from './CommentThread'
 
+export const dynamic = 'force-dynamic'
+
 const CATEGORY_LABELS: Record<string, string> = {
   hair: 'Hair', makeup: 'Make Up', flowers: 'Flowers', dress: 'Dress',
   shoes: 'Shoes', bridesmaids: 'Bridesmaids', groomswear: 'Groomswear',
