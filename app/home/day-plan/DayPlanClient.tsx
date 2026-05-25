@@ -80,6 +80,7 @@ type Props = {
   groomName: string
   partner1Gender: 'woman' | 'man'
   partner2Gender: 'woman' | 'man'
+  photographerCount: 1 | 2
   initialPlan: DayPlan | null
   people: CirclePerson[]
 }
@@ -259,16 +260,18 @@ function SectionBanner({
 const inputClass = "w-full border border-hairline bg-transparent px-4 py-3 text-ink text-base focus:outline-none focus:border-mauve"
 const textareaClass = "w-full border border-hairline bg-transparent px-4 py-3 text-ink text-base focus:outline-none focus:border-mauve resize-none"
 
-export default function DayPlanClient({ brideName, groomName, partner1Gender, partner2Gender, initialPlan, people }: Props) {
+export default function DayPlanClient({ brideName, groomName, partner1Gender, partner2Gender, photographerCount, initialPlan, people }: Props) {
   const [plan, setPlan] = useState<DayPlan>(() => {
-    if (!initialPlan) return EMPTY
-    const merged = { ...EMPTY }
+    const base = { ...EMPTY, photographer_count: photographerCount }
+    if (!initialPlan) return base
+    const merged = { ...base }
     for (const key of Object.keys(EMPTY) as Array<keyof DayPlan>) {
       const val = initialPlan[key]
       if (val !== null && val !== undefined) {
         (merged as Record<string, unknown>)[key] = val
       }
     }
+    merged.photographer_count = photographerCount
     return merged
   })
   const [saving, setSaving] = useState(false)
@@ -297,7 +300,7 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
     setSaving(false)
   }
 
-  const twoPhotographers = plan.photographer_count === 2
+  const twoPhotographers = photographerCount === 2
   const partner1IsMale = partner1Gender === 'man'
   const partner2IsFemale = partner2Gender === 'woman'
   const twoGrooms = partner1Gender === 'man' && partner2Gender === 'man'
@@ -328,24 +331,14 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
       />
       <div className="max-w-4xl mx-auto px-8 md:px-16 py-12 space-y-10">
 
-        <Q label="How many photographers have you booked?">
-          <div className="grid grid-cols-2 gap-3 max-w-xs">
-            {([1, 2] as const).map(n => (
-              <button
-                key={n}
-                type="button"
-                onClick={() => set('photographer_count', n)}
-                className={`py-3 text-sm border transition-colors ${
-                  plan.photographer_count === n
-                    ? 'border-plum bg-plum text-cream'
-                    : 'border-hairline text-whisper hover:border-mauve hover:text-ink'
-                }`}
-              >
-                {n} photographer{n === 2 ? 's' : ''}
-              </button>
-            ))}
-          </div>
-        </Q>
+        <div className="border border-hairline px-6 py-5 bg-blush-soft max-w-lg">
+          <p className="text-sm text-ink font-light">
+            {twoPhotographers
+              ? `You have two photographers on your day. We will be with both of you from the morning so nothing is missed.`
+              : `You have one photographer on your day. We will meet ${groomName} at the ceremony location 30 minutes before it begins, so there is no need to fill in anything for the ${groomName.split(' ')[0]}'s morning.`
+            }
+          </p>
+        </div>
 
         <Q
           label="How many guests are attending?"
@@ -360,14 +353,6 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
             placeholder="e.g. 120"
           />
         </Q>
-
-        {plan.photographer_count === 1 && (
-          <div className="border border-hairline px-6 py-5 bg-blush-soft max-w-lg">
-            <p className="text-sm text-ink font-light">
-              With one photographer, we will meet {groomName} at the ceremony location 30 minutes before the ceremony begins. No need to fill in anything for the groom&apos;s morning.
-            </p>
-          </div>
-        )}
 
       </div>
 

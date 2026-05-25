@@ -9,7 +9,7 @@ export default async function DayPlanPage() {
 
   const { data: couple } = await supabase
     .from('couples')
-    .select('id, bride_name, groom_name, partner_1_gender, partner_2_gender')
+    .select('id, bride_name, groom_name, partner_1_gender, partner_2_gender, second_photographer_email')
     .eq('user_id', user.id)
     .single()
   if (!couple) redirect('/login')
@@ -19,12 +19,15 @@ export default async function DayPlanPage() {
     supabase.from('people').select('id, name, role').eq('couple_id', couple.id).order('created_at', { ascending: true }),
   ])
 
+  const photographerCount: 1 | 2 = couple.second_photographer_email ? 2 : 1
+
   return (
     <DayPlanClient
       brideName={couple.bride_name}
       groomName={couple.groom_name}
       partner1Gender={couple.partner_1_gender ?? 'woman'}
       partner2Gender={couple.partner_2_gender ?? 'man'}
+      photographerCount={photographerCount}
       initialPlan={plan ?? null}
       people={people ?? []}
     />
