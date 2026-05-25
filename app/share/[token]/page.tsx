@@ -72,7 +72,12 @@ export default async function SharePage({ params }: PageProps) {
 
       <div className="bg-plum text-cream px-8 md:px-16 pt-14 pb-16">
         <div className="max-w-3xl mx-auto">
-          <img src="/brand/Inner Circle Landscap.svg" alt="4Ever Inner Circle" className="h-8 w-auto mb-10 opacity-70" />
+          <div className="flex items-center justify-between mb-10">
+            <img src="/brand/Inner Circle Landscap.svg" alt="4Ever Inner Circle" className="h-8 w-auto opacity-70" />
+            <a href="/home" className="text-[11px] tracking-label uppercase text-mauve-soft hover:text-cream transition-colors">
+              ← Your dashboard
+            </a>
+          </div>
           <div className="text-[11px] tracking-label uppercase text-mauve-soft mb-3">
             {couple?.bride_name ? `${couple.bride_name}'s inspiration` : 'Shared with you'}
           </div>
@@ -84,6 +89,12 @@ export default async function SharePage({ params }: PageProps) {
       </div>
 
       <div className="max-w-3xl mx-auto px-8 md:px-16 py-14">
+        <a
+          href="/home"
+          className="inline-block border border-plum text-plum px-6 py-3 text-[11px] tracking-label uppercase hover:bg-plum hover:text-cream transition-colors mb-10"
+        >
+          ← Back to dashboard
+        </a>
         {images.length === 0 ? (
           <div className="border border-hairline px-8 py-16 text-center">
             <p className="text-sm text-whisper italic">No images have been added to this folder yet. Check back soon.</p>
