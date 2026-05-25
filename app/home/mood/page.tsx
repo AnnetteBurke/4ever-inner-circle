@@ -10,7 +10,7 @@ export default async function MoodBoardPage() {
 
   const { data: couple } = await supabase
     .from('couples')
-    .select('id')
+    .select('id, bride_name, wedding_date')
     .eq('user_id', user.id)
     .single()
 
@@ -49,6 +49,8 @@ export default async function MoodBoardPage() {
       <div className="max-w-3xl mx-auto px-8 md:px-16 py-14">
         <MoodBoardClient
           coupleId={couple.id}
+          coupleName={couple.bride_name ?? ''}
+          weddingDate={couple.wedding_date ?? null}
           initialImages={images ?? []}
         />
       </div>

@@ -36,19 +36,33 @@ const CATEGORIES = [
   { value: 'other', label: 'Other' },
 ]
 
+const NOTIFY_OPTIONS = [
+  { value: 'now', label: 'Right now' },
+  { value: '1_month', label: '1 month before' },
+  { value: '2_months', label: '2 months before' },
+  { value: '3_months', label: '3 months before' },
+  { value: '4_months', label: '4 months before' },
+]
+
 function ShareModal({
   category,
   coupleId,
+  coupleName,
+  weddingDate,
   onClose,
 }: {
   category: string
   coupleId: string
+  coupleName: string
+  weddingDate: string | null
   onClose: () => void
 }) {
   const [people, setPeople] = useState<Person[]>([])
   const [sharedWith, setSharedWith] = useState<string[]>([])
+  const [notifyWhen, setNotifyWhen] = useState('now')
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const [sent, setSent] = useState(false)
 
   const catLabel = CATEGORIES.find(c => c.value === category)?.label ?? category
 
@@ -56,25 +70,28 @@ function ShareModal({
     const supabase = createClient()
     Promise.all([
       supabase.from('people').select('id, name, role').eq('couple_id', coupleId).order('name'),
-      supabase.from('mood_board_shares').select('person_id').eq('couple_id', coupleId).eq('category', category),
+      supabase.from('mood_board_shares').select('person_id, notify_when').eq('couple_id', coupleId).eq('category', category),
     ]).then(([peopleRes, sharesRes]) => {
       setPeople(peopleRes.data ?? [])
       setSharedWith((sharesRes.data ?? []).map((s: { person_id: string }) => s.person_id))
+      if (sharesRes.data?.[0]?.notify_when) setNotifyWhen(sharesRes.data[0].notify_when)
       setLoading(false)
     })
   }, [coupleId, category])
 
   async function save() {
     setSaving(true)
-    const supabase = createClient()
-    await supabase.from('mood_board_shares').delete().eq('couple_id', coupleId).eq('category', category)
-    if (sharedWith.length > 0) {
-      await supabase.from('mood_board_shares').insert(
-        sharedWith.map(personId => ({ couple_id: coupleId, category, person_id: personId }))
-      )
-    }
+    await fetch('/api/mood/share-notify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ coupleId, category, personIds: sharedWith, notifyWhen, coupleName, weddingDate }),
+    })
     setSaving(false)
-    onClose()
+    if (notifyWhen === 'now' && sharedWith.length > 0) {
+      setSent(true)
+    } else {
+      onClose()
+    }
   }
 
   function toggle(personId: string) {
@@ -83,14 +100,35 @@ function ShareModal({
     )
   }
 
+  if (sent) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center px-6" onClick={onClose}>
+        <div className="absolute inset-0 bg-ink/40" />
+        <div className="relative bg-cream w-full max-w-md p-8 text-center" onClick={e => e.stopPropagation()}>
+          <div className="text-[11px] tracking-label uppercase text-mauve mb-4">Done</div>
+          <h2 className="text-2xl font-light text-ink mb-3">Link sent</h2>
+          <p className="text-sm text-whisper leading-relaxed mb-8">
+            {sharedWith.length === 1 ? 'They have' : 'Everyone you selected has'} received a private link to your {catLabel} folder.
+          </p>
+          <button
+            onClick={onClose}
+            className="px-8 py-3 text-[11px] tracking-label uppercase bg-plum text-cream hover:bg-plum/80 transition-colors"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center px-6" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center px-6 py-8" onClick={onClose}>
       <div className="absolute inset-0 bg-ink/40" />
-      <div className="relative bg-cream w-full max-w-md p-8" onClick={e => e.stopPropagation()}>
+      <div className="relative bg-cream w-full max-w-md p-8 max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
         <div className="text-[11px] tracking-label uppercase text-mauve mb-2">Share folder</div>
         <h2 className="text-2xl font-light text-ink mb-2">Who can see your {catLabel} folder?</h2>
         <p className="text-sm text-whisper mb-8 leading-relaxed">
-          Tick anyone you'd like to share this section with. They'll get a private link straight to these images.
+          Tick anyone you'd like to share this section with. They'll receive a private link straight to these images.
         </p>
 
         {loading ? (
@@ -142,13 +180,38 @@ function ShareModal({
           </div>
         )}
 
+        {/* When to notify */}
+        <div className="mb-8">
+          <p className="text-[11px] tracking-label uppercase text-whisper mb-3">When should we send them the link?</p>
+          <div className="flex flex-wrap gap-2">
+            {NOTIFY_OPTIONS.map(opt => (
+              <button
+                key={opt.value}
+                onClick={() => setNotifyWhen(opt.value)}
+                className={`text-[11px] tracking-label uppercase px-3 py-2 border transition-colors ${
+                  notifyWhen === opt.value
+                    ? 'bg-plum border-plum text-cream'
+                    : 'border-hairline text-whisper hover:border-mauve hover:text-ink'
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+          {notifyWhen !== 'now' && (
+            <p className="text-xs text-whisper mt-2 italic">
+              The link will be sent automatically {notifyWhen.replace('_', ' ')} your wedding day.
+            </p>
+          )}
+        </div>
+
         <div className="flex gap-3">
           <button
             onClick={save}
-            disabled={saving || loading}
+            disabled={saving || loading || sharedWith.length === 0}
             className="flex-1 px-6 py-3 text-[11px] tracking-label uppercase bg-plum text-cream hover:bg-plum/80 transition-colors disabled:opacity-50"
           >
-            {saving ? 'Saving...' : 'Save'}
+            {saving ? 'Saving...' : notifyWhen === 'now' ? 'Send link now' : 'Save and schedule'}
           </button>
           <button
             onClick={onClose}
@@ -242,9 +305,13 @@ function ImageCard({
 
 export default function MoodBoardClient({
   coupleId,
+  coupleName,
+  weddingDate,
   initialImages,
 }: {
   coupleId: string
+  coupleName: string
+  weddingDate: string | null
   initialImages: MoodImage[]
 }) {
   const [images, setImages] = useState<MoodImage[]>(initialImages)
@@ -402,6 +469,8 @@ export default function MoodBoardClient({
         <ShareModal
           category={shareModal}
           coupleId={coupleId}
+          coupleName={coupleName}
+          weddingDate={weddingDate}
           onClose={() => setShareModal(null)}
         />
       )}
