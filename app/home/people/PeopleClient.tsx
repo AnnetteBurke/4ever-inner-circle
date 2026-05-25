@@ -126,8 +126,8 @@ export default function PeopleClient({ brideName, groomName, initialPeople }: Pr
           const sectionPeople = people.filter(section.filter)
           return (
             <div key={section.label}>
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-[11px] tracking-label uppercase text-mauve">{section.label}</h2>
+              <div className="flex items-end justify-between border-b border-plum pb-4 mb-6">
+                <h2 className="text-2xl font-light text-plum">{section.label}</h2>
                 <AddPersonModal
                   group={section.group}
                   brideName={brideName}
