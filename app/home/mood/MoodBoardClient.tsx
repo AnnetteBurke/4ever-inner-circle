@@ -308,11 +308,13 @@ export default function MoodBoardClient({
   coupleName,
   weddingDate,
   initialImages,
+  categoryShares,
 }: {
   coupleId: string
   coupleName: string
   weddingDate: string | null
   initialImages: MoodImage[]
+  categoryShares: Record<string, string>
 }) {
   const [images, setImages] = useState<MoodImage[]>(initialImages)
   const [activeCategory, setActiveCategory] = useState(CATEGORIES[0].value)
@@ -424,7 +426,7 @@ export default function MoodBoardClient({
 
       {/* Section images */}
       <div className="border-t border-hairline pt-8">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-start justify-between gap-4 mb-6">
           <div>
             <h3 className="text-base font-light text-ink">{activeCatLabel}</h3>
             <p className="text-xs text-whisper mt-0.5">
@@ -434,14 +436,24 @@ export default function MoodBoardClient({
               }
             </p>
           </div>
-          {categoryImages.length > 0 && (
-            <button
-              onClick={() => setShareModal(activeCategory)}
-              className="text-[11px] tracking-label uppercase text-mauve border border-mauve px-4 py-2 hover:bg-mauve hover:text-cream transition-colors"
-            >
-              Share this folder
-            </button>
-          )}
+          <div className="flex items-center gap-3 flex-shrink-0">
+            {categoryShares[activeCategory] && (
+              <a
+                href={`/share/${categoryShares[activeCategory]}`}
+                className="text-[11px] tracking-label uppercase text-mauve border border-mauve px-4 py-2 hover:bg-mauve hover:text-cream transition-colors"
+              >
+                View conversation
+              </a>
+            )}
+            {categoryImages.length > 0 && (
+              <button
+                onClick={() => setShareModal(activeCategory)}
+                className="text-[11px] tracking-label uppercase text-ink border border-hairline px-4 py-2 hover:border-mauve hover:text-mauve transition-colors"
+              >
+                Share this folder
+              </button>
+            )}
+          </div>
         </div>
 
         {categoryImages.length === 0 ? (

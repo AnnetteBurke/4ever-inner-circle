@@ -16,11 +16,23 @@ export default async function MoodBoardPage() {
 
   if (!couple) redirect('/home')
 
-  const { data: images } = await supabase
-    .from('mood_board_images')
-    .select('id, url, caption, category, storage_path')
-    .eq('couple_id', couple.id)
-    .order('created_at', { ascending: false })
+  const [imagesRes, sharesRes] = await Promise.all([
+    supabase
+      .from('mood_board_images')
+      .select('id, url, caption, category, storage_path')
+      .eq('couple_id', couple.id)
+      .order('created_at', { ascending: false }),
+    supabase
+      .from('mood_board_shares')
+      .select('category, share_token')
+      .eq('couple_id', couple.id),
+  ])
+
+  // Build a map of category → one share token (so the bride can jump into the conversation)
+  const categoryShares: Record<string, string> = {}
+  for (const s of sharesRes.data ?? []) {
+    if (!categoryShares[s.category]) categoryShares[s.category] = s.share_token
+  }
 
   return (
     <main className="min-h-screen bg-cream">
@@ -51,7 +63,8 @@ export default async function MoodBoardPage() {
           coupleId={couple.id}
           coupleName={couple.bride_name ?? ''}
           weddingDate={couple.wedding_date ?? null}
-          initialImages={images ?? []}
+          initialImages={imagesRes.data ?? []}
+          categoryShares={categoryShares}
         />
       </div>
 
