@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 type Comment = {
   id: string
@@ -25,9 +25,25 @@ export default function CommentThread({
   const [message, setMessage] = useState('')
   const [sending, setSending] = useState(false)
   const [sent, setSent] = useState(false)
+  const bottomRef = useRef<HTMLDivElement>(null)
 
   const isBride = selectedName === brideName
   const allOptions = [...sharedPeople, brideName]
+
+  // Fetch fresh comments on load to bypass any server-side caching
+  useEffect(() => {
+    fetch(`/api/mood/comments?token=${shareToken}`)
+      .then(r => r.json())
+      .then(data => {
+        if (Array.isArray(data)) setComments(data)
+      })
+      .catch(() => {})
+  }, [shareToken])
+
+  // Scroll to latest message whenever comments change
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+  }, [comments])
 
   function formatTime(dateStr: string) {
     return new Date(dateStr).toLocaleDateString('en-GB', {
@@ -156,6 +172,7 @@ export default function CommentThread({
                 <p className="text-sm text-charcoal leading-relaxed">{comment.message}</p>
               </div>
             ))}
+            <div ref={bottomRef} />
           </div>
         </div>
       )}
