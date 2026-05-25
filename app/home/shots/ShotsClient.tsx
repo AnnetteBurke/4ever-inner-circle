@@ -291,10 +291,12 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
   })
 
   const familyInCircle = people.some(p =>
-    p.is_family || PARENT_RELATIONSHIPS.includes(p.family_relationship ?? '') ||
-    SIBLING_RELATIONSHIPS.includes(p.family_relationship ?? '') ||
-    BRIDE_PARENT_ROLES.includes(p.role ?? '') || GROOM_PARENT_ROLES.includes(p.role ?? '')
+    p.is_family === true ||
+    (p.family_relationship !== null && p.family_relationship !== '') ||
+    BRIDE_PARENT_ROLES.includes(p.role ?? '') ||
+    GROOM_PARENT_ROLES.includes(p.role ?? '')
   )
+  const hasAnyPeople = people.length > 0
 
   async function handleDecide(shot: GeneratedShot, status: 'approved' | 'skipped') {
     setActioning(shot.id)
@@ -400,25 +402,34 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
 
       <div className="max-w-4xl mx-auto px-8 md:px-16 py-16 space-y-16">
 
-        {/* Prerequisite nudge — shown always, content changes based on count */}
+        {/* Prerequisite nudge */}
         <div className="border border-mauve/40 bg-blush-soft px-8 py-8">
           <div className="text-[11px] tracking-label uppercase text-mauve mb-2">Before you start</div>
-          {!familyInCircle ? (
+          {!hasAnyPeople ? (
             <>
               <p className="text-base font-light text-ink mb-2">
-                <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> doesn&apos;t have any family members yet.
+                Head to <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> and add your family first.
               </p>
               <p className="text-sm text-charcoal/70 leading-relaxed mb-5">
-                To build your family shot list, we need to know who is coming. Add parents, siblings, step-parents, grandparents, nieces and nephews into <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> first. The more detail you add, the more accurate your shot list will be. Once you have ticked your combinations, we send everyone a WhatsApp 10 minutes before their shot with the exact location so nobody gets lost.
+                We build your shot list from the people you add. Parents, siblings, step-parents, grandparents, nieces and nephews — the more you add, the more we can suggest. Once you have ticked your combinations, we send everyone a WhatsApp 10 minutes before their shot with the exact location so nobody gets lost.
+              </p>
+            </>
+          ) : !familyInCircle ? (
+            <>
+              <p className="text-base font-light text-ink mb-2">
+                Do you have all the family you want photographed in <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a>?
+              </p>
+              <p className="text-sm text-charcoal/70 leading-relaxed mb-5">
+                We can see people in your circle but not all the family relationships yet. Pop back to <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> and make sure parents, siblings and grandparents are all in there — the suggestions below will fill in automatically. Once ticked, we send everyone a WhatsApp 10 minutes before their shot with the exact location.
               </p>
             </>
           ) : (
             <>
               <p className="text-base font-light text-ink mb-2">
-                You have <span className="font-semibold text-plum">{people.length}</span> {people.length === 1 ? 'person' : 'people'} in <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a>.
+                You have <span className="font-semibold text-plum">{people.length}</span> {people.length === 1 ? 'person' : 'people'} in <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a>. Is everyone there?
               </p>
               <p className="text-sm text-charcoal/70 leading-relaxed mb-5">
-                Add anyone else to <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> and the suggestions here update automatically. Once you have ticked your combinations, we send everyone a WhatsApp 10 minutes before their shot with the exact location so nobody gets lost.
+                If you add anyone else, the suggestions below update automatically. Once you have ticked your combinations, we send everyone a WhatsApp 10 minutes before their shot with the exact location so nobody gets lost.
               </p>
             </>
           )}
@@ -426,7 +437,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
             href="/home/people"
             className="inline-block text-[11px] tracking-label uppercase bg-plum text-cream border border-plum px-6 py-3 hover:bg-plum/90 transition-colors"
           >
-            Add more people to <strong>Our Circle</strong>
+            Go to <strong>Our Circle</strong>
           </Link>
         </div>
 
