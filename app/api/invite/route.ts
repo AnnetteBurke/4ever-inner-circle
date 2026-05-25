@@ -23,6 +23,7 @@ export async function POST(request: Request) {
     ceremonyAddress,
     bridePrep,
     groomPrep,
+    secondPhotographerEmail,
   } = await request.json()
 
   if (!email || !brideName || !groomName) {
@@ -87,6 +88,7 @@ We cannot wait to show you what we have built for you.`,
     ceremony_time: ceremonyTime || null,
     bride_prep_address: bridePrep || null,
     groom_prep_address: groomPrep || null,
+    second_photographer_email: secondPhotographerEmail || null,
   }).select().single()
 
   if (insertError || !couple) {

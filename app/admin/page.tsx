@@ -51,12 +51,20 @@ export default async function AdminPage() {
                       )}
                     </div>
                   </div>
-                  <Link
-                    href={`/admin/brief/${c.id}`}
-                    className="text-[11px] tracking-label uppercase text-mauve border border-mauve px-5 py-2 hover:bg-mauve hover:text-cream transition-colors flex-shrink-0"
-                  >
-                    View brief
-                  </Link>
+                  <div className="flex gap-2 flex-shrink-0">
+                    <Link
+                      href={`/admin/couples/${c.id}`}
+                      className="text-[11px] tracking-label uppercase text-whisper border border-hairline px-5 py-2 hover:border-mauve hover:text-ink transition-colors"
+                    >
+                      Edit
+                    </Link>
+                    <Link
+                      href={`/admin/brief/${c.id}`}
+                      className="text-[11px] tracking-label uppercase text-mauve border border-mauve px-5 py-2 hover:bg-mauve hover:text-cream transition-colors"
+                    >
+                      View brief
+                    </Link>
+                  </div>
                 </div>
               )
             })}

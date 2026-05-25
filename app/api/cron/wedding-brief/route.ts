@@ -24,7 +24,7 @@ export async function GET(request: Request) {
 
   const { data: couples, error } = await supabase
     .from('couples')
-    .select('id, bride_name, groom_name, partner_1_gender, partner_2_gender, wedding_date, venue_name, venue_address, ceremony_name, ceremony_address')
+    .select('id, bride_name, groom_name, partner_1_gender, partner_2_gender, wedding_date, venue_name, venue_address, ceremony_name, ceremony_address, second_photographer_email')
     .eq('wedding_date', dateStr)
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
@@ -53,13 +53,20 @@ export async function GET(request: Request) {
       weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
     })
 
-    await resend.emails.send({
-      from: `4Ever Inner Circle <studio@4ever.photos>`,
-      to: PHOTOGRAPHER_EMAIL,
-      subject: `Brief — ${couple.bride_name} & ${couple.groom_name} — ${weddingDateFormatted}`,
-      html,
-      text: `Photographer's Brief\n${couple.bride_name} & ${couple.groom_name}\n${weddingDateFormatted}\n\nOpen this email in a mail app to view the full brief.`,
-    })
+    const recipients = [PHOTOGRAPHER_EMAIL]
+    if (couple.second_photographer_email) {
+      recipients.push(couple.second_photographer_email)
+    }
+
+    for (const recipient of recipients) {
+      await resend.emails.send({
+        from: `4Ever Inner Circle <studio@4ever.photos>`,
+        to: recipient,
+        subject: `Brief — ${couple.bride_name} & ${couple.groom_name} — ${weddingDateFormatted}`,
+        html,
+        text: `Photographer's Brief\n${couple.bride_name} & ${couple.groom_name}\n${weddingDateFormatted}\n\nOpen this email in a mail app to view the full brief.`,
+      })
+    }
 
     sent++
   }

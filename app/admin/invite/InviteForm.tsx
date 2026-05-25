@@ -40,6 +40,7 @@ type FormState = {
   ceremonyAddress: string
   bridePrep: string
   groomPrep: string
+  secondPhotographerEmail: string
 }
 
 const empty: FormState = {
@@ -59,6 +60,7 @@ const empty: FormState = {
   ceremonyAddress: '',
   bridePrep: '',
   groomPrep: '',
+  secondPhotographerEmail: '',
 }
 
 const MARRIAGE_TYPES = [
@@ -136,6 +138,7 @@ export default function InviteForm({
         ceremonyAddress: form.ceremonyAddress,
         bridePrep: form.bridePrep,
         groomPrep: form.groomPrep,
+        secondPhotographerEmail: form.secondPhotographerEmail || null,
       }),
     })
 
@@ -314,6 +317,24 @@ export default function InviteForm({
                 label={`${marriageConfig.p2} getting ready`}
                 suggestions={livePrepLocations}
               />
+            </div>
+          </fieldset>
+
+          {/* Photography team */}
+          <fieldset>
+            <legend className="text-[11px] tracking-label uppercase text-mauve mb-4 block">Photography team</legend>
+            <div>
+              <label className={labelClass}>Second photographer email (optional)</label>
+              <input
+                type="email"
+                value={form.secondPhotographerEmail}
+                onChange={e => set('secondPhotographerEmail', e.target.value)}
+                className={inputClass}
+                placeholder="second@example.com"
+              />
+              <p className="mt-2 text-[11px] text-whisper">
+                If you have a second shooter on this wedding, add their email here. They will receive the 48-hour brief alongside you.
+              </p>
             </div>
           </fieldset>
 
