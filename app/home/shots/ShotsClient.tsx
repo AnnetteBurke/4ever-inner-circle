@@ -429,8 +429,8 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
               <h2 className="text-2xl font-light text-plum">Suggested shots</h2>
               <span className="text-[11px] tracking-label uppercase text-mauve-soft">{pending.length} remaining</span>
             </div>
-            <p className="text-sm text-whisper italic mb-8">
-              Based on the people in <a href="/home/people" className="font-semibold text-ink hover:text-mauve transition-colors">Our Circle</a>. Include the ones you want and skip the rest. Remember to ask your parents if there are any they would love themselves — this is a family day too.
+            <p className="text-sm text-charcoal/70 leading-relaxed mb-8">
+              If someone is missing from a shot, click <span className="font-semibold text-plum">Add someone</span> to pop over to Our Circle and add them. To take anyone out of a particular shot, click their name and it goes dark. When you are happy with the combination, click <span className="font-semibold text-plum">Approve</span> and it joins your confirmed list.
             </p>
             <div className="space-y-4">
               {pending.map(shot => {
@@ -463,14 +463,21 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
                         )
                       })}
                     </div>
-                    <div className="flex gap-3">
+                    <div className="flex flex-wrap gap-3">
                       <button
                         onClick={() => handleDecide(shot, 'approved', includedPeople)}
                         disabled={actioning === shot.id || includedPeople === ''}
-                        className="flex-1 py-2.5 text-[11px] tracking-label uppercase bg-plum text-cream hover:bg-plum/90 transition-colors disabled:opacity-40"
+                        className="px-6 py-2.5 text-[11px] tracking-label uppercase bg-plum text-cream hover:bg-plum/90 transition-colors disabled:opacity-40"
                       >
                         {actioning === shot.id ? 'Saving...' : 'Approve'}
                       </button>
+                      <Link
+                        href="/home/people"
+                        target="_blank"
+                        className="px-6 py-2.5 text-[11px] tracking-label uppercase border border-mauve text-mauve hover:bg-mauve hover:text-cream transition-colors"
+                      >
+                        Add someone
+                      </Link>
                       <button
                         onClick={() => handleDecide(shot, 'skipped')}
                         disabled={actioning === shot.id}
