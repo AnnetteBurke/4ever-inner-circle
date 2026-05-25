@@ -416,7 +416,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
                 When all the family you want in the photographs are added, check back here and you will see a suggested list of combinations.
               </p>
               <p className="text-sm text-charcoal/70 leading-relaxed mb-3">
-                Consider each one. If someone is missing, go back to <a href="/home/people" className="font-semibold text-plum hover:text-mauve transition-colors">Our Circle</a> and add them. If there is someone in the combination that you would like to remove, click their name and the box turns black, which means they will not be in that photograph.
+                Consider each combination. If someone is missing, click the <span className="font-semibold text-plum">Need to add someone</span> button. If you want to remove someone, click their name and you will have that option.
               </p>
               <p className="text-sm text-charcoal/70 leading-relaxed mb-5">
                 We will WhatsApp everyone on the list a time and place to be, so that no one disappears to their room when they are supposed to be in front of the camera.
@@ -439,7 +439,7 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
               <span className="text-[11px] tracking-label uppercase text-mauve-soft">{pending.length} remaining</span>
             </div>
             <p className="text-sm text-charcoal/70 leading-relaxed mb-8">
-              Click a name to remove them from that image. When you have it right, press Approve and it joins the confirmed list.
+              Check each photo combination. You can add someone, click a name to remove them, then press Approve or skip the shot altogether.
             </p>
             <div className="space-y-4">
               {pending.map(shot => {
