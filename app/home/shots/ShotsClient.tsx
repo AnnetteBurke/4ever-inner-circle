@@ -63,6 +63,10 @@ function withCouple(couple: string, group: Person[]) {
   return group.length ? `${couple}, ${names(group)}` : couple
 }
 
+function withPerson(personName: string, group: Person[]) {
+  return group.length ? `${personName}, ${names(group)}` : personName
+}
+
 function categorizeSide(people: Person[], side: 'partner_1' | 'partner_2', isPartner1Bride: boolean) {
   const onSide = people.filter(p => p.side === side)
   const parentRoles = side === 'partner_1' ? BRIDE_PARENT_ROLES : GROOM_PARENT_ROLES
@@ -141,11 +145,11 @@ function generateSuggestions(
         shot_type: 'family',
       })
 
-      // B&G with siblings only
+      // Bride with siblings only — no groom
       shots.push({
         id: 'bride_siblings',
         label: `${brideName}'s siblings`,
-        people: withCouple(couple, bride1.siblings),
+        people: withPerson(brideName, bride1.siblings),
         shot_type: 'family',
       })
     }
@@ -194,10 +198,11 @@ function generateSuggestions(
         shot_type: 'family',
       })
 
+      // Groom with siblings only — no bride
       shots.push({
         id: 'groom_siblings',
         label: `${groomName}'s siblings`,
-        people: withCouple(couple, groom1.siblings),
+        people: withPerson(groomName, groom1.siblings),
         shot_type: 'family',
       })
     }
@@ -277,6 +282,23 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
   const [customNotes, setCustomNotes] = useState('')
   const [saving, setSaving] = useState(false)
   const [actioning, setActioning] = useState<string | null>(null)
+  const [excluded, setExcluded] = useState<Record<string, string[]>>({})
+
+  function getPersonLabel(name: string): string {
+    if (name === brideName) return brideName.split(' ')[0]
+    if (name === groomName) return groomName.split(' ')[0]
+    const person = people.find(p => p.name === name)
+    if (person?.family_relationship) return person.family_relationship
+    return name.split(' ')[0]
+  }
+
+  function togglePerson(shotId: string, name: string) {
+    setExcluded(prev => {
+      const current = prev[shotId] ?? []
+      const already = current.includes(name)
+      return { ...prev, [shotId]: already ? current.filter(n => n !== name) : [...current, name] }
+    })
+  }
 
   const approvedIds = new Set(shots.filter(s => s.generated_id && s.status === 'approved').map(s => s.generated_id!))
   const skippedIds = new Set(shots.filter(s => s.generated_id && s.status === 'skipped').map(s => s.generated_id!))
@@ -298,14 +320,14 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
   )
   const hasAnyPeople = people.length > 0
 
-  async function handleDecide(shot: GeneratedShot, status: 'approved' | 'skipped') {
+  async function handleDecide(shot: GeneratedShot, status: 'approved' | 'skipped', filteredPeople?: string) {
     setActioning(shot.id)
     const res = await fetch('/api/shots', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         label: shot.label,
-        people: shot.people,
+        people: filteredPeople !== undefined ? filteredPeople : shot.people,
         status,
         shot_type: shot.shot_type,
         generated_id: shot.id,
@@ -451,33 +473,56 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
             <p className="text-sm text-whisper italic mb-8">
               Based on the people in <a href="/home/people" className="font-semibold text-ink hover:text-mauve transition-colors">Our Circle</a>. Include the ones you want and skip the rest. Remember to ask your parents if there are any they would love themselves — this is a family day too.
             </p>
-            <div className="space-y-3">
-              {pending.map(shot => (
-                <div key={shot.id} className="border border-hairline px-6 py-5">
-                  <div className="flex items-start justify-between gap-6">
-                    <div className="flex-1 min-w-0">
-                      <p className="text-base font-light text-ink mb-1">{shot.label}</p>
-                      <p className="text-sm text-whisper">{shot.people}</p>
+            <div className="space-y-4">
+              {pending.map(shot => {
+                const shotExcluded = excluded[shot.id] ?? []
+                const personNames = shot.people.split(', ')
+                const includedPeople = personNames.filter(n => !shotExcluded.includes(n)).join(', ')
+                return (
+                  <div key={shot.id} className="border border-hairline px-6 py-6">
+                    <p className="text-[11px] tracking-label uppercase text-mauve mb-4">{shot.label}</p>
+                    <div className="flex flex-wrap gap-2 mb-5">
+                      {personNames.map(name => {
+                        const isOut = shotExcluded.includes(name)
+                        const label = getPersonLabel(name)
+                        return (
+                          <button
+                            key={name}
+                            type="button"
+                            onClick={() => togglePerson(shot.id, name)}
+                            className={`px-4 py-3 text-center min-w-[72px] transition-colors ${
+                              isOut ? 'bg-ink' : 'bg-blush-soft'
+                            }`}
+                          >
+                            <span className={`block text-[11px] tracking-label uppercase leading-tight ${isOut ? 'text-cream/50' : 'text-plum'}`}>
+                              {label}
+                            </span>
+                            {isOut && (
+                              <span className="block text-[9px] text-cream/30 mt-0.5 italic">not included</span>
+                            )}
+                          </button>
+                        )
+                      })}
                     </div>
-                    <div className="flex gap-2 flex-shrink-0">
+                    <div className="flex gap-3">
                       <button
-                        onClick={() => handleDecide(shot, 'approved')}
-                        disabled={actioning === shot.id}
-                        className="text-[11px] tracking-label uppercase px-5 py-2 bg-plum text-cream hover:bg-plum/80 transition-colors disabled:opacity-40"
+                        onClick={() => handleDecide(shot, 'approved', includedPeople)}
+                        disabled={actioning === shot.id || includedPeople === ''}
+                        className="flex-1 py-2.5 text-[11px] tracking-label uppercase bg-plum text-cream hover:bg-plum/90 transition-colors disabled:opacity-40"
                       >
-                        Include
+                        {actioning === shot.id ? 'Saving...' : 'Approve'}
                       </button>
                       <button
                         onClick={() => handleDecide(shot, 'skipped')}
                         disabled={actioning === shot.id}
-                        className="text-[11px] tracking-label uppercase px-5 py-2 border border-hairline text-whisper hover:border-mauve hover:text-ink transition-colors disabled:opacity-40"
+                        className="px-6 py-2.5 text-[11px] tracking-label uppercase border border-hairline text-whisper hover:border-mauve hover:text-ink transition-colors disabled:opacity-40"
                       >
                         Skip
                       </button>
                     </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
         )}
