@@ -349,9 +349,20 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
   return (
     <main className="min-h-screen bg-cream">
 
-      {/* Header */}
-      <div className="bg-plum text-cream px-8 md:px-16 pt-12 pb-12">
-        <div className="max-w-4xl mx-auto">
+      {/* Header — image behind plum, faded */}
+      <div className="relative text-cream px-8 md:px-16 pt-12 pb-16 overflow-hidden" style={{ backgroundColor: '#4A1F3D' }}>
+        {/* Desktop: image 00, wide landscape */}
+        <div
+          className="hidden md:block absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/00-family.jpg)` }}
+        />
+        {/* Mobile: image 02, works better portrait */}
+        <div
+          className="md:hidden absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/02-family.jpg)` }}
+        />
+        <div className="absolute inset-0 bg-plum/78" />
+        <div className="relative max-w-4xl mx-auto">
           <Link href="/home" className="text-[11px] tracking-label uppercase text-mauve-soft hover:text-cream transition-colors mb-6 block">
             ← Back to your Inner Circle
           </Link>
@@ -363,14 +374,25 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
         </div>
       </div>
 
-      {/* Family image strip — 4 photos full bleed */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-0.5">
-        {['00','01','02','03'].map(n => (
+      {/* Family image strip — mobile: 2 cols, desktop: 4 flex */}
+      <div className="md:hidden grid grid-cols-2 gap-0.5">
+        {['01','03'].map(n => (
           <div key={n} className="overflow-hidden">
             <img
               src={`https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/${n}-family.jpg`}
               alt=""
-              className="w-full h-56 md:h-72 object-cover hover:scale-105 transition-transform duration-700"
+              className="w-full h-44 object-cover"
+            />
+          </div>
+        ))}
+      </div>
+      <div className="hidden md:flex gap-0.5 h-80 overflow-hidden">
+        {['01','02','03','04'].map(n => (
+          <div key={n} className="flex-1 overflow-hidden">
+            <img
+              src={`https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/${n}-family.jpg`}
+              alt=""
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
             />
           </div>
         ))}
@@ -495,14 +517,25 @@ export default function ShotsClient({ brideName, groomName, partner1Gender, part
 
       </div>
 
-      {/* Image break — 3 photos, full bleed */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-0.5">
-        {['04','05','06'].map(n => (
+      {/* Image break — mobile: 2 cols, desktop: 3 flex */}
+      <div className="md:hidden grid grid-cols-2 gap-0.5">
+        {['05','06'].map(n => (
           <div key={n} className="overflow-hidden">
             <img
               src={`https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/${n}-family.jpg`}
               alt=""
-              className="w-full h-48 md:h-64 object-cover hover:scale-105 transition-transform duration-700"
+              className="w-full h-44 object-cover"
+            />
+          </div>
+        ))}
+      </div>
+      <div className="hidden md:flex gap-0.5 h-72 overflow-hidden">
+        {['05','06','07'].map(n => (
+          <div key={n} className="flex-1 overflow-hidden">
+            <img
+              src={`https://gthsnkpmkgxiirszbcau.supabase.co/storage/v1/object/public/site-images/family-shots/${n}-family.jpg`}
+              alt=""
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
             />
           </div>
         ))}
