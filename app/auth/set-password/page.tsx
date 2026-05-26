@@ -19,27 +19,35 @@ export default function SetPasswordPage() {
     const supabase = createSupabaseBrowserClient()
 
     async function handleTokens() {
-      // Supabase sends tokens either as hash fragments or as a code param
       const hashParams = new URLSearchParams(window.location.hash.substring(1))
       const access_token = hashParams.get('access_token')
       const refresh_token = hashParams.get('refresh_token')
 
       if (access_token && refresh_token) {
-        const { error } = await supabase.auth.setSession({ access_token, refresh_token })
+        const { data, error } = await supabase.auth.setSession({ access_token, refresh_token })
         if (error) { setInvalid(true); return }
+        // Already set their password — send straight to login
+        if (data.user?.user_metadata?.password_set) {
+          router.replace('/login')
+          return
+        }
         setReady(true)
         return
       }
 
       const code = new URLSearchParams(window.location.search).get('code')
       if (code) {
-        const { error } = await supabase.auth.exchangeCodeForSession(code)
+        const { data, error } = await supabase.auth.exchangeCodeForSession(code)
         if (error) { setInvalid(true); return }
+        if (data.user?.user_metadata?.password_set) {
+          router.replace('/login')
+          return
+        }
         setReady(true)
         return
       }
 
-      // No tokens — check if already logged in (e.g. navigated here directly)
+      // No tokens in URL — check if already logged in (navigated here directly)
       const { data: { session } } = await supabase.auth.getSession()
       if (session) { setReady(true); return }
 
@@ -47,7 +55,7 @@ export default function SetPasswordPage() {
     }
 
     handleTokens()
-  }, [])
+  }, [router])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -57,12 +65,22 @@ export default function SetPasswordPage() {
     setSaving(true)
     setError('')
     const supabase = createSupabaseBrowserClient()
-    const { error } = await supabase.auth.updateUser({ password })
+
+    // Set the password and mark as set in metadata so second invite-link clicks go to login
+    const { error } = await supabase.auth.updateUser({
+      password,
+      data: { password_set: true },
+    })
+
     if (error) {
       setError(error.message)
       setSaving(false)
       return
     }
+
+    // Send confirmation email and WhatsApp
+    await fetch('/api/auth/on-password-set', { method: 'POST' }).catch(() => {})
+
     router.replace('/home')
   }
 
@@ -73,7 +91,7 @@ export default function SetPasswordPage() {
           <div className="text-[11px] tracking-label uppercase text-mauve mb-6">4Ever Inner Circle</div>
           <h1 className="text-4xl font-light text-ink mb-4">This link has expired</h1>
           <p className="text-base text-whisper mb-8 leading-relaxed">
-            Password reset links expire after 24 hours for security. Head to the sign-in page and use &ldquo;Forgot your password?&rdquo; to get a fresh one.
+            Head to the sign-in page and use &ldquo;Forgot your password?&rdquo; to get a fresh link.
           </p>
           <a
             href="/login"
@@ -134,7 +152,7 @@ export default function SetPasswordPage() {
             disabled={saving}
             className="w-full py-4 text-[11px] tracking-label uppercase border border-plum text-plum hover:bg-plum hover:text-cream transition-colors disabled:opacity-50"
           >
-            {saving ? 'Saving...' : 'Set password and open my Inner Circle'}
+            {saving ? 'Setting up...' : 'Set password and open my Inner Circle'}
           </button>
         </form>
 
