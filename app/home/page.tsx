@@ -3,7 +3,6 @@ import { createSupabaseServerClient } from '@/lib/supabase-server'
 import { createAdminClient } from '@/lib/supabase'
 import Link from 'next/link'
 import DashboardCards from './DashboardCards'
-import InstallNudge from '@/components/InstallNudge'
 
 function getCountdown(weddingDate: string | null): { days: number | null; label: string } {
   if (!weddingDate) return { days: null, label: '' }
@@ -142,11 +141,6 @@ export default async function HomePage() {
           </div>
         </>
       )}
-
-      {/* Install nudge */}
-      <div className="max-w-4xl mx-auto pt-10">
-        <InstallNudge />
-      </div>
 
       {/* Feature cards */}
       <div className="max-w-4xl mx-auto px-8 md:px-16 py-16">

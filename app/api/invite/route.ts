@@ -37,7 +37,7 @@ export async function POST(request: Request) {
     type: 'invite',
     email,
     options: {
-      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/confirm`,
+      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/set-password`,
       data: { bride_name: brideName, groom_name: groomName },
     },
   })
