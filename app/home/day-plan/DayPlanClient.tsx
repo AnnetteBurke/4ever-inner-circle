@@ -838,30 +838,23 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
         </Q>
 
         {plan.confetti && (
-          <Q
-            label="How are you planning the confetti moment?"
-            hint="The most stunning confetti photographs happen when you step back inside after the ceremony while the bridal party hand out the confetti outside. We use that time to capture the empty room and the flowers, and then when everyone is ready you walk back out through the throw together."
-          >
-            <div className="flex flex-col gap-3 max-w-md">
-              {([
-                { value: 'coordinated', label: 'Step back inside while confetti is handed out, then walk through the throw' },
-                { value: 'bags_on_exit', label: 'Guests collect bags on the way out' },
-              ] as const).map(opt => (
-                <button
-                  key={opt.value}
-                  type="button"
-                  onClick={() => set('confetti_notes', opt.value)}
-                  className={`py-3 px-4 text-sm border text-left transition-colors ${
-                    plan.confetti_notes === opt.value
-                      ? 'bg-plum border-plum text-cream'
-                      : 'border-hairline text-whisper hover:border-mauve hover:text-ink'
-                  }`}
-                >
-                  {opt.label}
-                </button>
-              ))}
+          <>
+            <div className="border border-hairline bg-blush/30 px-6 py-5 max-w-lg">
+              <p className="text-[11px] tracking-label uppercase text-mauve mb-2">Our tip</p>
+              <p className="text-sm text-ink font-light leading-relaxed">
+                The most stunning confetti photographs happen when you step back inside while the bridal party hand out the confetti to guests outside. We use that time to capture the empty room and the flowers, then when everyone is ready, you walk back out together through the throw. The difference in the photographs is extraordinary.
+              </p>
             </div>
-          </Q>
+            <Field label="Tell us how you would like to do your confetti moment">
+              <textarea
+                value={plan.confetti_notes ?? ''}
+                onChange={e => set('confetti_notes', e.target.value || null)}
+                rows={3}
+                className={textareaClass}
+                placeholder="e.g. We love that idea of stepping back inside — we will definitely do that. We are having biodegradable petal confetti."
+              />
+            </Field>
+          </>
         )}
 
         <Q label="What is your tradition with guests after the ceremony?">
@@ -1002,12 +995,13 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
           />
         </Q>
 
-        <Q label="When are the speeches?">
+        <Q label="Are you having speeches?">
           <div className="flex flex-col gap-2 max-w-xs">
             {([
-              { value: 'after_call_in' as const, label: 'Straight after call in' },
-              { value: 'after_starter' as const, label: 'After starter' },
-              { value: 'after_dinner' as const, label: 'After dinner' },
+              { value: 'after_call_in' as const, label: 'Yes — straight after call in' },
+              { value: 'after_starter' as const, label: 'Yes — after starter' },
+              { value: 'after_dinner' as const, label: 'Yes — after dinner' },
+              { value: 'no_speeches' as const, label: 'No speeches' },
             ] as { value: string; label: string }[]).map(opt => (
               <button
                 key={opt.value}
@@ -1025,6 +1019,8 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
           </div>
         </Q>
 
+        {plan.speeches_timing !== 'no_speeches' && (
+        <>
         <Q
           label="Who is speaking, and in what order?"
           hint="Select each speaker in turn. A new slot appears automatically once each one is filled."
@@ -1037,6 +1033,8 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
               </p>
               <a
                 href="/home/people"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-[11px] tracking-label uppercase text-mauve border border-mauve px-5 py-2 inline-block hover:bg-mauve hover:text-cream transition-colors"
               >
                 Go to Our Circle
@@ -1105,6 +1103,8 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
             placeholder="e.g. Best man Sean will be at table 3, not the top table"
           />
         </Field>
+        </>
+        )}
 
         <Q label="Is there any meal entertainment?">
           <YesNo value={plan.meal_entertainment} onChange={v => set('meal_entertainment', v)} />

@@ -100,7 +100,9 @@ function generateSuggestions(
 
   const bride1 = categorizeSide(people, 'partner_1', true)
   const groom1 = categorizeSide(people, 'partner_2', false)
-  const coupleChildren = people.filter(p => CHILD_RELATIONSHIPS.includes(p.family_relationship ?? ''))
+  const brideChildren = people.filter(p => CHILD_RELATIONSHIPS.includes(p.family_relationship ?? '') && p.side === 'partner_1')
+  const groomChildren = people.filter(p => CHILD_RELATIONSHIPS.includes(p.family_relationship ?? '') && p.side === 'partner_2')
+  const coupleChildren = [...brideChildren, ...groomChildren]
 
   // ── 1. Couple with bride's parents ───────────────────────────────────────
   if (bride1.parents.length > 0) {
@@ -215,7 +217,27 @@ function generateSuggestions(
   }
 
   // ── Couple's own children ─────────────────────────────────────────────────
-  if (coupleChildren.length > 0) {
+  const isBlendedFamily = brideChildren.length > 0 && groomChildren.length > 0
+  if (isBlendedFamily) {
+    shots.push({
+      id: 'couple_children',
+      label: 'Couple with all their children together',
+      people: withCouple(couple, coupleChildren),
+      shot_type: 'family',
+    })
+    shots.push({
+      id: 'bride_own_children',
+      label: `${brideName} with her children`,
+      people: withPerson(brideName, brideChildren),
+      shot_type: 'family',
+    })
+    shots.push({
+      id: 'groom_own_children',
+      label: `${groomName} with his children`,
+      people: withPerson(groomName, groomChildren),
+      shot_type: 'family',
+    })
+  } else if (coupleChildren.length > 0) {
     shots.push({
       id: 'couple_children',
       label: 'Couple with their children',
