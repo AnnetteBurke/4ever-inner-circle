@@ -7,41 +7,41 @@ type DayPlan = {
   photographer_count: number | null
   guest_count: number | null
   bride_prep_address: string | null
-  bride_has_children: boolean
+  bride_has_children: boolean | null
   bride_children_details: string | null
-  bride_dad_reveal: boolean
-  bride_bridesmaids_reveal: boolean
-  bride_gifts: boolean
+  bride_dad_reveal: boolean | null
+  bride_bridesmaids_reveal: boolean | null
+  bride_gifts: boolean | null
   bride_gifts_notes: string | null
   bride_prep_location_notes: string | null
-  bride_pub_stop: boolean
+  bride_pub_stop: boolean | null
   bride_pub_address: string | null
   bride_personality_notes: string | null
   groom_prep_address: string | null
-  groom_has_children: boolean
+  groom_has_children: boolean | null
   groom_children_details: string | null
   groom_personality_notes: string | null
-  groom_pub_stop: boolean
+  groom_pub_stop: boolean | null
   groom_pub_address: string | null
-  groom_dad_reveal: boolean
-  groom_bridesmaids_reveal: boolean
-  groom_gifts: boolean
+  groom_dad_reveal: boolean | null
+  groom_bridesmaids_reveal: boolean | null
+  groom_gifts: boolean | null
   groom_gifts_notes: string | null
   groom_prep_location_notes: string | null
-  getting_ready_together: boolean
+  getting_ready_together: boolean | null
   aisle_entrance_style: string | null
   aisle_entrance_notes: string | null
   ceremony_special_moments: string | null
   celebrant_notes: string | null
-  altar_shot: boolean
+  altar_shot: boolean | null
   post_ceremony_style: string | null
-  ceremony_dip: boolean
-  confetti: boolean
+  ceremony_dip: boolean | null
+  confetti: boolean | null
   confetti_notes: string | null
-  special_visit: boolean
+  special_visit: boolean | null
   special_visit_address: string | null
   special_visit_notes: string | null
-  post_ceremony_refreshments: boolean
+  post_ceremony_refreshments: boolean | null
   post_ceremony_refreshments_notes: string | null
   photo_shoot_address: string | null
   photo_shoot_attendees: string | null
@@ -51,21 +51,21 @@ type DayPlan = {
   speeches_timing: string | null
   speeches_speakers: string | null
   speeches_notes: string | null
-  meal_entertainment: boolean
+  meal_entertainment: boolean | null
   meal_entertainment_notes: string | null
   first_dance_style: string | null
-  first_dance_choreographed: boolean
+  first_dance_choreographed: boolean | null
   first_dance_notes: string | null
-  daddy_daughter_dance: boolean
-  second_dress: boolean
+  daddy_daughter_dance: boolean | null
+  second_dress: boolean | null
   second_dress_notes: string | null
-  evening_outdoor_shots: boolean
+  evening_outdoor_shots: boolean | null
   evening_outdoor_notes: string | null
-  sparklers_fireworks: boolean
+  sparklers_fireworks: boolean | null
   sparklers_fireworks_type: string | null
   sparklers_who: string | null
   first_songs: string | null
-  leaving_outfit_change: boolean
+  leaving_outfit_change: boolean | null
   leaving_outfit_change_notes: string | null
 }
 
@@ -91,69 +91,69 @@ const EMPTY: DayPlan = {
   photographer_count: null,
   guest_count: null,
   bride_prep_address: null,
-  bride_has_children: false,
+  bride_has_children: null,
   bride_children_details: null,
-  bride_dad_reveal: false,
-  bride_bridesmaids_reveal: false,
-  bride_gifts: false,
+  bride_dad_reveal: null,
+  bride_bridesmaids_reveal: null,
+  bride_gifts: null,
   bride_gifts_notes: null,
   bride_prep_location_notes: null,
-  bride_pub_stop: false,
+  bride_pub_stop: null,
   bride_pub_address: null,
   bride_personality_notes: null,
   groom_prep_address: null,
-  groom_has_children: false,
+  groom_has_children: null,
   groom_children_details: null,
   groom_personality_notes: null,
-  groom_pub_stop: false,
+  groom_pub_stop: null,
   groom_pub_address: null,
-  groom_dad_reveal: false,
-  groom_bridesmaids_reveal: false,
-  groom_gifts: false,
+  groom_dad_reveal: null,
+  groom_bridesmaids_reveal: null,
+  groom_gifts: null,
   groom_gifts_notes: null,
   groom_prep_location_notes: null,
-  getting_ready_together: false,
-  aisle_entrance_style: 'together',
+  getting_ready_together: null,
+  aisle_entrance_style: null,
   aisle_entrance_notes: null,
   ceremony_special_moments: null,
   celebrant_notes: null,
-  altar_shot: false,
-  post_ceremony_style: 'meet_greet',
-  ceremony_dip: false,
-  confetti: false,
-  confetti_notes: 'coordinated',
-  special_visit: false,
+  altar_shot: null,
+  post_ceremony_style: null,
+  ceremony_dip: null,
+  confetti: null,
+  confetti_notes: null,
+  special_visit: null,
   special_visit_address: null,
   special_visit_notes: null,
-  post_ceremony_refreshments: false,
+  post_ceremony_refreshments: null,
   post_ceremony_refreshments_notes: null,
   photo_shoot_address: null,
-  photo_shoot_attendees: 'couple_and_bridal',
+  photo_shoot_attendees: null,
   photo_shoot_notes: null,
-  room_entrance_style: 'announced',
+  room_entrance_style: null,
   room_entrance_notes: null,
-  speeches_timing: 'after_dinner',
+  speeches_timing: null,
   speeches_speakers: null,
   speeches_notes: null,
-  meal_entertainment: false,
+  meal_entertainment: null,
   meal_entertainment_notes: null,
-  first_dance_style: 'alone',
-  first_dance_choreographed: false,
+  first_dance_style: null,
+  first_dance_choreographed: null,
   first_dance_notes: null,
-  daddy_daughter_dance: false,
-  second_dress: false,
+  daddy_daughter_dance: null,
+  second_dress: null,
   second_dress_notes: null,
-  evening_outdoor_shots: false,
+  evening_outdoor_shots: null,
   evening_outdoor_notes: null,
-  sparklers_fireworks: false,
+  sparklers_fireworks: null,
   sparklers_fireworks_type: null,
   sparklers_who: null,
   first_songs: null,
-  leaving_outfit_change: false,
+  leaving_outfit_change: null,
   leaving_outfit_change_notes: null,
 }
 
-function YesNo({ value, onChange }: { value: boolean; onChange: (v: boolean) => void }) {
+function YesNo({ value, onChange }: { value: boolean | null; onChange: (v: boolean) => void }) {
   return (
     <div className="grid grid-cols-2 gap-3 max-w-xs">
       {([true, false] as const).map(opt => (
