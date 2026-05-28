@@ -45,7 +45,7 @@ export default function MembersOnlyButton({
               href="/login"
               className="block text-[11px] tracking-label uppercase border border-plum text-plum px-6 py-3 hover:bg-plum hover:text-cream transition-colors mb-4"
             >
-              Sign in to my Inner Circle
+              Sign in to the Inner Circle
             </Link>
             <button
               onClick={() => setOpen(false)}
