@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import MembersOnlyButton from '@/components/MembersOnlyButton'
 
 const gifts = [
   {
@@ -65,7 +66,7 @@ export default function RegistrySection() {
       <div className="max-w-container mx-auto px-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {gifts.map((g) => (
-            <div key={g.title} className="border border-cream/15 p-9 bg-cream/[0.02] hover:border-mauve-soft transition-colors">
+            <MembersOnlyButton key={g.title} className="border border-cream/15 p-9 bg-cream/[0.02] hover:border-mauve-soft transition-colors text-left w-full">
               <div className="text-[10px] tracking-label uppercase text-mauve-soft mb-2">{g.label}</div>
               <h4 className="text-2xl font-normal text-cream mb-2 mt-2">{g.title}</h4>
               <div className="text-sm text-cream/60 leading-relaxed">{g.desc}</div>
@@ -77,7 +78,7 @@ export default function RegistrySection() {
                 <span>{g.progress}% funded</span>
                 <span>by {g.by}</span>
               </div>
-            </div>
+            </MembersOnlyButton>
           ))}
         </div>
       </div>
