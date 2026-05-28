@@ -26,21 +26,24 @@ const SECTIONS: Record<string, React.ComponentType> = {
 }
 
 export default function LandingPageClient() {
-  const [activeSection, setActiveSection] = useState('dashboard')
+  const [activeSection, setActiveSection] = useState('')
 
   function handleSectionClick(id: string) {
-    setActiveSection(id || 'dashboard')
+    setActiveSection(id)
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior })
   }
 
-  const ActiveComponent = SECTIONS[activeSection] ?? DashboardSection
+  const ActiveComponent = activeSection ? SECTIONS[activeSection] : null
 
   return (
     <>
       <Nav activeSection={activeSection} onSectionClick={handleSectionClick} />
       <main>
-        <HeroSection />
-        <ActiveComponent />
+        {ActiveComponent ? (
+          <ActiveComponent />
+        ) : (
+          <HeroSection />
+        )}
       </main>
       <Footer />
       <MemberPopup />
