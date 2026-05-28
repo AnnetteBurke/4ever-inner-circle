@@ -292,6 +292,15 @@ export default function InviteForm({
           {/* Ceremony */}
           <fieldset>
             <legend className="text-[11px] tracking-label uppercase text-mauve mb-4 block">Ceremony location</legend>
+            {form.venueName && (
+              <button
+                type="button"
+                onClick={() => { set('ceremonyName', form.venueName); set('ceremonyAddress', form.venueAddress) }}
+                className="mb-4 text-[11px] tracking-label uppercase text-mauve border border-mauve px-4 py-2 hover:bg-mauve hover:text-cream transition-colors"
+              >
+                Same as reception venue
+              </button>
+            )}
             <CeremonyAutocomplete
               nameValue={form.ceremonyName}
               addressValue={form.ceremonyAddress}
