@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import MembersOnlyButton from '@/components/MembersOnlyButton'
 
 export default function CalmSection() {
   return (
@@ -45,12 +46,9 @@ export default function CalmSection() {
                 Five tapping coins, gifted with our compliments
               </div>
             </div>
-            <a
-              href="#"
-              className="inline-block mt-7 px-9 py-4 text-[11px] tracking-label uppercase border border-mauve text-mauve hover:bg-mauve hover:text-cream transition-colors"
-            >
+            <MembersOnlyButton className="inline-block mt-7 px-9 py-4 text-[11px] tracking-label uppercase border border-mauve text-mauve hover:bg-mauve hover:text-cream transition-colors">
               Enter Calm Corner
-            </a>
+            </MembersOnlyButton>
           </div>
         </div>
 

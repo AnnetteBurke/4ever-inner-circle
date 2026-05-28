@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import MembersOnlyButton from '@/components/MembersOnlyButton'
 
 const collageImages = [
   { src: '/images/mood-7.jpg',              alt: 'Dancing at the reception' },
@@ -130,12 +131,9 @@ export default function GuestAlbumSection() {
                 </li>
               ))}
             </ul>
-            <a
-              href="#"
-              className="inline-block mt-8 px-9 py-4 text-[11px] tracking-label uppercase border border-mauve text-mauve hover:bg-mauve hover:text-cream transition-colors"
-            >
+            <MembersOnlyButton className="inline-block mt-8 px-9 py-4 text-[11px] tracking-label uppercase border border-mauve text-mauve hover:bg-mauve hover:text-cream transition-colors">
               Add to gift list
-            </a>
+            </MembersOnlyButton>
           </div>
         </div>
 

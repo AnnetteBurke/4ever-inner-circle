@@ -1,3 +1,5 @@
+import MembersOnlyButton from '@/components/MembersOnlyButton'
+
 const products = [
   { num: 'N° 01', silhouette: 'kit', tag: 'Essential', name: 'The Wedding Day Kit', price: '£68 · linen pouch', tone: 'from-blush-soft to-blush' },
   { num: 'N° 02', silhouette: 'guest', tag: 'Keepsake', name: 'Heirloom Guest Book', price: '£94 · hand-bound', tone: 'from-blush-deep to-mauve-soft' },
@@ -42,12 +44,9 @@ export default function EditSection() {
         </div>
 
         <div className="text-center mt-16">
-          <a
-            href="#"
-            className="inline-block px-9 py-4 text-[11px] tracking-label uppercase border border-plum text-plum hover:bg-plum hover:text-cream transition-colors"
-          >
+          <MembersOnlyButton className="inline-block px-9 py-4 text-[11px] tracking-label uppercase border border-plum text-plum hover:bg-plum hover:text-cream transition-colors">
             Open the full shop
-          </a>
+          </MembersOnlyButton>
         </div>
       </div>
     </section>
