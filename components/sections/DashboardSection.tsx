@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import MembersOnlyButton from '@/components/MembersOnlyButton'
 
 /* Sample dashboard preview (marketing-side mockup of the private dashboard).
    The real private dashboard is built in Phase 1 session 4. */
@@ -58,9 +59,9 @@ export default function DashboardSection() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-hairline border border-hairline">
             {cards.map((card) => (
-              <div
+              <MembersOnlyButton
                 key={card.title}
-                className="bg-white p-8 min-h-[200px] flex flex-col justify-between cursor-pointer hover:bg-cream transition-colors"
+                className="bg-white p-8 min-h-[200px] flex flex-col justify-between text-left w-full hover:bg-cream transition-colors"
               >
                 <div>
                   <h4 className="text-2xl font-normal text-ink mb-2">{card.title}</h4>
@@ -69,7 +70,7 @@ export default function DashboardSection() {
                 <div className="text-[11px] tracking-small-caps uppercase text-mauve mt-5">
                   {card.cta}
                 </div>
-              </div>
+              </MembersOnlyButton>
             ))}
           </div>
         </div>
