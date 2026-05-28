@@ -4,11 +4,13 @@ export default function Footer() {
       <div className="max-w-container mx-auto px-12">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-8">
           <div>
-            <img
-              src="/brand/Inner Circle Landscap.svg"
-              alt="4Ever Inner Circle"
-              className="h-14 w-auto mb-4"
-            />
+            <a href="/">
+              <img
+                src="/brand/Inner Circle Landscap.svg"
+                alt="4Ever Inner Circle"
+                className="h-14 w-auto mb-4"
+              />
+            </a>
             <div className="font-serif italic text-lg text-mauve-soft">
               part of your dream wedding story
             </div>
