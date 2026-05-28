@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const NAV_LINKS = [
   { id: 'dashboard', label: 'Dashboard' },
@@ -19,15 +19,24 @@ export default function Nav({
   onSectionClick?: (id: string) => void
 }) {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    function onScroll() { setScrolled(window.scrollY > 80) }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   function handleClick(id: string) {
     onSectionClick?.(id)
     setMobileOpen(false)
   }
 
-  const mobileNavBg = mobileOpen
+  const mobileNavBg = mobileOpen || scrolled
     ? 'bg-cream border-b border-hairline'
     : 'bg-transparent'
+
+  const onDark = !mobileOpen && !scrolled
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 ${mobileNavBg} md:bg-cream/95 md:backdrop-blur-md md:border-b md:border-hairline transition-colors`}>
@@ -39,7 +48,7 @@ export default function Nav({
             src="/brand/Inner Circle Landscap.svg"
             alt="4Ever Inner Circle"
             className="h-9 w-auto block md:hidden"
-            style={mobileOpen ? { filter: 'invert(1) hue-rotate(180deg)' } : undefined}
+            style={onDark ? undefined : { filter: 'invert(1) hue-rotate(180deg)' }}
           />
           <img
             src="/brand/Inner Circle Landscap.svg"
@@ -78,9 +87,9 @@ export default function Nav({
           <a
             href="/login"
             className={`text-[11px] tracking-label uppercase px-4 py-2 border transition-colors ${
-              mobileOpen
-                ? 'text-plum border-plum/40'
-                : 'text-cream border-cream/40'
+              onDark
+                ? 'text-cream border-cream/40'
+                : 'text-plum border-plum/40'
             }`}
           >
             Sign in
@@ -88,7 +97,7 @@ export default function Nav({
           <button
             type="button"
             onClick={() => setMobileOpen(o => !o)}
-            className={`p-1 transition-colors ${mobileOpen ? 'text-ink' : 'text-cream'}`}
+            className={`p-1 transition-colors ${onDark ? 'text-cream' : 'text-ink'}`}
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           >
             {mobileOpen ? (
