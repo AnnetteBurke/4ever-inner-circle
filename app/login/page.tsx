@@ -116,7 +116,8 @@ export default function LoginPage() {
       <div className="max-w-md w-full px-8">
         <div className="text-[11px] tracking-label uppercase text-mauve mb-6 text-center">4Ever Inner Circle</div>
         <h1 className="text-4xl font-light text-ink mb-2 leading-tight text-center">Welcome back</h1>
-        <p className="font-serif italic text-xl text-plum mb-10 text-center">Sign in to your Inner Circle</p>
+        <p className="font-serif italic text-xl text-plum mb-3 text-center">Sign in to your Inner Circle</p>
+        <p className="text-[11px] tracking-label uppercase text-whisper text-center mb-10">Exclusively for 4Ever Photos couples</p>
 
         <form onSubmit={handleLogin} className="space-y-4">
           <input
