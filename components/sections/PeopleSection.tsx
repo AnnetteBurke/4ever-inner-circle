@@ -1,3 +1,5 @@
+import MembersOnlyButton from '@/components/MembersOnlyButton'
+
 const people = [
   { initial: 'E', name: 'Emma Whitfield', role: 'Maid of Honour', status: 'All briefed', next: 'Hair & makeup timing · in 14 days' },
   { initial: 'T', name: 'Tom Bradley', role: 'Best Man', status: 'Speech tips sent', next: 'Day-before rundown · in 55 days' },
@@ -37,7 +39,7 @@ export default function PeopleSection() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-hairline border border-hairline">
           {people.map((p) => (
-            <div key={p.name} className="bg-cream p-8 md:p-10 text-center hover:bg-white transition-colors">
+            <MembersOnlyButton key={p.name} className="bg-cream p-8 md:p-10 text-center hover:bg-white transition-colors w-full">
               <div className="w-16 h-16 rounded-full mx-auto mb-5 flex items-center justify-center text-white font-script text-3xl shadow-md bg-gradient-to-br from-mauve-soft to-blush">
                 {p.initial}
               </div>
@@ -48,11 +50,11 @@ export default function PeopleSection() {
                 <strong className="text-ink font-medium block mb-1">Next message</strong>
                 {p.next}
               </div>
-            </div>
+            </MembersOnlyButton>
           ))}
-          <div className="bg-transparent border border-dashed border-mauve-soft flex items-center justify-center text-mauve font-serif italic text-lg cursor-pointer hover:bg-blush-soft hover:border-mauve transition-colors p-8">
+          <MembersOnlyButton className="bg-transparent border border-dashed border-mauve-soft flex items-center justify-center text-mauve font-serif italic text-lg hover:bg-blush-soft hover:border-mauve transition-colors p-8 w-full">
             + add someone
-          </div>
+          </MembersOnlyButton>
         </div>
       </div>
     </section>

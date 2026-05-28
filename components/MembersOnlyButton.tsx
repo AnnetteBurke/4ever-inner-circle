@@ -38,7 +38,7 @@ export default function MembersOnlyButton({
             <div className="text-[10px] tracking-label uppercase text-mauve mb-5">4Ever Inner Circle</div>
             <h3 className="text-2xl font-light text-ink mb-3">Members only</h3>
             <p className="text-sm text-whisper leading-relaxed mb-8">
-              This is part of your private Inner Circle, available exclusively to couples booked with 4Ever Photos.
+              This is part of the private Inner Circle, available exclusively to couples booked with 4Ever Photos.
               If that is you, check your inbox for your invitation email. Already set up? Sign in below.
             </p>
             <Link
