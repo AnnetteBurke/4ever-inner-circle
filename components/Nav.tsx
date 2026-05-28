@@ -26,7 +26,7 @@ export default function Nav() {
             style={{ filter: 'invert(1) hue-rotate(180deg)' }}
           />
         </a>
-        <div className="hidden md:flex gap-9">
+        <div className="hidden md:flex items-center gap-9">
           {links.map((link) => (
             <a
               key={link.href}
@@ -36,7 +36,20 @@ export default function Nav() {
               {link.label}
             </a>
           ))}
+          <a
+            href="/login"
+            className="text-[11px] tracking-label uppercase text-plum border border-plum/40 px-4 py-2 hover:bg-plum hover:text-cream transition-colors"
+          >
+            Sign in
+          </a>
         </div>
+        {/* Mobile sign in */}
+        <a
+          href="/login"
+          className="md:hidden text-[11px] tracking-label uppercase text-cream border border-cream/40 px-4 py-2"
+        >
+          Sign in
+        </a>
       </div>
     </nav>
   );

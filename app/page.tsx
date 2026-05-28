@@ -11,6 +11,7 @@ import GuestAlbumSection from '@/components/sections/GuestAlbumSection';
 import SignatureBlock from '@/components/sections/SignatureBlock';
 import SignInSection from '@/components/sections/SignInSection';
 import Footer from '@/components/Footer';
+import MemberPopup from '@/components/MemberPopup';
 
 /**
  * Inner Circle — public landing page
@@ -40,6 +41,7 @@ export default function HomePage() {
         <SignInSection />
       </main>
       <Footer />
+      <MemberPopup />
     </>
   );
 }

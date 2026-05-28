@@ -1,24 +1,6 @@
-'use client'
-
-import { useState } from 'react'
+import Link from 'next/link'
 
 export default function SignInSection() {
-  const [email, setEmail] = useState('')
-  const [sent, setSent] = useState(false)
-  const [loading, setLoading] = useState(false)
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setLoading(true)
-    await fetch('/api/auth/magic-link', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
-    })
-    setSent(true)
-    setLoading(false)
-  }
-
   return (
     <section id="signin" className="bg-plum py-20 px-8">
       <div className="max-w-xl mx-auto text-center">
@@ -26,42 +8,18 @@ export default function SignInSection() {
           Already booked with us?
         </div>
         <h2 className="text-3xl md:text-4xl font-light text-cream mb-4 leading-tight">
-          Already in the Inner Circle?
+          Already a member?
         </h2>
-
-        {sent ? (
-          <>
-            <p className="font-serif italic text-xl text-mauve-soft mb-6">
-              Your link is on its way
-            </p>
-            <p className="text-cream/70 text-base leading-relaxed">
-              Check your inbox for an email from us. Click the link and you will be straight back in. No password, no fuss.
-            </p>
-          </>
-        ) : (
-          <>
-            <p className="text-cream/70 text-base leading-relaxed mb-10">
-              If we are capturing your wedding, your private space is waiting for you. Enter your email and we will send you a link straight back in.
-            </p>
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                placeholder="your@email.com"
-                className="flex-1 bg-transparent border border-cream/30 px-4 py-3 text-cream placeholder-cream/40 text-base focus:outline-none focus:border-cream/70"
-              />
-              <button
-                type="submit"
-                disabled={loading}
-                className="px-8 py-3 text-[11px] tracking-label uppercase border border-mauve text-mauve hover:bg-mauve hover:text-cream transition-colors disabled:opacity-50 whitespace-nowrap"
-              >
-                {loading ? 'Sending...' : 'Send me a link'}
-              </button>
-            </form>
-          </>
-        )}
+        <p className="text-cream/70 text-base leading-relaxed mb-10 max-w-md mx-auto">
+          If we are capturing your wedding, your private Inner Circle is waiting for you.
+          Sign in with your email and password to pick up right where you left off.
+        </p>
+        <Link
+          href="/login"
+          className="inline-block text-[11px] tracking-label uppercase border border-mauve-soft text-mauve-soft px-10 py-4 hover:bg-mauve hover:border-mauve hover:text-cream transition-colors"
+        >
+          Sign in to your Inner Circle
+        </Link>
       </div>
     </section>
   )
