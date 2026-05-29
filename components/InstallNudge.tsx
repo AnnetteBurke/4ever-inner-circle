@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 
 // The iOS Safari share icon — square with arrow pointing up
 function ShareIcon() {
@@ -94,7 +95,7 @@ export default function InstallNudge() {
           </div>
           <p className="text-[10px] text-whisper pt-1 border-t border-plum/15 leading-relaxed">
             If you can't find it right now, just go to{' '}
-            <a href="/#signin" className="underline text-plum/70">our website</a>
+            <Link href="/#signin" className="underline text-plum/70">our website</Link>
             {' '}and at the bottom you can request a new link any time.
           </p>
         </div>
@@ -113,7 +114,7 @@ export default function InstallNudge() {
           )}
           <p className="text-[10px] text-whisper leading-relaxed">
             If you can't find it right now, just go to{' '}
-            <a href="/#signin" className="underline text-plum/70">our website</a>
+            <Link href="/#signin" className="underline text-plum/70">our website</Link>
             {' '}and at the bottom you can request a new link any time.
           </p>
         </div>

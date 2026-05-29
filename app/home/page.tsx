@@ -6,13 +6,12 @@ import DashboardCards from './DashboardCards'
 
 function getCountdown(weddingDate: string | null): { days: number | null; label: string } {
   if (!weddingDate) return { days: null, label: '' }
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  const wedding = new Date(weddingDate)
-  wedding.setHours(0, 0, 0, 0)
-  const diff = Math.round((wedding.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
+  // Force UTC midnight on both sides so no server or client timezone shifts the day
+  const todayUtc = new Date(new Date().toISOString().split('T')[0] + 'T00:00:00Z')
+  const weddingUtc = new Date(weddingDate + 'T00:00:00Z')
+  const diff = Math.round((weddingUtc.getTime() - todayUtc.getTime()) / (1000 * 60 * 60 * 24))
   if (diff === 0) return { days: 0, label: 'Today is your day' }
-  if (diff < 0) return { days: Math.abs(diff), label: `days since your wedding` }
+  if (diff < 0) return { days: Math.abs(diff), label: 'days since your wedding' }
   return { days: diff, label: 'days to go' }
 }
 
