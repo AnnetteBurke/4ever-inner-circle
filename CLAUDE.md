@@ -231,7 +231,7 @@ If she hasn't moved them into this folder, ask her where they are.
 
 All endpoints that touch couples' data, invite creation, or third-party APIs (Twilio, Resend) must be protected. These rules are non-negotiable:
 
-1. **Admin routes** — Always check `createSupabaseServerClient().auth.getUser()` and verify `user.email === process.env.ADMIN_EMAIL` before rendering. Redirect to `/login` if not authenticated.
+1. **Admin routes** — Always check `createSupabaseServerClient().auth.getUser()` and verify `user.email === process.env.ADMIN_MAIL` before rendering. Redirect to `/login` if not authenticated.
 2. **Admin API endpoints** — Same check as above. Return `401 Unauthorised` if the session is missing or the email does not match.
 3. **Cron endpoints** — Use fail-closed logic: `if (!cronSecret || authHeader !== ...)`. Never use `if (cronSecret && ...)` — that pattern is open when the env var is missing.
 4. **Never trust user input** — Validate all fields at the API boundary before inserting into the database.

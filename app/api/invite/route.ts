@@ -8,7 +8,7 @@ import { sendWhatsApp } from '@/lib/twilio'
 export async function POST(request: Request) {
   const serverClient = await createSupabaseServerClient()
   const { data: { user } } = await serverClient.auth.getUser()
-  const adminEmail = process.env.ADMIN_EMAIL
+  const adminEmail = process.env.ADMIN_MAIL
 
   if (!user || !adminEmail || user.email !== adminEmail) {
     return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })

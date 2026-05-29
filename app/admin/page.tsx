@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 export default async function AdminPage() {
   const serverClient = await createSupabaseServerClient()
   const { data: { user } } = await serverClient.auth.getUser()
-  const adminEmail = process.env.ADMIN_EMAIL
+  const adminEmail = process.env.ADMIN_MAIL
 
   if (!user || !adminEmail || user.email !== adminEmail) {
     redirect('/login')
