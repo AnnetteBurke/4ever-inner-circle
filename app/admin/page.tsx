@@ -1,9 +1,19 @@
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 import { createAdminClient } from '@/lib/supabase'
+import { createSupabaseServerClient } from '@/lib/supabase-server'
 
 export const dynamic = 'force-dynamic'
 
 export default async function AdminPage() {
+  const serverClient = await createSupabaseServerClient()
+  const { data: { user } } = await serverClient.auth.getUser()
+  const adminEmail = process.env.ADMIN_EMAIL
+
+  if (!user || !adminEmail || user.email !== adminEmail) {
+    redirect('/login')
+  }
+
   const supabase = createAdminClient()
 
   const { data: couples } = await supabase

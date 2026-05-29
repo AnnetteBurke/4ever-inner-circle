@@ -1,10 +1,19 @@
 import { NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase'
+import { createSupabaseServerClient } from '@/lib/supabase-server'
 import { scheduleMessagesForPerson } from '@/lib/messages/schedule'
 import { sendEmail } from '@/lib/resend'
 import { sendWhatsApp } from '@/lib/twilio'
 
 export async function POST(request: Request) {
+  const serverClient = await createSupabaseServerClient()
+  const { data: { user } } = await serverClient.auth.getUser()
+  const adminEmail = process.env.ADMIN_EMAIL
+
+  if (!user || !adminEmail || user.email !== adminEmail) {
+    return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })
+  }
+
   const {
     email,
     brideName,

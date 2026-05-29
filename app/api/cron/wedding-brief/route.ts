@@ -11,7 +11,7 @@ const PHOTOGRAPHER_EMAIL = 'studio@4ever.photos'
 export async function GET(request: Request) {
   const authHeader = request.headers.get('authorization')
   const cronSecret = process.env.CRON_SECRET
-  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+  if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
     return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })
   }
 
