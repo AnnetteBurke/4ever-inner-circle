@@ -132,13 +132,17 @@ We cannot wait to show you what we have built for you.`,
 
   // Send SMS nudge to partner 1 to check their inbox
   // (WhatsApp requires Meta Business API approval — using SMS until that is live)
+  let smsResult = { ok: false, error: 'No mobile number provided' }
   if (partner1Mobile) {
     const firstName = brideName.split(' ')[0]
-    sendSms({
+    smsResult = await sendSms({
       to: partner1Mobile,
       body: `Hi ${firstName}! An invitation email has just landed in your inbox from studio@4ever.photos. If you don't see it in the next few minutes, check your junk or spam folder. So excited to have you in the Inner Circle! Annette x`,
-    }).catch(() => {})
+    })
+    if (!smsResult.ok) {
+      console.error('SMS failed:', smsResult.error)
+    }
   }
 
-  return NextResponse.json({ success: true })
+  return NextResponse.json({ success: true, sms: smsResult })
 }
