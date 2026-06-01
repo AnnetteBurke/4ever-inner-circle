@@ -132,7 +132,7 @@ We cannot wait to show you what we have built for you.`,
 
   // Send SMS nudge to partner 1 to check their inbox
   // (WhatsApp requires Meta Business API approval — using SMS until that is live)
-  let smsResult = { ok: false, error: 'No mobile number provided' }
+  let smsResult: { ok: boolean; error?: string } = { ok: false, error: 'No mobile number provided' }
   if (partner1Mobile) {
     const firstName = brideName.split(' ')[0]
     smsResult = await sendSms({
