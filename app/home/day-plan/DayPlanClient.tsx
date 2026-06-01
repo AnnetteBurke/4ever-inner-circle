@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import LightAlert from '@/components/LightAlert'
+import type { SunlightInfo } from '@/lib/sunlight'
 
 type DayPlan = {
   photographer_count: number | null
@@ -85,6 +87,7 @@ type Props = {
   photographerCount: 1 | 2
   initialPlan: DayPlan | null
   people: CirclePerson[]
+  sunlight?: SunlightInfo | null
 }
 
 const EMPTY: DayPlan = {
@@ -276,7 +279,7 @@ function SectionBanner({
 const inputClass = "w-full border border-hairline bg-transparent px-4 py-3 text-ink text-base focus:outline-none focus:border-mauve"
 const textareaClass = "w-full border border-hairline bg-transparent px-4 py-3 text-ink text-base focus:outline-none focus:border-mauve resize-none"
 
-export default function DayPlanClient({ brideName, groomName, partner1Gender, partner2Gender, photographerCount, initialPlan, people }: Props) {
+export default function DayPlanClient({ brideName, groomName, partner1Gender, partner2Gender, photographerCount, initialPlan, people, sunlight }: Props) {
   const [plan, setPlan] = useState<DayPlan>(() => {
     const base = { ...EMPTY, photographer_count: photographerCount }
     if (!initialPlan) return base
@@ -345,6 +348,12 @@ export default function DayPlanClient({ brideName, groomName, partner1Gender, pa
           </p>
         </div>
       </div>
+
+      {sunlight && (
+        <div className="max-w-4xl mx-auto px-8 md:px-16 pt-8">
+          <LightAlert info={sunlight} />
+        </div>
+      )}
 
       {/* ── SECTION 01: Package ── */}
       <SectionBanner

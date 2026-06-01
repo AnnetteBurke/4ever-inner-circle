@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import { createSupabaseServerClient } from '@/lib/supabase-server'
+import { getSunlightInfo } from '@/lib/sunlight'
 import DayPlanClient from './DayPlanClient'
 
 export default async function DayPlanPage() {
@@ -9,10 +10,12 @@ export default async function DayPlanPage() {
 
   const { data: couple } = await supabase
     .from('couples')
-    .select('id, bride_name, groom_name, partner_1_gender, partner_2_gender, second_photographer_email')
+    .select('id, bride_name, groom_name, partner_1_gender, partner_2_gender, second_photographer_email, wedding_date')
     .eq('user_id', user.id)
     .single()
   if (!couple) redirect('/login')
+
+  const sunlight = couple.wedding_date ? getSunlightInfo(couple.wedding_date) : null
 
   const [{ data: plan }, { data: people }] = await Promise.all([
     supabase.from('day_plan').select('*').eq('couple_id', couple.id).single(),
@@ -30,6 +33,7 @@ export default async function DayPlanPage() {
       photographerCount={photographerCount}
       initialPlan={plan ?? null}
       people={people ?? []}
+      sunlight={sunlight}
     />
   )
 }

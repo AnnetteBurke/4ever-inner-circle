@@ -13,11 +13,13 @@
   "dependencies": {
     "@supabase/ssr": "^0.5.1",
     "@supabase/supabase-js": "^2.45.0",
+    "@types/suncalc": "^1.9.2",
     "clsx": "^2.1.1",
     "next": "14.2.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "resend": "^6.12.3",
+    "suncalc": "^1.9.0",
     "twilio": "^6.0.2"
   },
   "devDependencies": {
@@ -28,6 +30,7 @@
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.5",
     "postcss": "^8.4.39",
+    "sharp": "^0.34.5",
     "tailwindcss": "^3.4.6",
     "typescript": "^5.5.3"
   }
