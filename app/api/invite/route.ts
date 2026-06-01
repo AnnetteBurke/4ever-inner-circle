@@ -3,7 +3,7 @@ import { createAdminClient } from '@/lib/supabase'
 import { createSupabaseServerClient } from '@/lib/supabase-server'
 import { scheduleMessagesForPerson } from '@/lib/messages/schedule'
 import { sendEmail } from '@/lib/resend'
-import { sendWhatsApp } from '@/lib/twilio'
+import { sendSms } from '@/lib/twilio'
 
 export async function POST(request: Request) {
   const serverClient = await createSupabaseServerClient()
@@ -130,10 +130,11 @@ We cannot wait to show you what we have built for you.`,
     })
   }
 
-  // Send WhatsApp nudge to partner 1 to check their inbox
+  // Send SMS nudge to partner 1 to check their inbox
+  // (WhatsApp requires Meta Business API approval — using SMS until that is live)
   if (partner1Mobile) {
     const firstName = brideName.split(' ')[0]
-    sendWhatsApp({
+    sendSms({
       to: partner1Mobile,
       body: `Hi ${firstName}! An invitation email has just landed in your inbox from studio@4ever.photos. If you don't see it in the next few minutes, check your junk or spam folder. So excited to have you in the Inner Circle! Annette x`,
     }).catch(() => {})

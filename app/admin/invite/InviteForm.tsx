@@ -84,6 +84,7 @@ export default function InviteForm({
   const [errorMsg, setErrorMsg] = useState('')
   const [liveLocations, setLiveLocations] = useState(ceremonyLocations)
   const [livePrepLocations, setLivePrepLocations] = useState(prepLocations)
+  const [customVenues, setCustomVenues] = useState<{ name: string; address: string }[]>([])
 
   useEffect(() => {
     fetch('/api/locations')
@@ -91,6 +92,7 @@ export default function InviteForm({
       .then(data => {
         if (data.ceremony) setLiveLocations(data.ceremony)
         if (data.prep) setLivePrepLocations(data.prep)
+        if (data.customVenues) setCustomVenues(data.customVenues)
       })
       .catch(() => {})
   }, [])
@@ -105,6 +107,10 @@ export default function InviteForm({
       setForm(f => ({ ...f, venueSlug: '_unset', venueName: '', venueAddress: '' }))
     } else if (slug === '') {
       setForm(f => ({ ...f, venueSlug: '', venueName: '', venueAddress: '' }))
+    } else if (slug.startsWith('custom:')) {
+      const name = slug.replace('custom:', '')
+      const venue = customVenues.find(v => v.name === name)
+      setForm(f => ({ ...f, venueSlug: '', venueName: venue?.name ?? name, venueAddress: venue?.address ?? '' }))
     } else {
       const venue = VENUES.find(v => v.slug === slug)
       setForm(f => ({ ...f, venueSlug: slug, venueName: venue?.name ?? '', venueAddress: venue?.address ?? '' }))
@@ -273,9 +279,13 @@ export default function InviteForm({
             <div className="mb-4">
               <select required value={form.venueSlug} onChange={handleVenueChange} className={inputClass}>
                 <option value="_unset" disabled>Select a venue</option>
-                {VENUES.map(v => (
-                  <option key={v.slug || 'other'} value={v.slug}>{v.name}</option>
+                {VENUES.filter(v => v.name !== 'Other').map(v => (
+                  <option key={v.slug} value={v.slug}>{v.name}</option>
                 ))}
+                {customVenues.filter(cv => !VENUES.find(v => v.name === cv.name)).map(cv => (
+                  <option key={cv.name} value={`custom:${cv.name}`}>{cv.name}</option>
+                ))}
+                <option value="">Other / new venue</option>
               </select>
             </div>
             {isOtherVenue && (

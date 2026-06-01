@@ -36,8 +36,20 @@ export async function GET() {
       }
     }
 
-    return NextResponse.json({ ceremony, prep })
+    // Also return custom venues (previously entered as "Other" in the invite form)
+    const { data: venueData } = await supabase
+      .from('couples')
+      .select('venue_name, venue_address')
+      .not('venue_name', 'is', null)
+      .is('venue_slug', null)
+
+    const venueSeen = new Set<string>()
+    const customVenues = (venueData ?? [])
+      .filter(r => r.venue_name && !venueSeen.has(r.venue_name) && venueSeen.add(r.venue_name))
+      .map(r => ({ name: r.venue_name!, address: r.venue_address ?? '' }))
+
+    return NextResponse.json({ ceremony, prep, customVenues })
   } catch (e) {
-    return NextResponse.json({ ceremony: [], prep: [], error: String(e) })
+    return NextResponse.json({ ceremony: [], prep: [], customVenues: [], error: String(e) })
   }
 }
