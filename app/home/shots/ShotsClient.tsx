@@ -135,23 +135,27 @@ function generateSuggestions(
   }
 
   // ── 4–7. Bride's family ──────────────────────────────────────────────────
-  if (bride1.parents.length > 0 && bride1.siblings.length > 0) {
+  // Full family: couple + parents (if alive) + siblings + siblings' partners + niblings + couple's own children
+  const brideFamilyGroup = [...bride1.parents, ...bride1.siblings, ...bride1.siblingPartners, ...bride1.niblings]
+  if (brideFamilyGroup.length > 0) {
     shots.push({
       id: 'bride_full_family',
       label: `${brideName}'s full family`,
-      people: withCouple(couple, [...bride1.parents, ...bride1.siblings, ...bride1.siblingPartners, ...bride1.niblings]),
+      people: withCouple(couple, [...brideFamilyGroup, ...coupleChildren]),
       shot_type: 'family',
     })
   }
-  const brideImmediateAll = [...bride1.parents, ...bride1.siblings, ...bride1.siblingPartners]
-  if (brideImmediateAll.length > 0) {
+  // Immediate family: bride + parents + siblings (no partners, no niblings)
+  const brideImmediate = [...bride1.parents, ...bride1.siblings]
+  if (brideImmediate.length > 0) {
     shots.push({
       id: 'bride_immediate_family',
       label: `${brideName}'s immediate family`,
-      people: withPerson(brideName, brideImmediateAll),
+      people: withPerson(brideName, brideImmediate),
       shot_type: 'family',
     })
   }
+  // Siblings: bride + siblings only
   if (bride1.siblings.length > 0) {
     shots.push({
       id: 'bride_siblings',
@@ -170,23 +174,27 @@ function generateSuggestions(
   }
 
   // ── 8–11. Groom's family ─────────────────────────────────────────────────
-  if (groom1.parents.length > 0 && groom1.siblings.length > 0) {
+  // Full family: couple + parents (if alive) + siblings + siblings' partners + niblings + couple's own children
+  const groomFamilyGroup = [...groom1.parents, ...groom1.siblings, ...groom1.siblingPartners, ...groom1.niblings]
+  if (groomFamilyGroup.length > 0) {
     shots.push({
       id: 'groom_full_family',
       label: `${groomName}'s full family`,
-      people: withCouple(couple, [...groom1.parents, ...groom1.siblings, ...groom1.siblingPartners, ...groom1.niblings]),
+      people: withCouple(couple, [...groomFamilyGroup, ...coupleChildren]),
       shot_type: 'family',
     })
   }
-  const groomImmediateAll = [...groom1.parents, ...groom1.siblings, ...groom1.siblingPartners]
-  if (groomImmediateAll.length > 0) {
+  // Immediate family: groom + parents + siblings (no partners, no niblings)
+  const groomImmediate = [...groom1.parents, ...groom1.siblings]
+  if (groomImmediate.length > 0) {
     shots.push({
       id: 'groom_immediate_family',
       label: `${groomName}'s immediate family`,
-      people: withPerson(groomName, groomImmediateAll),
+      people: withPerson(groomName, groomImmediate),
       shot_type: 'family',
     })
   }
+  // Siblings: groom + siblings only
   if (groom1.siblings.length > 0) {
     shots.push({
       id: 'groom_siblings',

@@ -166,8 +166,10 @@ function generateFamilyGroups(people: BriefPerson[], brideName: string, groomNam
   const gParents = gSide.filter(p => ['Mum','Dad','Step-mum','Step-dad'].includes(p.family_relationship ?? ''))
   const bSiblings = bSide.filter(p => ['Sister','Brother','Step-sister','Step-brother'].includes(p.family_relationship ?? ''))
   const gSiblings = gSide.filter(p => ['Sister','Brother','Step-sister','Step-brother'].includes(p.family_relationship ?? ''))
-  const bSibPartners = bSide.filter(p => p.family_relationship === 'Partner' && p.in_family_photos)
-  const gSibPartners = gSide.filter(p => p.family_relationship === 'Partner' && p.in_family_photos)
+  const bSibPartners = bSide.filter(p => ['Partner','Sister-in-law','Brother-in-law'].includes(p.family_relationship ?? '') && p.in_family_photos)
+  const gSibPartners = gSide.filter(p => ['Partner','Sister-in-law','Brother-in-law'].includes(p.family_relationship ?? '') && p.in_family_photos)
+  const bNiblings = bSide.filter(p => ['Niece','Nephew'].includes(p.family_relationship ?? ''))
+  const gNiblings = gSide.filter(p => ['Niece','Nephew'].includes(p.family_relationship ?? ''))
   const bGrandparents = bSide.filter(p => ['Grandmother','Grandfather','Step-grandmother','Step-grandfather'].includes(p.family_relationship ?? ''))
   const gGrandparents = gSide.filter(p => ['Grandmother','Grandfather','Step-grandmother','Step-grandfather'].includes(p.family_relationship ?? ''))
 
@@ -175,14 +177,22 @@ function generateFamilyGroups(people: BriefPerson[], brideName: string, groomNam
   if (bParents.length > 0) shots.push(`Couple with ${brideName}'s parents — ${names(bParents)}`)
   if (bParents.length > 0 && gParents.length > 0) shots.push(`Couple with both sets of parents — ${names([...bParents, ...gParents])}`)
   if (gParents.length > 0) shots.push(`Couple with ${groomName}'s parents — ${names(gParents)}`)
-  const bImmediateAll = [...bParents, ...bSiblings, ...bSibPartners]
-  if (bImmediateAll.length > 0) shots.push(`${brideName}'s immediate family — ${names(bImmediateAll)}`)
-  if (bParents.length > 0 && bSiblings.length > 0) shots.push(`${brideName} with parents and siblings — ${names([...bParents, ...bSiblings])}`)
+
+  // Full family: couple + parents (if alive) + siblings + siblings' partners + niblings
+  const bFullFamily = [...bParents, ...bSiblings, ...bSibPartners, ...bNiblings]
+  if (bFullFamily.length > 0) shots.push(`Couple with ${brideName}'s full family — ${names(bFullFamily)}`)
+  // Immediate family: bride + parents + siblings (no partners, no niblings)
+  const bImmediate = [...bParents, ...bSiblings]
+  if (bImmediate.length > 0) shots.push(`${brideName}'s immediate family — ${names(bImmediate)}`)
   if (bParents.length >= 2) shots.push(`${brideName}'s parents together — ${names(bParents)}`)
   if (bSiblings.length > 0) shots.push(`${brideName} with siblings — ${names(bSiblings)}`)
-  const gImmediateAll = [...gParents, ...gSiblings, ...gSibPartners]
-  if (gImmediateAll.length > 0) shots.push(`${groomName}'s immediate family — ${names(gImmediateAll)}`)
-  if (gParents.length > 0 && gSiblings.length > 0) shots.push(`${groomName} with parents and siblings — ${names([...gParents, ...gSiblings])}`)
+
+  // Full family: couple + parents (if alive) + siblings + siblings' partners + niblings
+  const gFullFamily = [...gParents, ...gSiblings, ...gSibPartners, ...gNiblings]
+  if (gFullFamily.length > 0) shots.push(`Couple with ${groomName}'s full family — ${names(gFullFamily)}`)
+  // Immediate family: groom + parents + siblings (no partners, no niblings)
+  const gImmediate = [...gParents, ...gSiblings]
+  if (gImmediate.length > 0) shots.push(`${groomName}'s immediate family — ${names(gImmediate)}`)
   if (gParents.length >= 2) shots.push(`${groomName}'s parents together — ${names(gParents)}`)
   if (gSiblings.length > 0) shots.push(`${groomName} with siblings — ${names(gSiblings)}`)
   bGrandparents.forEach(gp => shots.push(`Couple with ${gp.name} (${brideName}'s side)`))
