@@ -156,7 +156,7 @@ function generateSuggestions(
     shots.push({
       id: 'bride_siblings',
       label: `${brideName}'s siblings`,
-      people: withPerson(brideName, [...bride1.siblings, ...bride1.siblingPartners]),
+      people: withPerson(brideName, bride1.siblings),
       shot_type: 'family',
     })
   }
@@ -191,7 +191,7 @@ function generateSuggestions(
     shots.push({
       id: 'groom_siblings',
       label: `${groomName}'s siblings`,
-      people: withPerson(groomName, [...groom1.siblings, ...groom1.siblingPartners]),
+      people: withPerson(groomName, groom1.siblings),
       shot_type: 'family',
     })
   }
