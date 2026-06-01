@@ -179,12 +179,12 @@ function generateFamilyGroups(people: BriefPerson[], brideName: string, groomNam
   if (bImmediateAll.length > 0) shots.push(`${brideName}'s immediate family — ${names(bImmediateAll)}`)
   if (bParents.length > 0 && bSiblings.length > 0) shots.push(`${brideName} with parents and siblings — ${names([...bParents, ...bSiblings])}`)
   if (bParents.length >= 2) shots.push(`${brideName}'s parents together — ${names(bParents)}`)
-  if (bSiblings.length > 0) shots.push(`${brideName} with siblings — ${names(bSiblings)}`)
+  if (bSiblings.length > 0) shots.push(`${brideName} with siblings — ${names([...bSiblings, ...bSibPartners])}`)
   const gImmediateAll = [...gParents, ...gSiblings, ...gSibPartners]
   if (gImmediateAll.length > 0) shots.push(`${groomName}'s immediate family — ${names(gImmediateAll)}`)
   if (gParents.length > 0 && gSiblings.length > 0) shots.push(`${groomName} with parents and siblings — ${names([...gParents, ...gSiblings])}`)
   if (gParents.length >= 2) shots.push(`${groomName}'s parents together — ${names(gParents)}`)
-  if (gSiblings.length > 0) shots.push(`${groomName} with siblings — ${names(gSiblings)}`)
+  if (gSiblings.length > 0) shots.push(`${groomName} with siblings — ${names([...gSiblings, ...gSibPartners])}`)
   bGrandparents.forEach(gp => shots.push(`Couple with ${gp.name} (${brideName}'s side)`))
   gGrandparents.forEach(gp => shots.push(`Couple with ${gp.name} (${groomName}'s side)`))
   return shots

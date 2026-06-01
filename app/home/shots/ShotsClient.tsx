@@ -142,10 +142,13 @@ function generateSuggestions(
       people: withCouple(couple, [...bride1.parents, ...bride1.siblings, ...bride1.siblingPartners, ...bride1.niblings]),
       shot_type: 'family',
     })
+  }
+  const brideImmediateAll = [...bride1.parents, ...bride1.siblings, ...bride1.siblingPartners]
+  if (brideImmediateAll.length > 0) {
     shots.push({
       id: 'bride_immediate_family',
       label: `${brideName}'s immediate family`,
-      people: withPerson(brideName, [...bride1.parents, ...bride1.siblings]),
+      people: withPerson(brideName, brideImmediateAll),
       shot_type: 'family',
     })
   }
@@ -153,7 +156,7 @@ function generateSuggestions(
     shots.push({
       id: 'bride_siblings',
       label: `${brideName}'s siblings`,
-      people: withPerson(brideName, bride1.siblings),
+      people: withPerson(brideName, [...bride1.siblings, ...bride1.siblingPartners]),
       shot_type: 'family',
     })
   }
@@ -174,10 +177,13 @@ function generateSuggestions(
       people: withCouple(couple, [...groom1.parents, ...groom1.siblings, ...groom1.siblingPartners, ...groom1.niblings]),
       shot_type: 'family',
     })
+  }
+  const groomImmediateAll = [...groom1.parents, ...groom1.siblings, ...groom1.siblingPartners]
+  if (groomImmediateAll.length > 0) {
     shots.push({
       id: 'groom_immediate_family',
       label: `${groomName}'s immediate family`,
-      people: withPerson(groomName, [...groom1.parents, ...groom1.siblings]),
+      people: withPerson(groomName, groomImmediateAll),
       shot_type: 'family',
     })
   }
@@ -185,7 +191,7 @@ function generateSuggestions(
     shots.push({
       id: 'groom_siblings',
       label: `${groomName}'s siblings`,
-      people: withPerson(groomName, groom1.siblings),
+      people: withPerson(groomName, [...groom1.siblings, ...groom1.siblingPartners]),
       shot_type: 'family',
     })
   }
