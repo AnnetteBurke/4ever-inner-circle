@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { ROLES } from '@/content/roles'
 import AddPersonModal from './AddPersonModal'
+import EditPersonModal from './EditPersonModal'
 
 type Person = {
   id: string
@@ -54,6 +55,7 @@ function sideLabel(side: string | null, brideName: string, groomName: string) {
 export default function PeopleClient({ brideName, groomName, partner1Gender, partner2Gender, initialPeople }: Props) {
   const [people, setPeople] = useState<Person[]>(initialPeople)
   const [deleting, setDeleting] = useState<string | null>(null)
+  const [editing, setEditing] = useState<Person | null>(null)
 
   const sameSex = partner1Gender === partner2Gender
   const ALL_PARTY_ROLES = [...BRIDE_PARTY_ROLES, ...GROOM_PARTY_ROLES]
@@ -110,6 +112,11 @@ export default function PeopleClient({ brideName, groomName, partner1Gender, par
 
   function handleAdd(person: Person) {
     setPeople(prev => [...prev, person])
+  }
+
+  function handleUpdate(updated: Person) {
+    setPeople(prev => prev.map(p => p.id === updated.id ? updated : p))
+    setEditing(null)
   }
 
   async function handleDelete(id: string) {
@@ -211,13 +218,21 @@ export default function PeopleClient({ brideName, groomName, partner1Gender, par
                           )}
                         </div>
                       </div>
-                      <button
-                        onClick={() => handleDelete(person.id)}
-                        disabled={deleting === person.id}
-                        className="text-[11px] tracking-label uppercase text-whisper hover:text-mauve transition-colors flex-shrink-0 disabled:opacity-40"
-                      >
-                        Remove
-                      </button>
+                      <div className="flex flex-col items-end gap-2 flex-shrink-0">
+                        <button
+                          onClick={() => setEditing(person)}
+                          className="text-[11px] tracking-label uppercase text-mauve hover:text-plum transition-colors"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDelete(person.id)}
+                          disabled={deleting === person.id}
+                          className="text-[11px] tracking-label uppercase text-whisper hover:text-mauve transition-colors disabled:opacity-40"
+                        >
+                          Remove
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -226,6 +241,14 @@ export default function PeopleClient({ brideName, groomName, partner1Gender, par
           )
         })}
       </div>
+
+      {editing && (
+        <EditPersonModal
+          person={editing}
+          onSave={handleUpdate}
+          onClose={() => setEditing(null)}
+        />
+      )}
 
     </main>
   )
