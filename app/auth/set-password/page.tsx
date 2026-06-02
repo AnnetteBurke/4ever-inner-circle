@@ -9,11 +9,18 @@ const inputClass = 'w-full border border-hairline bg-transparent px-4 py-3 text-
 export default function SetPasswordPage() {
   const router = useRouter()
   const [ready, setReady] = useState(false)
+  const [expired, setExpired] = useState(false)
   const [invalid, setInvalid] = useState(false)
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+
+  // Resend state
+  const [resendEmail, setResendEmail] = useState('')
+  const [resending, setResending] = useState(false)
+  const [resendDone, setResendDone] = useState(false)
+  const [resendError, setResendError] = useState('')
 
   useEffect(() => {
     const supabase = createSupabaseBrowserClient()
@@ -25,12 +32,12 @@ export default function SetPasswordPage() {
 
       if (access_token && refresh_token) {
         const { data, error } = await supabase.auth.setSession({ access_token, refresh_token })
-        if (error) { setInvalid(true); return }
-        // Already set their password — send straight to login
-        if (data.user?.user_metadata?.password_set) {
-          router.replace('/login')
+        if (error) {
+          const msg = error.message.toLowerCase()
+          if (msg.includes('expired') || msg.includes('invalid')) { setExpired(true) } else { setInvalid(true) }
           return
         }
+        if (data.user?.user_metadata?.password_set) { router.replace('/login'); return }
         setReady(true)
         return
       }
@@ -38,11 +45,12 @@ export default function SetPasswordPage() {
       const code = new URLSearchParams(window.location.search).get('code')
       if (code) {
         const { data, error } = await supabase.auth.exchangeCodeForSession(code)
-        if (error) { setInvalid(true); return }
-        if (data.user?.user_metadata?.password_set) {
-          router.replace('/login')
+        if (error) {
+          const msg = error.message.toLowerCase()
+          if (msg.includes('expired') || msg.includes('invalid')) { setExpired(true) } else { setInvalid(true) }
           return
         }
+        if (data.user?.user_metadata?.password_set) { router.replace('/login'); return }
         setReady(true)
         return
       }
@@ -51,11 +59,25 @@ export default function SetPasswordPage() {
       const { data: { session } } = await supabase.auth.getSession()
       if (session) { setReady(true); return }
 
-      setInvalid(true)
+      setExpired(true)
     }
 
     handleTokens()
   }, [router])
+
+  async function handleResend(e: React.FormEvent) {
+    e.preventDefault()
+    if (!resendEmail) return
+    setResending(true)
+    setResendError('')
+    const supabase = createSupabaseBrowserClient()
+    const { error } = await supabase.auth.resetPasswordForEmail(resendEmail, {
+      redirectTo: `${window.location.origin}/auth/set-password`,
+    })
+    setResending(false)
+    if (error) { setResendError('We could not find that email address. Please check and try again.'); return }
+    setResendDone(true)
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -66,7 +88,6 @@ export default function SetPasswordPage() {
     setError('')
     const supabase = createSupabaseBrowserClient()
 
-    // Set the password and mark as set in metadata so second invite-link clicks go to login
     const { error } = await supabase.auth.updateUser({
       password,
       data: { password_set: true },
@@ -78,10 +99,54 @@ export default function SetPasswordPage() {
       return
     }
 
-    // Send confirmation email and WhatsApp
     await fetch('/api/auth/on-password-set', { method: 'POST' }).catch(() => {})
-
     router.replace('/home')
+  }
+
+  if (expired) {
+    return (
+      <main className="min-h-screen bg-cream flex items-center justify-center">
+        <div className="max-w-md w-full px-8">
+          <div className="text-[11px] tracking-label uppercase text-mauve mb-6 text-center">4Ever Inner Circle</div>
+          <h1 className="text-4xl font-light text-ink mb-4 text-center">Your link has expired</h1>
+          <p className="text-base text-whisper mb-10 leading-relaxed text-center">
+            No problem at all. Enter your email below and we will send you a fresh link straight away.
+          </p>
+
+          {resendDone ? (
+            <div className="text-center">
+              <p className="text-base text-ink mb-2">Check your inbox.</p>
+              <p className="text-sm text-whisper leading-relaxed">
+                A new link is on its way to you now. Click it and you will be straight in.
+              </p>
+            </div>
+          ) : (
+            <form onSubmit={handleResend} className="space-y-4">
+              <div>
+                <label className="text-[11px] tracking-label uppercase text-whisper block mb-2">Your email address</label>
+                <input
+                  type="email"
+                  required
+                  value={resendEmail}
+                  onChange={e => setResendEmail(e.target.value)}
+                  placeholder="The email your invitation was sent to"
+                  className={inputClass}
+                  autoComplete="email"
+                />
+              </div>
+              {resendError && <p className="text-sm text-red-500">{resendError}</p>}
+              <button
+                type="submit"
+                disabled={resending}
+                className="w-full py-4 text-[11px] tracking-label uppercase border border-plum text-plum hover:bg-plum hover:text-cream transition-colors disabled:opacity-50"
+              >
+                {resending ? 'Sending...' : 'Send me a new link'}
+              </button>
+            </form>
+          )}
+        </div>
+      </main>
+    )
   }
 
   if (invalid) {
@@ -89,9 +154,9 @@ export default function SetPasswordPage() {
       <main className="min-h-screen bg-cream flex items-center justify-center">
         <div className="max-w-md w-full px-8 text-center">
           <div className="text-[11px] tracking-label uppercase text-mauve mb-6">4Ever Inner Circle</div>
-          <h1 className="text-4xl font-light text-ink mb-4">This link has expired</h1>
+          <h1 className="text-4xl font-light text-ink mb-4">Something went wrong</h1>
           <p className="text-base text-whisper mb-8 leading-relaxed">
-            Head to the sign-in page and use &ldquo;Forgot your password?&rdquo; to get a fresh link.
+            Please contact Annette at studio@4ever.photos and she will get you a fresh link.
           </p>
           <a
             href="/login"
