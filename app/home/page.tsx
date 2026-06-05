@@ -27,6 +27,8 @@ export default async function HomePage() {
     .eq('user_id', user.id)
     .single()
 
+  if (!couple) redirect('/login')
+
   const { days, label } = getCountdown(couple?.wedding_date ?? null)
 
   const weddingDateFormatted = couple?.wedding_date
