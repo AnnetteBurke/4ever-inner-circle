@@ -27,7 +27,7 @@ export default async function HomePage() {
     .eq('user_id', user.id)
     .single()
 
-  if (!couple) redirect('/login')
+  if (!couple) redirect(user.email === process.env.ADMIN_MAIL ? '/admin' : '/login')
 
   const { days, label } = getCountdown(couple?.wedding_date ?? null)
 
