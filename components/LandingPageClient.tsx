@@ -8,7 +8,6 @@ import JourneySection from '@/components/sections/JourneySection'
 import PeopleSection from '@/components/sections/PeopleSection'
 import MoodSection from '@/components/sections/MoodSection'
 import CalmSection from '@/components/sections/CalmSection'
-import EditSection from '@/components/sections/EditSection'
 import RegistrySection from '@/components/sections/RegistrySection'
 import GuestAlbumSection from '@/components/sections/GuestAlbumSection'
 import SignatureBlock from '@/components/sections/SignatureBlock'
@@ -22,7 +21,6 @@ const NAV_ORDER = [
   { id: 'people',    label: 'People' },
   { id: 'mood',      label: 'Mood' },
   { id: 'calm',      label: 'Calm Corner' },
-  { id: 'edit',      label: 'The Edit' },
 ]
 
 const SECTIONS: Record<string, React.ComponentType> = {
@@ -31,7 +29,6 @@ const SECTIONS: Record<string, React.ComponentType> = {
   people:    PeopleSection,
   mood:      MoodSection,
   calm:      CalmSection,
-  edit:      EditSection,
 }
 
 export default function LandingPageClient() {
